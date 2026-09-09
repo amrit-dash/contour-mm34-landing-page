@@ -1,0 +1,72 @@
+/* ============================================================
+   Contour — Colour tokens
+   Anchor every layout in hero navy; cream is the default base;
+   accents are used sparingly. Text is ONLY ever cream, charcoal
+   or navy — never highlighter or OG blue.
+   ============================================================ */
+
+:root {
+  /* ---- Primary ------------------------------------------------ */
+  --navy: #0C3166;        /* hero — primary brand colour, anchors every layout */
+  --cream: #FFF9F1;       /* default base / background */
+  --charcoal: #212121;    /* text (can be a base if needed) */
+
+  /* ---- Secondary accents (digital, sparingly; never as text,
+          never together) ------------------------------------- */
+  --og-blue: #007AFF;     /* heritage accent — clarity / emphasis */
+  --highlighter: #D7FC3D; /* focus / standout — CTAs especially */
+
+  /* ---- Monochromatic tints (contrast on coloured backgrounds) - */
+  --navy-m: #092749;
+  --cream-m: #E2DBD1;
+  --charcoal-m: #3A3A3A;
+  --og-blue-m: #005FCC;
+  --highlighter-m: #BDE535;
+
+  /* ---- Subject colours (subject-specific contexts only —
+          illustration / icons / LMS; always navy-anchored) ----- */
+  --subject-mathematics: #89BDD3;
+  --subject-maths-methods: #E15E80;
+  --subject-specialist-maths: #B93C40;
+  --subject-biology: #45A172;
+  --subject-chemistry: #DF9943;
+  --subject-physics: #94BFE1;
+  --subject-english-language: #9550A0;
+  --subject-selective-entry: #CE9747;
+  --subject-ucat: #3E6FA9;
+
+  /* ---- Semantic surfaces ------------------------------------- */
+  --surface-base: var(--cream);          /* default page background */
+  --surface-raised: #FFFFFF;             /* cards on cream */
+  --surface-sunken: var(--cream-m);      /* wells, insets */
+  --surface-inverse: var(--navy);        /* navy sections */
+  --surface-inverse-2: var(--navy-m);    /* cards on navy */
+  --surface-dark: var(--charcoal);       /* charcoal sections */
+
+  /* ---- Semantic text ----------------------------------------- */
+  --text-primary: var(--charcoal);       /* body on cream/white */
+  --text-heading: var(--navy);           /* headlines on cream/white */
+  --text-muted: #5C5C5C;                 /* secondary text on cream */
+  --text-on-navy: var(--cream);          /* text on navy */
+  --text-on-navy-muted: #B6C4DA;         /* secondary on navy */
+  --text-on-dark: var(--cream);          /* text on charcoal */
+
+  /* ---- Borders & lines --------------------------------------- */
+  --border-subtle: #EBE3D6;              /* hairline on cream */
+  --border-default: #DCD2C2;
+  --border-strong: var(--navy);
+  --border-on-navy: rgba(255, 249, 241, 0.18);
+
+  /* ---- Accents (interaction only — never text) --------------- */
+  --accent-cta: var(--highlighter);      /* primary CTA fill */
+  --accent-cta-hover: var(--highlighter-m);
+  --accent-emphasis: var(--og-blue);     /* links/clarity on navy/white */
+  --accent-emphasis-hover: var(--og-blue-m);
+  --focus-ring: var(--og-blue);
+
+  /* ---- Status (derived from subject palette for harmony) ----- */
+  --status-success: var(--subject-biology);
+  --status-warning: var(--subject-chemistry);
+  --status-error: var(--subject-specialist-maths);
+  --status-info: var(--og-blue);
+}

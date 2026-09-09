@@ -1,0 +1,49 @@
+/* ============================================================
+   Contour — Typography tokens
+   Headlines / display:  PolySans Bulky
+   Body / UI / long-form: Inter (Regular, Medium, Semi Bold)
+   CTAs:                  Inter Semi Bold
+   Casing: sentence case for copy; Title Case for brand,
+   sub-brands and key CTAs. Left-aligned by default.
+   ============================================================ */
+
+:root {
+  /* ---- Families ---------------------------------------------- */
+  --font-display: "PolySans Bulky", "Inter", system-ui, sans-serif;
+  --font-body: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+
+  /* ---- Weights ----------------------------------------------- */
+  --weight-regular: 400;
+  --weight-medium: 500;
+  --weight-semibold: 600;
+  --weight-display: 700;   /* PolySans Bulky */
+
+  /* ---- Type scale (1.250 major-third, 16px base) ------------- */
+  --text-xs: 0.75rem;     /* 12px — captions, legal */
+  --text-sm: 0.875rem;    /* 14px — labels, meta */
+  --text-base: 1rem;      /* 16px — body */
+  --text-md: 1.125rem;    /* 18px — lead body */
+  --text-lg: 1.375rem;    /* 22px — small headings */
+  --text-xl: 1.75rem;     /* 28px — H4 */
+  --text-2xl: 2.25rem;    /* 36px — H3 */
+  --text-3xl: 3rem;       /* 48px — H2 */
+  --text-4xl: 4rem;       /* 64px — H1 */
+  --text-5xl: 5.25rem;    /* 84px — hero display */
+
+  /* ---- Line heights ------------------------------------------ */
+  --leading-tight: 1.04;   /* display headlines */
+  --leading-snug: 1.18;    /* sub-heads */
+  --leading-normal: 1.55;  /* body */
+  --leading-relaxed: 1.7;  /* long-form */
+
+  /* ---- Letter spacing ---------------------------------------- */
+  --tracking-display: -0.02em;  /* tighten big PolySans */
+  --tracking-tight: -0.01em;
+  --tracking-normal: 0em;
+  --tracking-wide: 0.04em;      /* small all-caps labels */
+
+  /* ---- Semantic roles ---------------------------------------- */
+  --font-heading: var(--font-display);
+  --font-ui: var(--font-body);
+  --weight-cta: var(--weight-semibold);
+}

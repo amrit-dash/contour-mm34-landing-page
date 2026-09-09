@@ -1,0 +1,7 @@
+# Heavy source material and backups — kept local
+uploads/
+scraps/
+.thumbnail
+
+# Build output of tools/pack.py; the committed deliverable is index.html
+Contour Methods 3-4 Landing Page.html

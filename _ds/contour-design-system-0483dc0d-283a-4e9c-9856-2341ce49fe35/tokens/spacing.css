@@ -1,0 +1,59 @@
+/* ============================================================
+   Contour — Spacing, radii, shadows, motion
+   Shapes are rounded with contoured edges only — no sharp
+   corners. Generous, calm rhythm; left-aligned layouts.
+   ============================================================ */
+
+:root {
+  /* ---- Spacing scale (4px base) ------------------------------ */
+  --space-0: 0;
+  --space-1: 0.25rem;   /* 4 */
+  --space-2: 0.5rem;    /* 8 */
+  --space-3: 0.75rem;   /* 12 */
+  --space-4: 1rem;      /* 16 */
+  --space-5: 1.5rem;    /* 24 */
+  --space-6: 2rem;      /* 32 */
+  --space-7: 3rem;      /* 48 */
+  --space-8: 4rem;      /* 64 */
+  --space-9: 6rem;      /* 96 */
+  --space-10: 8rem;     /* 128 */
+
+  /* ---- Radii — rounded, contoured edges only ----------------- */
+  --radius-sm: 8px;     /* tags, small chips */
+  --radius-md: 14px;    /* buttons, inputs */
+  --radius-lg: 20px;    /* cards */
+  --radius-xl: 28px;    /* feature cards, media */
+  --radius-2xl: 40px;   /* hero panels, large shapes */
+  --radius-pill: 999px; /* pills, avatars, capsule CTAs */
+
+  /* ---- Border widths ----------------------------------------- */
+  --border-thin: 1px;
+  --border-thick: 2px;
+
+  /* ---- Shadows — soft, warm, low; never harsh ---------------- */
+  --shadow-xs: 0 1px 2px rgba(12, 49, 102, 0.06);
+  --shadow-sm: 0 2px 8px rgba(12, 49, 102, 0.08);
+  --shadow-md: 0 8px 24px rgba(12, 49, 102, 0.10);
+  --shadow-lg: 0 18px 48px rgba(12, 49, 102, 0.14);
+  --shadow-focus: 0 0 0 3px rgba(0, 122, 255, 0.35);
+
+  /* ---- Layout ------------------------------------------------ */
+  --container-max: 1200px;
+  --container-wide: 1320px;
+  --gutter: var(--space-5);
+
+  /* ---- Highlight strike (hero highlight on one key word) ----
+     Generous line-height gives the strike breathing room; the
+     box adds ~0.08em vertical / 0.16em horizontal padding.
+     Fill is Highlighter (navy text) or OG Blue (cream text). */
+  --highlight-pad-x: 0.16em;
+  --highlight-pad-y: 0.08em;
+  --highlight-leading: 1.4;
+
+  /* ---- Motion — calm, confident; ease, no bounce ------------- */
+  --ease-standard: cubic-bezier(0.4, 0, 0.2, 1); /* @kind other */
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1); /* @kind other */
+  --duration-fast: 120ms; /* @kind other */
+  --duration-base: 200ms; /* @kind other */
+  --duration-slow: 360ms; /* @kind other */
+}
