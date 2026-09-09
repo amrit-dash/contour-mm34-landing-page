@@ -4,7 +4,7 @@
   "version": "0.0.0",
   "description": "Static hosting for the Contour Methods 3/4 landing page",
   "scripts": {
-    "pack": "python3 tools/pack.py && cp 'Contour Methods 3-4 Landing Page.html' site/index.html",
+    "pack": "python3 tools/pack.py && cp 'Contour Methods 3-4 Landing Page.html' site/index.html && python3 tools/add_noindex.py site/index.html",
     "dev": "wrangler dev",
     "check": "wrangler deploy --dry-run",
     "deploy": "wrangler deploy"

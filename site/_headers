@@ -1,0 +1,4 @@
+# Internal review build — keep it out of search indexes.
+/*
+  X-Robots-Tag: noindex, nofollow, noarchive
+  Referrer-Policy: no-referrer
