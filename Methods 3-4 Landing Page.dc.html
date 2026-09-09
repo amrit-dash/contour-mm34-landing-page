@@ -1314,6 +1314,36 @@ section[id],div[id]{scroll-margin-top:176px}
     section.sec{border-top:1px solid var(--border-subtle)!important}
     section.sec.dark,#story.sec,#system.sec{border-top:none!important}
     .card-h{will-change:transform}
+
+    /* ── carousels: no scrollbars, room for hover shadows, smooth snap ── */
+    .hscroll{gap:22px!important;padding:14px 14px 26px!important;margin:-14px -14px -14px!important;overflow-x:auto!important;overflow-y:hidden!important;scrollbar-width:none!important;scroll-behavior:smooth;-webkit-overflow-scrolling:touch;scroll-snap-type:x proximity;scroll-padding:14px}
+    .hscroll::-webkit-scrollbar{display:none!important;height:0!important}
+    .hscroll>*{scroll-snap-align:start;flex:none}
+    /* ── two-column sections: one gap scale ── */
+    .g2{gap:clamp(24px,3.6vw,52px)!important}
+    /* ── system panel: even inner padding, no dead space under visual cards ── */
+    .syspanel .tabpanel>div:nth-child(2){padding:0}
+    .syspanel .tabpanel>div:nth-child(2):has(.pvis){min-height:0!important}
+    .syspanel .pvis{padding:26px!important}
+    .syspanel .tabpanel>div:last-child{padding:28px 30px 28px!important}
+    .sysrail{padding:0 8px 0 4px}
+    .sysgrp{padding:18px 20px}
+    /* ── story chapters: eyebrow chips count up through the page ── */
+    body{counter-reset:chap}
+    .eyebrow{counter-increment:chap;padding-left:9px}
+    .eyebrow::before{content:counter(chap,decimal-leading-zero);width:auto;height:auto;border-radius:0;background:none;font:700 11px/1 var(--font-body);color:var(--og-blue);letter-spacing:.04em}
+    .sec.dark .eyebrow::before{color:var(--highlighter)}
+    /* ── side rail: per-section progress rings + connectors ── */
+    #secrail{gap:10px;padding:12px 8px}
+    #secrail::before,#secrail .prog{display:none!important}
+    #secrail a{--p:0;overflow:visible}
+    #secrail a::before{content:"";position:absolute;inset:-4px;border-radius:15px;background:conic-gradient(var(--navy) calc(var(--p)*360deg),rgba(12,49,102,.12) 0);-webkit-mask:radial-gradient(farthest-side,transparent calc(100% - 3.5px),#000 calc(100% - 3px));mask:radial-gradient(farthest-side,transparent calc(100% - 3.5px),#000 calc(100% - 3px));opacity:0;transition:opacity .25s ease}
+    #secrail a.on::before{opacity:1}
+    #secrail a.on{box-shadow:none}
+    #secrail a.done{color:var(--navy)}
+    #secrail a::after{content:"";position:absolute;left:50%;top:calc(100% + 1px);width:2px;height:8px;transform:translateX(-50%);border-radius:2px;background:linear-gradient(to bottom,var(--navy) calc(var(--p)*100%),var(--border-subtle) 0)}
+    #secrail a:last-child::after{display:none}
+    @media (max-width:1250px){#secrail{gap:10px;padding:8px 12px}#secrail a::after{left:calc(100% + 1px);top:50%;width:8px;height:2px;transform:translateY(-50%);background:linear-gradient(to right,var(--navy) calc(var(--p)*100%),var(--border-subtle) 0)}}
   </style>
 </helmet>
 
@@ -2973,7 +3003,16 @@ class Component extends DCLogic {
               let cur = "top";
               ids.forEach((id) => { const el = document.getElementById(id); if (el && el.getBoundingClientRect().top <= vh * 0.45) cur = id; });
               rail.classList.toggle("on", cur !== "top" && y > vh * 0.6);
-              rail.querySelectorAll(".raildot").forEach((a) => { a.classList.toggle("on", (a.dataset.ids || "").split(",").indexOf(cur) >= 0); });
+              rail.querySelectorAll(".raildot").forEach((a) => {
+                const ids2 = (a.dataset.ids || "").split(",");
+                a.classList.toggle("on", ids2.indexOf(cur) >= 0);
+                let top = Infinity, bot = -Infinity;
+                ids2.forEach((id) => { const el = document.getElementById(id); if (!el) return; const r = el.getBoundingClientRect(); top = Math.min(top, r.top + y); bot = Math.max(bot, r.bottom + y); });
+                if (top === Infinity) return;
+                const p = Math.min(1, Math.max(0, (y + vh * 0.45 - top) / Math.max(1, bot - top)));
+                a.style.setProperty("--p", p.toFixed(3));
+                a.classList.toggle("done", p >= 0.999);
+              });
               const se = document.scrollingElement || document.documentElement;
               const max = Math.max(1, se.scrollHeight - vh);
               rail.style.setProperty("--sp", Math.min(1, Math.max(0, y / max)).toFixed(4));

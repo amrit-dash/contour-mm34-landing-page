@@ -5,3 +5,7 @@ scraps/
 
 # Build output of tools/pack.py; the committed deliverable is index.html
 Contour Methods 3-4 Landing Page.html
+
+# Node / Wrangler
+node_modules/
+.wrangler/

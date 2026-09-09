@@ -1,0 +1,10 @@
+{
+  // Static hosting for the Methods 3/4 landing page.
+  // The deliverable is a single self-contained HTML file in site/,
+  // produced by tools/pack.py. No Worker script — assets are served directly.
+  "name": "contour-mm34-landing-page",
+  "compatibility_date": "2026-09-09",
+  "assets": {
+    "directory": "./site"
+  }
+}

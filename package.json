@@ -1,0 +1,15 @@
+{
+  "name": "contour-mm34-landing-page",
+  "private": true,
+  "version": "0.0.0",
+  "description": "Static hosting for the Contour Methods 3/4 landing page",
+  "scripts": {
+    "pack": "python3 tools/pack.py && cp 'Contour Methods 3-4 Landing Page.html' site/index.html",
+    "dev": "wrangler dev",
+    "check": "wrangler deploy --dry-run",
+    "deploy": "wrangler deploy"
+  },
+  "devDependencies": {
+    "wrangler": "^4"
+  }
+}
