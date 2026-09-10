@@ -3454,8 +3454,9 @@ class Component extends DCLogic {
           try {
             document.documentElement.dataset.spyTick = String(Date.now());
             const y = W.scrollY, vh = W.innerHeight;
-            if (y === W.__mm34Y && vh === W.__mm34H) return;
-            W.__mm34Y = y; W.__mm34H = vh;
+            const vw = W.innerWidth;
+            if (y === W.__mm34Y && vh === W.__mm34H && vw === W.__mm34W) return;
+            W.__mm34Y = y; W.__mm34H = vh; W.__mm34W = vw;
             try {
               const hd = document.querySelector("header");
               const hb = hd ? Math.max(0, hd.getBoundingClientRect().bottom) : 120;
@@ -3470,10 +3471,17 @@ class Component extends DCLogic {
               const footerIn = ft ? ft.getBoundingClientRect().top < vh * 0.72 : false;
               rail.classList.toggle("on", cur !== "top" && y > vh * 0.6 && !footerIn);
               try {
-                const rr = rail.getBoundingClientRect(), ds = document.documentElement.style;
-                ds.setProperty("--rail-t", Math.round(rr.top) + "px");
-                ds.setProperty("--rail-l", Math.round(rr.left) + "px");
-                ds.setProperty("--rail-w", Math.round(rr.width) + "px");
+                const ds = document.documentElement.style;
+                // the tab only rides the rail's top edge while the rail is the vertical column;
+                // below that the rail is a full-width bar and its rect must not size the tab
+                if (vw > 1250) {
+                  const rr = rail.getBoundingClientRect();
+                  ds.setProperty("--rail-t", Math.round(rr.top) + "px");
+                  ds.setProperty("--rail-l", Math.round(rr.left) + "px");
+                  ds.setProperty("--rail-w", Math.round(rr.width) + "px");
+                } else {
+                  ds.removeProperty("--rail-t"); ds.removeProperty("--rail-l"); ds.removeProperty("--rail-w");
+                }
               } catch (e) {}
               document.documentElement.classList.toggle("rail-on", rail.classList.contains("on"));
               // phones: the header shows the lens switch until the story begins, then the wayfinder pill takes over
@@ -3566,7 +3574,7 @@ class Component extends DCLogic {
         }
       }
       if (!W.__mm34SpyInt) W.__mm34SpyInt = setInterval(W.__mm34Drive, 300);
-      W.__mm34Y = -1; W.__mm34H = -1; W.__mm34Drive();
+      W.__mm34Y = -1; W.__mm34H = -1; W.__mm34W = -1; W.__mm34Drive();
       if (!W.__mm34SpyRaf) {
         W.__mm34SpyRaf = true;
         const loop = () => { try { W.__mm34Drive(); } catch (e) {} try { requestAnimationFrame(loop); } catch (e) {} };
