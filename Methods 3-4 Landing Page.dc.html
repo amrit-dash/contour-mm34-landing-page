@@ -1658,7 +1658,7 @@ section[id],div[id]{scroll-margin-top:calc(var(--hdr,120px) - 1px)}
     #mwf .mwf-lbl{order:1;max-width:11ch;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;transition:opacity var(--dur-s) var(--ease),max-width var(--dur-s) var(--ease)}
     #mwf .mwf-ring{order:2;position:relative;width:32px;height:32px;border-radius:9px;background:var(--navy);color:var(--cream);display:inline-flex;align-items:center;justify-content:center;isolation:isolate;transition:background var(--dur-s) var(--ease),color var(--dur-s) var(--ease)}
     #mwf .mwf-ico{position:absolute;inset:0;overflow:hidden;border-radius:inherit}
-    #mwf .mwf-i>svg{width:18px;height:18px;stroke-width:2}
+    #mwf .mwf-i>svg{width:18px;height:18px;stroke-width:1.5}
     #mwf .mwf-i{position:absolute;inset:0;display:inline-flex;align-items:center;justify-content:center;opacity:0;transform:translateY(14px) scale(.7);transition:opacity var(--dur-m) var(--ease),transform var(--dur-m) var(--ease)}
     #mwf .mwf-i.out{transform:translateY(-14px) scale(.7)}
     #mwf .mwf-i.cur{opacity:1;transform:none}
@@ -1686,7 +1686,7 @@ section[id],div[id]{scroll-margin-top:calc(var(--hdr,120px) - 1px)}
     .mwf-list::before{content:"";position:absolute;z-index:-1;pointer-events:none;inset:-30px -44px -52px -24px;animation:mwfScrim var(--dur-s) var(--ease) both;backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);-webkit-mask-image:linear-gradient(to right,transparent,#000 22%),linear-gradient(to bottom,#000,#000 84%,transparent);-webkit-mask-composite:source-in;mask-image:linear-gradient(to right,transparent,#000 22%),linear-gradient(to bottom,#000,#000 84%,transparent);mask-composite:intersect}
     .mwf-name{display:none;position:absolute;right:calc(100% + 12px);top:50%;transform:translateY(-50%);font:600 12px/1 var(--font-body);color:var(--cream);background:var(--og-blue);padding:8px 10px;border-radius:9px;white-space:nowrap}
     .mwfrow.on .mwf-name{display:block}
-    .mwf-sq>svg{width:21px;height:21px;stroke-width:2}
+    .mwf-sq>svg{width:21px;height:21px;stroke-width:1.5}
     .mwf-sq{position:relative;isolation:isolate;width:44px;height:44px;border-radius:13px;background:#fff;border:1px solid var(--border-subtle);color:var(--text-muted);box-shadow:var(--shadow-xs);display:inline-flex;align-items:center;justify-content:center;transition:background var(--dur-s) var(--ease),color var(--dur-s) var(--ease)}
     .mwfrow.done .mwf-sq{color:var(--og-blue)}
     .mwfrow.on .mwf-sq{background:var(--navy);color:var(--cream);border-color:var(--navy);box-shadow:0 0 0 4px var(--cream)}
