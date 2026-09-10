@@ -1648,9 +1648,10 @@ section[id],div[id]{scroll-margin-top:calc(var(--hdr,120px) - 1px)}
     @media (min-width:761px) and (max-width:1250px){#totop{--tt-h:42px;--tt-tuck:5px;z-index:54;bottom:calc(57px - var(--tt-tuck));width:58px;border-radius:14px 14px 0 0;border-bottom:0;box-shadow:0 -6px 18px rgba(12,49,102,.10);align-items:center;padding-top:0;transform:translateY(110%)}html.totop-on #totop{transform:none}html.totop-on #totop:hover,html.totop-on #totop:focus-visible,#totop.tt-go{--tt-h:52px;box-shadow:0 -8px 22px rgba(12,49,102,.14)}#totop>svg{width:21px;height:21px}}
     /* wide desktop: the rail stands on the left, so the tab rides its top edge the same way it rides the bottom bar */
     @media (min-width:1251px){
-      #totop{--tt-h:40px;--tt-tuck:6px;z-index:54;left:var(--rail-l,14px);right:auto;top:calc(var(--rail-t,50vh) - var(--tt-h) + var(--tt-tuck));bottom:auto;width:var(--rail-w,62px);border-radius:16px 16px 0 0;border-bottom:0;box-shadow:0 -6px 18px rgba(12,49,102,.10);align-items:center;padding-top:0;transform:translateY(14px) scale(1);transition:opacity var(--dur-s) var(--ease),transform var(--dur-m) var(--ease),box-shadow var(--dur-s) var(--ease),height var(--dur-s) var(--ease),top var(--dur-s) var(--ease)}
+      #totop{--tt-h:40px;--tt-tuck:6px;background:var(--navy);color:var(--cream);border-color:var(--navy);z-index:54;left:var(--rail-l,14px);right:auto;top:calc(var(--rail-t,50vh) - var(--tt-h) + var(--tt-tuck));bottom:auto;width:var(--rail-w,62px);border-radius:16px 16px 0 0;border-bottom:0;box-shadow:0 -6px 18px rgba(12,49,102,.10);align-items:center;padding-top:0;transform:translateY(14px) scale(1);transition:opacity var(--dur-s) var(--ease),transform var(--dur-m) var(--ease),box-shadow var(--dur-s) var(--ease),height var(--dur-s) var(--ease),top var(--dur-s) var(--ease)}
       html.totop-on #totop{transform:none}
-      html.totop-on #totop:hover,html.totop-on #totop:focus-visible,#totop.tt-go{--tt-h:50px;transform:none;box-shadow:0 -10px 24px rgba(12,49,102,.14)}
+      html.totop-on #totop:hover,html.totop-on #totop:focus-visible,#totop.tt-go{--tt-h:50px;transform:none;box-shadow:0 -10px 24px rgba(12,49,102,.22)}
+      #totop>svg{width:19px;height:19px}
       /* no rail on screen, no tab to hang off it */
       html:not(.rail-on) #totop{opacity:0;pointer-events:none;transform:translateY(14px)}
     }
@@ -3476,9 +3477,9 @@ class Component extends DCLogic {
                 // below that the rail is a full-width bar and its rect must not size the tab
                 if (vw > 1250) {
                   const rr = rail.getBoundingClientRect();
-                  ds.setProperty("--rail-t", Math.round(rr.top) + "px");
-                  ds.setProperty("--rail-l", Math.round(rr.left) + "px");
-                  ds.setProperty("--rail-w", Math.round(rr.width) + "px");
+                  ds.setProperty("--rail-t", rr.top.toFixed(2) + "px");
+                  ds.setProperty("--rail-l", rr.left.toFixed(2) + "px");
+                  ds.setProperty("--rail-w", rr.width.toFixed(2) + "px");
                 } else {
                   ds.removeProperty("--rail-t"); ds.removeProperty("--rail-l"); ds.removeProperty("--rail-w");
                 }
