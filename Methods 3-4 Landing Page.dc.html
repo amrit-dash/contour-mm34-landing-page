@@ -1640,6 +1640,9 @@ section[id],div[id]{scroll-margin-top:calc(var(--hdr,120px) - 1px)}
     /* ── Back to top ── phones: a tab that rises out of the sticky trial bar; desktop: small FAB bottom-right */
     #totop{position:fixed;right:14px;bottom:calc(var(--barh,76px) - 10px);z-index:57;width:46px;height:38px;border-radius:14px 14px 0 0;background:var(--surface-raised);color:var(--navy);border:1px solid var(--border-subtle);border-bottom:0;box-shadow:0 -6px 18px rgba(12,49,102,.10);display:inline-flex;align-items:center;justify-content:center;padding-bottom:10px;opacity:0;transform:translateY(110%);pointer-events:none;transition:opacity var(--dur-s) var(--ease),transform var(--dur-m) var(--ease),box-shadow var(--dur-s) var(--ease)}
     html.totop-on #totop{opacity:1;transform:none;pointer-events:auto}
+    #totop>svg{transition:transform var(--dur-s) var(--ease)}
+    /* hover lifts the whole tab and nudges the chevron; the click keeps the chevron up until the top is reached */
+    html.totop-on #totop:hover>svg,#totop.tt-go>svg{transform:translateY(-3px)}
     html.mwf-open #totop{opacity:0;pointer-events:none}
     @media (min-width:761px){#totop{right:22px;bottom:22px;width:42px;height:42px;border-radius:13px;border-bottom:1px solid var(--border-subtle);box-shadow:var(--shadow-md);align-items:center;padding-bottom:0;transform:translateY(12px) scale(.92)}html.totop-on #totop:hover{box-shadow:var(--shadow-lg);transform:translateY(-3px) scale(1.06)}}
     @media (min-width:761px) and (max-width:1250px){#totop{z-index:54;bottom:52px;width:46px;height:39px;border-radius:14px 14px 0 0;border-bottom:0;box-shadow:0 -6px 18px rgba(12,49,102,.10);align-items:center;padding-top:0;padding-bottom:5px;transform:translateY(110%)}html.totop-on #totop{transform:none}html.totop-on #totop:hover{transform:translateY(-3px) scale(1.05);box-shadow:0 -8px 22px rgba(12,49,102,.14)}}
@@ -1647,7 +1650,7 @@ section[id],div[id]{scroll-margin-top:calc(var(--hdr,120px) - 1px)}
     @media (min-width:1251px){
       #totop{z-index:54;left:var(--rail-l,14px);right:auto;top:calc(var(--rail-t,50vh) - 34px);bottom:auto;width:var(--rail-w,62px);height:40px;border-radius:16px 16px 0 0;border-bottom:0;box-shadow:0 -6px 18px rgba(12,49,102,.10);align-items:center;padding-top:0;padding-bottom:6px;transform:translateY(14px) scale(1)}
       html.totop-on #totop{transform:none}
-      #totop:hover{transform:translateY(-3px);box-shadow:0 -8px 22px rgba(12,49,102,.14)}
+      html.totop-on #totop:hover{transform:translateY(-3px) scale(1.05);box-shadow:0 -8px 22px rgba(12,49,102,.14)}
       /* no rail on screen, no tab to hang off it */
       html:not(.rail-on) #totop{opacity:0;pointer-events:none;transform:translateY(14px)}
     }
@@ -3479,6 +3482,7 @@ class Component extends DCLogic {
               if (footerIn && document.documentElement.classList.contains("mwf-open")) document.documentElement.classList.remove("mwf-open");
               // back-to-top: after the hero and the first section are behind the reader
               document.documentElement.classList.toggle("totop-on", y > vh * 1.6 && !footerIn);
+              if (y < 8) { const tt = document.getElementById("totop"); if (tt) tt.classList.remove("tt-go"); }
               // the sticky CTA bar waits until the hero, and its own CTA, are scrolled past
               document.documentElement.classList.toggle("past-hero", y > vh * 0.72);
               try { const sb = document.querySelector(".only-m"); if (sb && sb.getBoundingClientRect().height > 0) document.documentElement.style.setProperty("--barh", Math.round(sb.getBoundingClientRect().height) + "px"); } catch (e) {}
@@ -3546,7 +3550,7 @@ class Component extends DCLogic {
             const setLens = (o) => { html.classList.toggle("lens-open", o); const t = document.querySelector(".mlens-t"); if (t) t.setAttribute("aria-expanded", o ? "true" : "false"); };
             if (e.target.closest(".mlens-t")) { setLens(!html.classList.contains("lens-open")); return; }
             if (html.classList.contains("lens-open")) setLens(false);
-            if (e.target.closest("#totop")) { e.preventDefault(); html.style.scrollBehavior = ""; W.scrollTo({ top: 0, behavior: W.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth" }); return; }
+            if (e.target.closest("#totop")) { e.preventDefault(); const tt = document.getElementById("totop"); if (tt) { tt.classList.add("tt-go"); setTimeout(() => tt.classList.remove("tt-go"), 1600); } html.style.scrollBehavior = ""; W.scrollTo({ top: 0, behavior: W.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth" }); return; }
             const pt = e.target.closest(".progtab");
             if (pt) { ["prog-1", "prog-2", "prog-3"].forEach((c) => html.classList.remove(c)); html.classList.add("prog-" + pt.dataset.prog); return; }
             // workbook viewer: full-screen toggle (state on <html> so the template re-render cannot drop it)
