@@ -1159,6 +1159,14 @@ section[id],div[id]{scroll-margin-top:calc(var(--hdr,120px) - 1px)}
 @media (max-width:1150px) and (min-width:881px){.chipTR{display:none!important}}
     @media (max-width:1250px){#secrail{left:0;right:0;top:auto;bottom:0;transform:none;flex-direction:row;justify-content:center;overflow:visible;border-radius:0;border:none;border-top:1px solid var(--border-subtle);padding:7px 10px;gap:2px}#secrail .lbl{left:50%;top:auto;bottom:calc(100% + 10px);transform:translate(-50%,4px)}#secrail a:hover .lbl{transform:translate(-50%,0)}}
 @media (max-width:760px){#secrail{bottom:calc(58px + env(safe-area-inset-bottom,0px))}}
+    /* free-week card: the illustration carries the headline beside it rather than sitting on its own row */
+    @media (min-width:901px){
+      .wksticky{display:grid;grid-template-columns:auto minmax(0,1fr);column-gap:clamp(18px,1.9vw,30px);align-items:center}
+      .wksticky>.wkicon{grid-column:1;grid-row:1;width:auto;height:clamp(92px,7.4vw,124px)!important;margin:0!important}
+      .wksticky>h2{grid-column:2;grid-row:1;margin:0!important}
+      .wksticky>*:not(.wkicon):not(h2){grid-column:1/-1}
+      .wksticky>p{margin-top:20px!important}
+    }
 @media (max-width:900px){.wksticky{position:static!important}.resrow{grid-template-columns:1fr!important;padding:30px 0!important}.resrow>div{order:0!important}}
     body{margin:0;background:var(--cream);color:var(--charcoal);font-family:var(--font-body,Inter,sans-serif);-webkit-font-smoothing:antialiased}
     a{color:var(--navy);text-decoration:none}a:hover{color:var(--og-blue)}
