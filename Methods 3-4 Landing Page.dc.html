@@ -1583,6 +1583,8 @@ section[id],div[id]{scroll-margin-top:calc(var(--hdr,120px) - 1px)}
     #mwfbar>span{display:block;height:100%;width:calc(var(--p,0)*100%);background:var(--og-blue);border-radius:0 3px 3px 0;box-shadow:0 1px 3px rgba(0,122,255,.28);transition:width .16s linear}
     @media (max-width:760px){
       html.mwf-live #mwfbar{display:block}
+      /* origin album: the fanned back cards overhang the deck, so inset it or they crowd the screen edge */
+      #story [title^="The origin album"]{margin-inline:14px;height:clamp(300px,76vw,380px)!important}
       #mlens{display:inline-flex}
       html.mwf-live #mlens,html.mwf-foot #mlens{display:none}
       html.mwf-live #mwf{display:inline-flex}
