@@ -1544,13 +1544,19 @@ section[id],div[id]{scroll-margin-top:calc(var(--hdr,120px) - 1px)}
     @keyframes mwfIn{from{opacity:0;transform:translateY(-10px)}to{opacity:1;transform:none}}
     @keyframes mwfScrim{from{opacity:0}to{opacity:1}}
     /* ── Back to top ── phones: a tab that rises out of the sticky trial bar; desktop: small FAB bottom-right */
-    #totop{position:fixed;right:14px;bottom:calc(var(--barh,76px) - 12px);z-index:57;width:48px;height:46px;border-radius:14px 14px 0 0;background:var(--surface-raised);color:var(--navy);border:1px solid var(--border-subtle);border-bottom:0;box-shadow:0 -6px 18px rgba(12,49,102,.10);display:inline-flex;align-items:flex-start;justify-content:center;padding-top:9px;opacity:0;transform:translateY(110%);pointer-events:none;transition:opacity var(--dur-s) var(--ease),transform var(--dur-m) var(--ease),box-shadow var(--dur-s) var(--ease)}
-    #totop svg{transition:transform var(--dur-s) var(--ease)}
+    #totop{position:fixed;right:14px;bottom:calc(var(--barh,76px) - 12px);z-index:57;width:48px;height:46px;border-radius:14px 14px 0 0;background:var(--surface-raised);color:var(--navy);border:1px solid var(--border-subtle);border-bottom:0;box-shadow:0 -6px 18px rgba(12,49,102,.10);display:inline-flex;align-items:center;justify-content:center;padding-bottom:12px;opacity:0;transform:translateY(110%);pointer-events:none;transition:opacity var(--dur-s) var(--ease),transform var(--dur-m) var(--ease),box-shadow var(--dur-s) var(--ease)}
     html.totop-on #totop{opacity:1;transform:none;pointer-events:auto}
-    #totop:hover svg,#totop:active svg{transform:translateY(-3px)}
     html.mwf-open #totop{opacity:0;pointer-events:none}
-    @media (min-width:761px){#totop{right:22px;bottom:22px;width:46px;height:46px;border-radius:14px;border-bottom:1px solid var(--border-subtle);box-shadow:var(--shadow-md);align-items:center;padding-top:0;transform:translateY(12px) scale(.92)}#totop:hover{box-shadow:var(--shadow-lg);transform:translateY(-2px)}}
-    @media (min-width:761px) and (max-width:1250px){#totop{bottom:57px;width:48px;height:46px;border-radius:14px 14px 0 0;border-bottom:0;box-shadow:0 -6px 18px rgba(12,49,102,.10);align-items:flex-start;padding-top:9px;transform:translateY(110%)}html.totop-on #totop{transform:none}#totop:hover{transform:none;box-shadow:0 -8px 22px rgba(12,49,102,.14)}}
+    @media (min-width:761px){#totop{right:22px;bottom:22px;width:46px;height:46px;border-radius:14px;border-bottom:1px solid var(--border-subtle);box-shadow:var(--shadow-md);align-items:center;padding-bottom:0;transform:translateY(12px) scale(.92)}#totop:hover{box-shadow:var(--shadow-lg);transform:translateY(-2px)}}
+    @media (min-width:761px) and (max-width:1250px){#totop{z-index:54;bottom:51px;width:48px;height:46px;border-radius:14px 14px 0 0;border-bottom:0;box-shadow:0 -6px 18px rgba(12,49,102,.10);align-items:center;padding-top:0;padding-bottom:6px;transform:translateY(110%)}html.totop-on #totop{transform:none}#totop:hover{transform:translateY(-3px);box-shadow:0 -8px 22px rgba(12,49,102,.14)}}
+    /* wide desktop: the rail stands on the left, so the tab rides its top edge the same way it rides the bottom bar */
+    @media (min-width:1251px){
+      #totop{z-index:54;left:var(--rail-l,14px);right:auto;top:calc(var(--rail-t,50vh) - 40px);bottom:auto;width:var(--rail-w,62px);height:46px;border-radius:16px 16px 0 0;border-bottom:0;box-shadow:0 -6px 18px rgba(12,49,102,.10);align-items:center;padding-top:0;padding-bottom:6px;transform:translateY(14px) scale(1)}
+      html.totop-on #totop{transform:none}
+      #totop:hover{transform:translateY(-3px);box-shadow:0 -8px 22px rgba(12,49,102,.14)}
+      /* no rail on screen, no tab to hang off it */
+      html:not(.rail-on) #totop{opacity:0;pointer-events:none;transform:translateY(14px)}
+    }
     /* section progress: a hairline under the header that fills as the current section is read, then restarts on the next one */
     #mwfbar{display:none;position:fixed;top:calc(var(--hdr,107px) - 3px);left:0;right:0;height:6px;z-index:59;background:rgba(12,49,102,.08);pointer-events:none;transition:opacity var(--dur-s) var(--ease)}
 
@@ -3339,6 +3345,13 @@ class Component extends DCLogic {
               const ft = document.querySelector("footer");
               const footerIn = ft ? ft.getBoundingClientRect().top < vh * 0.72 : false;
               rail.classList.toggle("on", cur !== "top" && y > vh * 0.6 && !footerIn);
+              try {
+                const rr = rail.getBoundingClientRect(), ds = document.documentElement.style;
+                ds.setProperty("--rail-t", Math.round(rr.top) + "px");
+                ds.setProperty("--rail-l", Math.round(rr.left) + "px");
+                ds.setProperty("--rail-w", Math.round(rr.width) + "px");
+              } catch (e) {}
+              document.documentElement.classList.toggle("rail-on", rail.classList.contains("on"));
               // phones: the header shows the lens switch until the story begins, then the wayfinder pill takes over
               document.documentElement.classList.toggle("mwf-live", cur !== "top" && !footerIn);
               document.documentElement.classList.toggle("mwf-foot", footerIn);
