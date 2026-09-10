@@ -1390,7 +1390,6 @@ section[id],div[id]{scroll-margin-top:calc(var(--hdr,120px) - 1px)}
       .h1r{margin-bottom:18px!important}
       /* 2-up grids: a lone third card spans the row instead of sitting half-width */
       .g3>*:last-child:nth-child(odd){grid-column:1/-1}
-      .pillarcards>a:last-child:nth-child(odd) img{height:200px!important}
       /* proof chips scale with the viewport */
       .chipTR,.chipBL{padding:clamp(11px,3vw,14px) clamp(13px,3.6vw,18px)!important}
       .chipTR>div:first-child,.chipBL>div:first-child{font-size:clamp(18px,5vw,22px)!important}
@@ -1424,6 +1423,22 @@ section[id],div[id]{scroll-margin-top:calc(var(--hdr,120px) - 1px)}
       .headstats{display:grid!important;grid-template-columns:repeat(3,auto);justify-content:space-between;gap:12px!important}
       .headstats>div>div:first-child{font-size:clamp(22px,6.6vw,30px)!important;white-space:nowrap}
       .viscap{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+      /* reviews: cards sized so the next one peeks in, which is what says "swipe" */
+      .revhead{margin-bottom:22px!important;gap:14px!important}
+      .revhead>a{padding:8px 13px!important}
+      .qcards{gap:12px!important}
+      .qcards>div{width:min(272px,74vw)!important;padding:18px!important;gap:9px!important}
+      .qcards>div>p{font-size:14px!important;line-height:1.55!important}
+      .vcards{gap:12px!important}
+      .vcards>div{width:min(200px,54vw)!important}
+      .vcards>div>div:first-child{height:116px!important}
+      .vcards>div>div:last-child{padding:11px 13px 13px!important}
+      .vcards>div>div:last-child>div:first-child{font-size:13.5px!important}
+      .vcards>div>div:last-child>div:last-child{font-size:11.5px!important}
+      /* leaderboard: title on its own line, mode toggle centred under it */
+      .lbhead{justify-content:center!important;padding:20px 20px 16px!important;gap:14px!important}
+      .lbhead>h3{flex:1 0 100%}
+      .lbhead>span{margin:0 auto!important}
       /* pricing week chips: let labels wrap instead of truncating */
       .wkchips{height:auto!important}
       .wkchips>span{padding:10px 8px!important;min-height:56px}
@@ -1640,7 +1655,7 @@ section[id],div[id]{scroll-margin-top:calc(var(--hdr,120px) - 1px)}
     <h2 style="font-family:var(--font-display);font-weight:700;font-size:clamp(32px,3.4vw,40px);letter-spacing:-0.02em;line-height:1.14;color:var(--navy);margin:0 0 14px;max-width:22ch">Results that speak for themselves.</h2>
     <p style="font-size:17px;line-height:1.6;color:var(--text-muted);margin:0 0 36px;max-width:58ch">Not luck. The same system, run for thousands of students, year after year.</p>
     <div style="background:var(--surface-raised);border:1px solid var(--border-subtle);border-radius:var(--radius-2xl);box-shadow:var(--shadow-sm);overflow:hidden;margin-bottom:26px" title="Placeholder names · named results render only with permission (PB:§20)">
-      <div style="display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;padding:22px 26px;border-bottom:1px solid var(--border-subtle)">
+      <div class="lbhead" style="display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;padding:22px 26px;border-bottom:1px solid var(--border-subtle)">
         <h3 style="display:flex;align-items:center;gap:10px;font:700 17px/1.3 var(--font-body);color:var(--navy);margin:0"><img loading="lazy" decoding="async" src="assets/ds/success-star.png" alt="" style="height:30px">Methods 3/4 leaderboard</h3>
         <span style="display:inline-flex;background:var(--cream-m);border-radius:999px;padding:3px;gap:2px;margin-left:auto">
           <sc-for list="{{ lbModes }}" as="m" hint-placeholder-count="2">
@@ -1724,14 +1739,14 @@ section[id],div[id]{scroll-margin-top:calc(var(--hdr,120px) - 1px)}
 <!-- ══ S3b · Reviews ══ -->
 <section id="reviews" data-screen-label="S3b Reviews" class="sec thread" style="padding:96px 0;border-top:1px solid var(--border-subtle)">
   <div class="ctrp" style="max-width:var(--container-max);margin:0 auto;padding:0 clamp(32px,11vw,210px)">
-    <div style="display:flex;align-items:flex-end;justify-content:space-between;gap:20px;flex-wrap:wrap;margin-bottom:34px">
+    <div class="revhead" style="display:flex;align-items:flex-end;justify-content:space-between;gap:20px;flex-wrap:wrap;margin-bottom:34px">
       <div>
         <h2 style="font-family:var(--font-display);font-weight:700;font-size:clamp(32px,3.4vw,40px);letter-spacing:-0.02em;line-height:1.14;color:var(--navy);margin:0 0 8px;max-width:22ch">{{ s13title }}</h2>
 
       </div>
       <a href="#reviews" style="display:inline-flex;align-items:center;gap:10px;background:var(--surface-raised);border:1px solid var(--border-subtle);border-radius:999px;padding:10px 16px;color:var(--navy);box-shadow:var(--shadow-xs)"><span style="font:700 15px/1 var(--font-body)">★ <span title="Proof-bank pending (pb:google_aggregate)" style="border-bottom:2px dotted rgba(0,122,255,.45);cursor:help">4.9</span></span><span style="font:500 13px/1 var(--font-body);color:var(--text-muted)"><span title="Proof-bank pending (pb:google_review_count)" style="border-bottom:2px dotted rgba(0,122,255,.45);cursor:help">3,000+</span> Google reviews →</span></a>
     </div>
-    <div class="hscroll" style="gap:14px;margin-bottom:22px;scroll-snap-type:x mandatory;padding-bottom:6px" title="Review bank · pending approvals">
+    <div class="hscroll qcards" style="gap:14px;margin-bottom:22px;scroll-snap-type:x mandatory;padding-bottom:6px" title="Review bank · pending approvals">
       <sc-for list="{{ quotes }}" as="q" hint-placeholder-count="8">
         <div style="flex:none;width:320px;scroll-snap-align:start;background:var(--surface-raised);border:1px solid var(--border-subtle);border-radius:var(--radius-xl);padding:22px;display:flex;flex-direction:column;gap:11px;box-shadow:var(--shadow-xs)">
           <div style="display:flex;align-items:center;justify-content:space-between;gap:10px"><strong style="font:700 14px/1.3 var(--font-body);color:var(--navy)">{{ q.n }}</strong><span aria-label="Five stars" style="font:600 12px/1 var(--font-body);color:var(--navy);letter-spacing:.05em">★★★★★</span></div>
@@ -1741,7 +1756,7 @@ section[id],div[id]{scroll-margin-top:calc(var(--hdr,120px) - 1px)}
       </sc-for>
     </div>
     <h3 style="font:700 17px/1.3 var(--font-body);color:var(--navy);margin:6px 0 14px">Hear it from them <span style="font:500 13px/1 var(--font-body);color:var(--text-muted)">· 60 seconds each</span></h3>
-    <div class="hscroll" style="gap:14px;margin-bottom:30px;scroll-snap-type:x mandatory;padding-bottom:6px" title="Video slots · names pending approval">
+    <div class="hscroll vcards" style="gap:14px;margin-bottom:30px;scroll-snap-type:x mandatory;padding-bottom:6px" title="Video slots · names pending approval">
       <sc-for list="{{ vids }}" as="v" hint-placeholder-count="6">
         <div style="flex:none;width:250px;scroll-snap-align:start;background:var(--surface-raised);border:1px solid var(--border-subtle);border-radius:var(--radius-xl);overflow:hidden;box-shadow:var(--shadow-xs)">
           <div style="position:relative;height:140px;background:var(--cream-m)">
