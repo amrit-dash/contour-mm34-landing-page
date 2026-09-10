@@ -1333,22 +1333,23 @@ section[id],div[id]{scroll-margin-top:calc(var(--hdr,120px) - 1px)}
     .eyebrow{counter-increment:chap;padding-left:9px}
     .eyebrow::before{content:counter(chap,decimal-leading-zero);width:auto;height:auto;border-radius:0;background:none;font:700 11px/1 var(--font-body);color:var(--og-blue);letter-spacing:.04em}
     .sec.dark .eyebrow::before{color:var(--highlighter)}
-    /* ── side rail: per-section progress rings + connectors ── */
-    #secrail{--rail-ring:6px;--rail-gap:20px;gap:var(--rail-gap);padding:16px}
-    #secrail::before,#secrail .prog{display:none!important}
-    #secrail a{--p:0;overflow:visible}
+    /* ── side rail: per-section progress rings on one continuous spine ── */
+    #secrail{--rail-ring:4px;--rail-gap:20px;--rail-pad:12px;--rail-dot:36px;gap:var(--rail-gap);padding:var(--rail-pad)}
+    /* spine: one line, first pill centre to last; each pill masks its own span */
+    #secrail::before{top:calc(var(--rail-pad) + var(--rail-dot)/2);bottom:calc(var(--rail-pad) + var(--rail-dot)/2);background:var(--border-default)}
+    #secrail .prog{top:calc(var(--rail-pad) + var(--rail-dot)/2);height:calc(var(--rp,0)*(100% - var(--rail-pad)*2 - var(--rail-dot)))}
+    #secrail a{--p:0;overflow:visible;background:var(--cream)}
     /* FILL view (default): active pill fills OG blue top to bottom */
     #secrail a.on{background:linear-gradient(to bottom,var(--og-blue) calc(var(--p)*100%),var(--navy) 0);color:var(--cream);box-shadow:none}
     #secrail a.done{color:var(--og-blue)}
     #secrail a.done:hover{color:var(--navy)}
     /* RING view: set data-rail="ring" on #secrail to switch */
-    #secrail a::before{content:"";position:absolute;inset:calc(var(--rail-ring)*-1);border-radius:17px;padding:3.5px;background:conic-gradient(var(--og-blue) calc(var(--p)*360deg),rgba(12,49,102,.10) 0);-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);mask-composite:exclude;opacity:0;transition:opacity .25s ease}
-    #secrail[data-rail="ring"] a.on{background:var(--navy)}
+    #secrail a::before{content:"";position:absolute;inset:calc(var(--rail-ring)*-1);border-radius:calc(12px + var(--rail-ring));padding:var(--rail-ring);background:conic-gradient(var(--og-blue) calc(var(--p)*360deg),rgba(12,49,102,.10) 0);-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);mask-composite:exclude;opacity:0;transition:opacity .25s ease}
+    #secrail[data-rail="ring"] a.on{background:var(--navy);color:var(--highlighter)}
     #secrail[data-rail="ring"] a.on::before{opacity:1}
-    /* connector: grey until reached, fills navy top to bottom, flush with both rings */
-    #secrail a::after{content:"";position:absolute;left:50%;top:calc(100% + var(--rail-ring));width:2px;height:calc(var(--rail-gap) - var(--rail-ring)*2);transform:translateX(-50%);border-radius:2px;background:linear-gradient(to bottom,var(--navy) calc(var(--p)*100%),var(--border-default) 0)}
-    #secrail a:last-child::after{display:none}
-    @media (max-width:1250px){#secrail{gap:var(--rail-gap);padding:12px 16px}#secrail a.on{background:linear-gradient(to right,var(--og-blue) calc(var(--p)*100%),var(--navy) 0)}#secrail[data-rail="ring"] a.on{background:var(--navy)}#secrail a::after{left:calc(100% + var(--rail-ring));top:50%;width:calc(var(--rail-gap) - var(--rail-ring)*2);height:2px;transform:translateY(-50%);background:linear-gradient(to right,var(--navy) calc(var(--p)*100%),var(--border-default) 0)}}
+    /* pill plate: hides the spine behind the pill and its ring band, so only the gaps show */
+    #secrail[data-rail="ring"] a,#secrail[data-rail="ring"] a.on{box-shadow:0 0 0 var(--rail-ring) var(--cream)}
+    @media (max-width:1250px){#secrail{gap:var(--rail-gap);padding:10px 14px}#secrail::before,#secrail .prog{display:none}#secrail a.on{background:linear-gradient(to right,var(--og-blue) calc(var(--p)*100%),var(--navy) 0)}#secrail[data-rail="ring"] a.on{background:var(--navy);color:var(--highlighter)}#secrail a::after{content:"";position:absolute;left:calc(100% + var(--rail-ring));top:50%;width:calc(var(--rail-gap) - var(--rail-ring)*2);height:2px;transform:translateY(-50%);border-radius:2px;background:linear-gradient(to right,var(--navy) calc(var(--p)*100%),var(--border-default) 0)}#secrail a:last-child::after{display:none}}
   </style>
 </helmet>
 
@@ -3015,16 +3016,22 @@ class Component extends DCLogic {
               const ft = document.querySelector("footer");
               const footerIn = ft ? ft.getBoundingClientRect().top < vh * 0.72 : false;
               rail.classList.toggle("on", cur !== "top" && y > vh * 0.6 && !footerIn);
-              rail.querySelectorAll(".raildot").forEach((a) => {
+              const dots = rail.querySelectorAll(".raildot");
+              let head = 0;
+              dots.forEach((a, i) => {
                 const ids2 = (a.dataset.ids || "").split(",");
-                a.classList.toggle("on", ids2.indexOf(cur) >= 0);
+                const act = ids2.indexOf(cur) >= 0;
+                a.classList.toggle("on", act);
                 let top = Infinity, bot = -Infinity;
                 ids2.forEach((id) => { const el = document.getElementById(id); if (!el) return; const r = el.getBoundingClientRect(); top = Math.min(top, r.top + y); bot = Math.max(bot, r.bottom + y); });
                 if (top === Infinity) return;
                 const p = Math.min(1, Math.max(0, (y + vh * 0.45 - top) / Math.max(1, bot - top)));
                 a.style.setProperty("--p", p.toFixed(3));
                 a.classList.toggle("done", p >= 0.999);
+                // spine head: pill centre plus the fraction of this section already read
+                if (act) head = i + p; else if (p >= 0.999) head = Math.max(head, i);
               });
+              rail.style.setProperty("--rp", (dots.length > 1 ? Math.min(1, head / (dots.length - 1)) : 1).toFixed(4));
               const se = document.scrollingElement || document.documentElement;
               const max = Math.max(1, se.scrollHeight - vh);
               rail.style.setProperty("--sp", Math.min(1, Math.max(0, y / max)).toFixed(4));
