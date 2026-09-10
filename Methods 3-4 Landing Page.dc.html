@@ -1354,6 +1354,11 @@ section[id],div[id]{scroll-margin-top:calc(var(--hdr,120px) - 1px)}
     /* ── Responsive layer 2026-09 · one gutter token, mobile rhythm, tablet reflow ── */
     :root{--gx:clamp(32px,11vw,210px)}
     @media (max-width:1100px){:root{--gx:clamp(28px,6.5vw,72px)}}
+    @media (max-width:1100px){
+      /* system: one column, so the live panel leads and the 19-part list becomes its index */
+      .sys .pillarg .syspanel{order:-1}
+      .sys .pillarg .sysrail{margin-top:10px}
+    }
     @media (max-width:1000px){
       /* results: the faded score cloud only reads on a wide canvas */
       #results>div[aria-hidden="true"]{display:none}
@@ -3077,6 +3082,17 @@ class Component extends DCLogic {
   }
   _pillarGo(key, i, scroll) {
     this.setState({ [key]: i, sysP: Number(key.slice(1)) }, () => {
+      // single-column layouts (tablet/phone): the panel sits above the list, so bring it back into view on every pick
+      if (window.matchMedia("(max-width:1100px)").matches) {
+        requestAnimationFrame(() => {
+          const p = document.querySelector(".syspanel");
+          if (!p) return;
+          const hb = parseFloat(getComputedStyle(document.documentElement).getPropertyValue("--hdr")) || 120;
+          const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+          window.scrollTo({ top: p.getBoundingClientRect().top + window.scrollY - hb - 10, behavior: reduced ? "auto" : "smooth" });
+        });
+        return;
+      }
       if (!scroll) return;
       const el = document.getElementById("system");
       if (el) { const hb = parseFloat(getComputedStyle(document.documentElement).getPropertyValue("--hdr")) || 120; window.scrollTo({ top: el.getBoundingClientRect().top + window.scrollY - hb + 1, behavior: "smooth" }); }
