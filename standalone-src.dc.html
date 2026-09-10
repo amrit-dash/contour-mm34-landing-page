@@ -1516,9 +1516,9 @@ section[id],div[id]{scroll-margin-top:176px}
       <div>
         <div style="position:relative;height:clamp(330px,30vw,420px)" title="The origin album · drop real photos onto each card">
           <sc-for list="{{ albumCards }}" as="c" hint-placeholder-count="3">
-            <div style="position:absolute;inset:0;display:flex;flex-direction:column;background:var(--surface-raised);border:1px solid var(--border-subtle);border-radius:var(--radius-xl);box-shadow:var(--shadow-md);padding:12px 12px 0;transition:transform .5s cubic-bezier(.22,1,.36,1);{{ c.style }}">
+            <div style="position:absolute;inset:0;display:flex;flex-direction:column;background:var(--surface-raised);border:1px solid var(--border-subtle);border-radius:var(--radius-xl);box-shadow:var(--shadow-md);padding:12px 12px 0;transition:transform .5s cubic-bezier(.22,1,.36,1);z-index:{{ c.z }};transform:{{ c.tf }};pointer-events:{{ c.pe }}">
               <div style="flex:1;border-radius:14px;overflow:hidden;background:var(--cream-m)"><image-slot id="{{ c.slot }}" shape="rect" placeholder="{{ c.ph }}"></image-slot></div>
-              <div style="height:52px;display:flex;align-items:center;justify-content:space-between;gap:12px;transition:opacity .3s ease;{{ c.capStyle }}">
+              <div style="height:52px;display:flex;align-items:center;justify-content:space-between;gap:12px;transition:opacity .3s ease;opacity:{{ c.capOp }}">
                 <span style="font:600 13.5px/1.3 var(--font-body);color:var(--navy)">{{ c.cap }}</span>
                 <span style="font:500 12px/1 var(--font-body);color:var(--text-muted);white-space:nowrap">{{ c.n }}</span>
               </div>
@@ -2329,8 +2329,8 @@ section[id],div[id]{scroll-margin-top:176px}
         <h2 style="font-family:var(--font-display);font-weight:700;font-size:clamp(32px,3.4vw,40px);letter-spacing:-0.02em;line-height:1.14;color:var(--navy);margin:0 0 14px;max-width:18ch">Built for Methods. Not adapted to it.</h2>
         <p style="font-size:17px;line-height:1.6;color:var(--text-muted);margin:0 0 22px;max-width:46ch">The tools only a Methods team would bother building, included for every student.</p>
         <div style="display:flex;gap:8px;flex-wrap:wrap;margin:0 0 24px">
-          <button sc-camel-on-click="{{ srPickCas }}" style="appearance:none;cursor:pointer;border-radius:999px;padding:10px 16px;font:600 13px/1 var(--font-body);transition:all .15s ease;{{ srBtnCas }}">The CAS Hub</button>
-          <button sc-camel-on-click="{{ srPickBound }}" style="appearance:none;cursor:pointer;border-radius:999px;padding:10px 16px;font:600 13px/1 var(--font-body);transition:all .15s ease;{{ srBtnBound }}">Bound Reference</button>
+          <button sc-camel-on-click="{{ srPickCas }}" style="appearance:none;cursor:pointer;border-radius:999px;padding:10px 16px;font:600 13px/1 var(--font-body);transition:all .15s ease;border:1.5px solid {{ srCasBd }};background:{{ srCasBg }};color:{{ srCasCo }}">The CAS Hub</button>
+          <button sc-camel-on-click="{{ srPickBound }}" style="appearance:none;cursor:pointer;border-radius:999px;padding:10px 16px;font:600 13px/1 var(--font-body);transition:all .15s ease;border:1.5px solid {{ srBoundBd }};background:{{ srBoundBg }};color:{{ srBoundCo }}">Bound Reference</button>
         </div>
         <sc-if value="{{ srCas }}" hint-placeholder-val="{{ true }}">
         <div style="display:flex;flex-direction:column;gap:14px">
@@ -3977,12 +3977,12 @@ class Component extends DCLogic {
         { slot: "story-og-class", cap: "One of the earliest classes", ph: "An early class" },
       ].map((c, i) => {
         const pos = (i - S.albumIdx + 3) % 3;
-        const styles = [
-          "z-index:3;transform:rotate(-1.2deg)",
-          "z-index:2;transform:translate(18px,14px) rotate(2.1deg) scale(.97)",
-          "z-index:1;transform:translate(-16px,24px) rotate(-3.2deg) scale(.94)",
+        const tfs = [
+          "rotate(-1.2deg)",
+          "translate(18px,14px) rotate(2.1deg) scale(.97)",
+          "translate(-16px,24px) rotate(-3.2deg) scale(.94)",
         ];
-        return { ...c, n: (i + 1) + " / 3", style: styles[pos] + (pos === 0 ? "" : ";pointer-events:none"), capStyle: pos === 0 ? "" : "opacity:0" };
+        return { ...c, n: (i + 1) + " / 3", z: 3 - pos, tf: tfs[pos], pe: pos === 0 ? "auto" : "none", capOp: pos === 0 ? "1" : "0" };
       }),
       letterSalut: S.lens === "guardian" ? "Dear parents and guardians," : "Dear students,",
       wbLabel: (S.wbPage + 1) + " / 5",
@@ -4016,8 +4016,8 @@ class Component extends DCLogic {
       funnelDots: Array.from({ length: 100 }, (_, i) => ({ bg: i >= 95 ? "var(--highlighter)" : "rgba(255,249,241,.18)" })),
       srCas: (S.srTab || "cas") === "cas", srBound: S.srTab === "bound",
       srPickCas: () => this.setState({ srTab: "cas" }), srPickBound: () => this.setState({ srTab: "bound" }),
-      srBtnCas: (S.srTab || "cas") === "cas" ? "border:1.5px solid var(--navy);background:var(--navy);color:#FFF9F1" : "border:1.5px solid var(--border-default);background:transparent;color:var(--navy)",
-      srBtnBound: S.srTab === "bound" ? "border:1.5px solid var(--navy);background:var(--navy);color:#FFF9F1" : "border:1.5px solid var(--border-default);background:transparent;color:var(--navy)",
+      srCasBd: (S.srTab || "cas") === "cas" ? "var(--navy)" : "var(--border-default)", srCasBg: (S.srTab || "cas") === "cas" ? "var(--navy)" : "transparent", srCasCo: (S.srTab || "cas") === "cas" ? "#FFF9F1" : "var(--navy)",
+      srBoundBd: S.srTab === "bound" ? "var(--navy)" : "var(--border-default)", srBoundBg: S.srTab === "bound" ? "var(--navy)" : "transparent", srBoundCo: S.srTab === "bound" ? "#FFF9F1" : "var(--navy)",
       joinStat: (() => {
         const js = [
           ["15,000+", " students tutored since 2020", "Proof-bank pending (pb:scale_stat)"],

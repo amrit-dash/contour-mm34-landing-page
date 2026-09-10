@@ -1518,9 +1518,9 @@ section[id],div[id]{scroll-margin-top:calc(var(--hdr,120px) - 1px)}
       <div>
         <div style="position:relative;height:clamp(330px,30vw,420px)" title="The origin album · drop real photos onto each card">
           <sc-for list="{{ albumCards }}" as="c" hint-placeholder-count="3">
-            <div style="position:absolute;inset:0;display:flex;flex-direction:column;background:var(--surface-raised);border:1px solid var(--border-subtle);border-radius:var(--radius-xl);box-shadow:var(--shadow-md);padding:12px 12px 0;transition:transform .5s cubic-bezier(.22,1,.36,1);{{ c.style }}">
+            <div style="position:absolute;inset:0;display:flex;flex-direction:column;background:var(--surface-raised);border:1px solid var(--border-subtle);border-radius:var(--radius-xl);box-shadow:var(--shadow-md);padding:12px 12px 0;transition:transform .5s cubic-bezier(.22,1,.36,1);z-index:{{ c.z }};transform:{{ c.tf }};pointer-events:{{ c.pe }}">
               <div style="flex:1;border-radius:14px;overflow:hidden;background:var(--cream-m)"><image-slot id="{{ c.slot }}" shape="rect" placeholder="{{ c.ph }}"></image-slot></div>
-              <div style="height:52px;display:flex;align-items:center;justify-content:space-between;gap:12px;transition:opacity .3s ease;{{ c.capStyle }}">
+              <div style="height:52px;display:flex;align-items:center;justify-content:space-between;gap:12px;transition:opacity .3s ease;opacity:{{ c.capOp }}">
                 <span style="font:600 13.5px/1.3 var(--font-body);color:var(--navy)">{{ c.cap }}</span>
                 <span style="font:500 12px/1 var(--font-body);color:var(--text-muted);white-space:nowrap">{{ c.n }}</span>
               </div>
@@ -1869,8 +1869,8 @@ section[id],div[id]{scroll-margin-top:calc(var(--hdr,120px) - 1px)}
 <sc-for list="{{ p1steps }}" as="s" hint-placeholder-count="6">
           <button sc-camel-on-click="{{ s.pick }}" style="appearance:none;border:none;background:transparent;cursor:pointer;text-align:left;display:grid;grid-template-columns:96px 1fr;gap:18px;padding:0 0 26px;margin:0;position:relative;width:100%;font-family:var(--font-body)">
             <span aria-hidden="true" style="position:absolute;left:47.25px;top:96px;bottom:0;width:1.5px;border-left:1.5px dashed var(--border-default);display:{{ s.line }}"></span>
-            <span style="position:relative;z-index:1;display:block;width:96px;height:96px"><span style="display:block;width:96px;height:96px;border-radius:18px;overflow:hidden;box-sizing:border-box;{{ s.ring }}"><img loading="lazy" decoding="async" src="{{ s.img }}" alt="" style="width:100%;height:100%;object-fit:cover;display:block;transition:opacity .2s ease;{{ s.fade }}"></span><span style="position:absolute;left:-8px;bottom:-8px;width:28px;height:28px;border-radius:8px;display:inline-flex;align-items:center;justify-content:center;font:700 12px/1 var(--font-body);box-sizing:border-box;box-shadow:var(--shadow-sm);{{ s.badge }}">{{ s.n }}</span></span>
-            <span style="min-width:0;padding-top:10px"><span style="display:block;font:700 17px/1.3 var(--font-body);{{ s.title }}">{{ s.t }}</span><span style="display:block;font:400 14px/1.5 var(--font-body);color:var(--text-muted);margin-top:5px">{{ s.d }}</span></span>
+            <span style="position:relative;z-index:1;display:block;width:96px;height:96px"><span style="display:block;width:96px;height:96px;border-radius:18px;overflow:hidden;box-sizing:border-box;border:{{ s.ringBd }};box-shadow:{{ s.ringSh }}"><img loading="lazy" decoding="async" src="{{ s.img }}" alt="" style="width:100%;height:100%;object-fit:cover;display:block;transition:opacity .2s ease;opacity:{{ s.fadeOp }}"></span><span style="position:absolute;left:-8px;bottom:-8px;width:28px;height:28px;border-radius:8px;display:inline-flex;align-items:center;justify-content:center;font:700 12px/1 var(--font-body);box-sizing:border-box;box-shadow:var(--shadow-sm);background:{{ s.badgeBg }};color:{{ s.badgeCo }};border:{{ s.badgeBd }}">{{ s.n }}</span></span>
+            <span style="min-width:0;padding-top:10px"><span style="display:block;font:700 17px/1.3 var(--font-body);color:{{ s.titleCo }}">{{ s.t }}</span><span style="display:block;font:400 14px/1.5 var(--font-body);color:var(--text-muted);margin-top:5px">{{ s.d }}</span></span>
           </button>
         </sc-for>
 </div>
@@ -1887,8 +1887,8 @@ section[id],div[id]{scroll-margin-top:calc(var(--hdr,120px) - 1px)}
 <sc-for list="{{ p2steps }}" as="s" hint-placeholder-count="6">
           <button sc-camel-on-click="{{ s.pick }}" style="appearance:none;border:none;background:transparent;cursor:pointer;text-align:left;display:grid;grid-template-columns:96px 1fr;gap:18px;padding:0 0 26px;margin:0;position:relative;width:100%;font-family:var(--font-body)">
             <span aria-hidden="true" style="position:absolute;left:47.25px;top:96px;bottom:0;width:1.5px;border-left:1.5px dashed var(--border-default);display:{{ s.line }}"></span>
-            <span style="position:relative;z-index:1;display:block;width:96px;height:96px"><span style="display:block;width:96px;height:96px;border-radius:18px;overflow:hidden;box-sizing:border-box;{{ s.ring }}"><img loading="lazy" decoding="async" src="{{ s.img }}" alt="" style="width:100%;height:100%;object-fit:cover;display:block;transition:opacity .2s ease;{{ s.fade }}"></span><span style="position:absolute;left:-8px;bottom:-8px;width:28px;height:28px;border-radius:8px;display:inline-flex;align-items:center;justify-content:center;font:700 12px/1 var(--font-body);box-sizing:border-box;box-shadow:var(--shadow-sm);{{ s.badge }}">{{ s.n }}</span></span>
-            <span style="min-width:0;padding-top:10px"><span style="display:block;font:700 17px/1.3 var(--font-body);{{ s.title }}">{{ s.t }}</span><span style="display:block;font:400 14px/1.5 var(--font-body);color:var(--text-muted);margin-top:5px">{{ s.d }}</span></span>
+            <span style="position:relative;z-index:1;display:block;width:96px;height:96px"><span style="display:block;width:96px;height:96px;border-radius:18px;overflow:hidden;box-sizing:border-box;border:{{ s.ringBd }};box-shadow:{{ s.ringSh }}"><img loading="lazy" decoding="async" src="{{ s.img }}" alt="" style="width:100%;height:100%;object-fit:cover;display:block;transition:opacity .2s ease;opacity:{{ s.fadeOp }}"></span><span style="position:absolute;left:-8px;bottom:-8px;width:28px;height:28px;border-radius:8px;display:inline-flex;align-items:center;justify-content:center;font:700 12px/1 var(--font-body);box-sizing:border-box;box-shadow:var(--shadow-sm);background:{{ s.badgeBg }};color:{{ s.badgeCo }};border:{{ s.badgeBd }}">{{ s.n }}</span></span>
+            <span style="min-width:0;padding-top:10px"><span style="display:block;font:700 17px/1.3 var(--font-body);color:{{ s.titleCo }}">{{ s.t }}</span><span style="display:block;font:400 14px/1.5 var(--font-body);color:var(--text-muted);margin-top:5px">{{ s.d }}</span></span>
           </button>
         </sc-for>
 </div>
@@ -1905,8 +1905,8 @@ section[id],div[id]{scroll-margin-top:calc(var(--hdr,120px) - 1px)}
 <sc-for list="{{ p3steps }}" as="s" hint-placeholder-count="6">
           <button sc-camel-on-click="{{ s.pick }}" style="appearance:none;border:none;background:transparent;cursor:pointer;text-align:left;display:grid;grid-template-columns:96px 1fr;gap:18px;padding:0 0 26px;margin:0;position:relative;width:100%;font-family:var(--font-body)">
             <span aria-hidden="true" style="position:absolute;left:47.25px;top:96px;bottom:0;width:1.5px;border-left:1.5px dashed var(--border-default);display:{{ s.line }}"></span>
-            <span style="position:relative;z-index:1;display:block;width:96px;height:96px"><span style="display:block;width:96px;height:96px;border-radius:18px;overflow:hidden;box-sizing:border-box;{{ s.ring }}"><img loading="lazy" decoding="async" src="{{ s.img }}" alt="" style="width:100%;height:100%;object-fit:cover;display:block;transition:opacity .2s ease;{{ s.fade }}"></span><span style="position:absolute;left:-8px;bottom:-8px;width:28px;height:28px;border-radius:8px;display:inline-flex;align-items:center;justify-content:center;font:700 12px/1 var(--font-body);box-sizing:border-box;box-shadow:var(--shadow-sm);{{ s.badge }}">{{ s.n }}</span></span>
-            <span style="min-width:0;padding-top:10px"><span style="display:block;font:700 17px/1.3 var(--font-body);{{ s.title }}">{{ s.t }}</span><span style="display:block;font:400 14px/1.5 var(--font-body);color:var(--text-muted);margin-top:5px">{{ s.d }}</span></span>
+            <span style="position:relative;z-index:1;display:block;width:96px;height:96px"><span style="display:block;width:96px;height:96px;border-radius:18px;overflow:hidden;box-sizing:border-box;border:{{ s.ringBd }};box-shadow:{{ s.ringSh }}"><img loading="lazy" decoding="async" src="{{ s.img }}" alt="" style="width:100%;height:100%;object-fit:cover;display:block;transition:opacity .2s ease;opacity:{{ s.fadeOp }}"></span><span style="position:absolute;left:-8px;bottom:-8px;width:28px;height:28px;border-radius:8px;display:inline-flex;align-items:center;justify-content:center;font:700 12px/1 var(--font-body);box-sizing:border-box;box-shadow:var(--shadow-sm);background:{{ s.badgeBg }};color:{{ s.badgeCo }};border:{{ s.badgeBd }}">{{ s.n }}</span></span>
+            <span style="min-width:0;padding-top:10px"><span style="display:block;font:700 17px/1.3 var(--font-body);color:{{ s.titleCo }}">{{ s.t }}</span><span style="display:block;font:400 14px/1.5 var(--font-body);color:var(--text-muted);margin-top:5px">{{ s.d }}</span></span>
           </button>
         </sc-for>
 </div>
@@ -2145,8 +2145,8 @@ section[id],div[id]{scroll-margin-top:calc(var(--hdr,120px) - 1px)}
         </sc-if>
         <sc-if value="{{ p2t4 }}" hint-placeholder-val="{{ false }}">
           <div class="pvis" style="padding:24px 24px 0"><div style="margin:0 0 16px"><div style="display:flex;gap:8px;flex-wrap:wrap;margin:0 0 24px">
-          <button sc-camel-on-click="{{ srPickCas }}" style="appearance:none;cursor:pointer;border-radius:999px;padding:10px 16px;font:600 13px/1 var(--font-body);transition:all .15s ease;{{ srBtnCas }}">The CAS Hub</button>
-          <button sc-camel-on-click="{{ srPickBound }}" style="appearance:none;cursor:pointer;border-radius:999px;padding:10px 16px;font:600 13px/1 var(--font-body);transition:all .15s ease;{{ srBtnBound }}">Bound Reference</button>
+          <button sc-camel-on-click="{{ srPickCas }}" style="appearance:none;cursor:pointer;border-radius:999px;padding:10px 16px;font:600 13px/1 var(--font-body);transition:all .15s ease;border:1.5px solid {{ srCasBd }};background:{{ srCasBg }};color:{{ srCasCo }}">The CAS Hub</button>
+          <button sc-camel-on-click="{{ srPickBound }}" style="appearance:none;cursor:pointer;border-radius:999px;padding:10px 16px;font:600 13px/1 var(--font-body);transition:all .15s ease;border:1.5px solid {{ srBoundBd }};background:{{ srBoundBg }};color:{{ srBoundCo }}">Bound Reference</button>
         </div></div><sc-if value="{{ srBound }}" hint-placeholder-val="{{ false }}">
         <div style="border-radius:var(--radius-2xl);box-shadow:var(--shadow-md);min-height:400px;background:var(--surface-raised);border:1px solid var(--border-subtle);padding:24px 28px 26px;display:flex;flex-direction:column" title="Illustrative Bound Reference · built week by week across the year">
           <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;border-bottom:1px solid var(--border-subtle);padding-bottom:14px">
@@ -3682,12 +3682,12 @@ class Component extends DCLogic {
         { slot: "story-og-class", cap: "One of the earliest classes", ph: "An early class" },
       ].map((c, i) => {
         const pos = (i - S.albumIdx + 3) % 3;
-        const styles = [
-          "z-index:3;transform:rotate(-1.2deg)",
-          "z-index:2;transform:translate(18px,14px) rotate(2.1deg) scale(.97)",
-          "z-index:1;transform:translate(-16px,24px) rotate(-3.2deg) scale(.94)",
+        const tfs = [
+          "rotate(-1.2deg)",
+          "translate(18px,14px) rotate(2.1deg) scale(.97)",
+          "translate(-16px,24px) rotate(-3.2deg) scale(.94)",
         ];
-        return { ...c, n: (i + 1) + " / 3", style: styles[pos] + (pos === 0 ? "" : ";pointer-events:none"), capStyle: pos === 0 ? "" : "opacity:0" };
+        return { ...c, n: (i + 1) + " / 3", z: 3 - pos, tf: tfs[pos], pe: pos === 0 ? "auto" : "none", capOp: pos === 0 ? "1" : "0" };
       }),
       letterSalut: S.lens === "guardian" ? "Dear parents and guardians," : "Dear students,",
       wbLabel: (S.wbPage + 1) + " / 5",
@@ -3741,10 +3741,10 @@ class Component extends DCLogic {
           const names = { p1: ["Weekly Class", "Weekly Workbook", "Weekly Workshop", "Curriculum", "SAC Preparation", "Exam Preparation"], p2: ["Weekly Homework", "Class Recordings", "Digital Resources", "Contour Checks", "CAS Hub & Bound Reference", "Practice SACs", "Practice Exams"], p3: ["Invigilated Mocks", "Learning Portal", "24/7 Text Support", "1-on-1 Consultations", "Your Tutoring Team", "Progress Tracking"] };
           pv[key + "cur"] = Object.assign({ n: steps[cur][0], name: names[key][cur] }, parts[key][cur]);
           pv[key + "steps"] = steps.map((st, i) => ({ n: st[0], t: st[1], d: st[2], img: "assets/" + st[3], pick: () => this._pillarGo(key, i),
-            badge: i === cur ? "background:" + col[0] + ";color:" + col[1] : "background:var(--surface-raised);border:1.5px solid var(--border-default);color:var(--navy)",
-            ring: i === cur ? "border:2.5px solid " + col[0] + ";box-shadow:var(--shadow-md)" : "border:1px solid var(--border-subtle)",
-            fade: i === cur ? "opacity:1" : "opacity:.72",
-            title: i === cur ? "color:var(--navy)" : "color:var(--charcoal)", line: i === n - 1 ? "none" : "block" }));
+            badgeBg: i === cur ? col[0] : "var(--surface-raised)", badgeCo: i === cur ? col[1] : "var(--navy)", badgeBd: i === cur ? "none" : "1.5px solid var(--border-default)",
+            ringBd: i === cur ? "2.5px solid " + col[0] : "1px solid var(--border-subtle)", ringSh: i === cur ? "var(--shadow-md)" : "none",
+            fadeOp: i === cur ? "1" : ".72",
+            titleCo: i === cur ? "var(--navy)" : "var(--charcoal)", line: i === n - 1 ? "none" : "block" }));
           for (let i = 0; i < n; i++) pv[key + "t" + i] = cur === i;
           pv[key + "count"] = (cur + 1) + " of " + n;
           pv[key + "prev"] = () => { if (cur > 0) this._pillarGo(key, cur - 1); else { const pk = key === "p1" ? "p3" : key === "p2" ? "p1" : "p2"; this._pillarGo(pk, ({ p1: 5, p2: 6, p3: 5 })[pk]); } };
@@ -3758,8 +3758,8 @@ class Component extends DCLogic {
       funnelDots: Array.from({ length: 100 }, (_, i) => ({ bg: i >= 95 ? "var(--highlighter)" : "rgba(255,249,241,.18)" })),
       srCas: (S.srTab || "cas") === "cas", srBound: S.srTab === "bound",
       srPickCas: () => this.setState({ srTab: "cas" }), srPickBound: () => this.setState({ srTab: "bound" }),
-      srBtnCas: (S.srTab || "cas") === "cas" ? "border:1.5px solid var(--navy);background:var(--navy);color:#FFF9F1" : "border:1.5px solid var(--border-default);background:transparent;color:var(--navy)",
-      srBtnBound: S.srTab === "bound" ? "border:1.5px solid var(--navy);background:var(--navy);color:#FFF9F1" : "border:1.5px solid var(--border-default);background:transparent;color:var(--navy)",
+      srCasBd: (S.srTab || "cas") === "cas" ? "var(--navy)" : "var(--border-default)", srCasBg: (S.srTab || "cas") === "cas" ? "var(--navy)" : "transparent", srCasCo: (S.srTab || "cas") === "cas" ? "#FFF9F1" : "var(--navy)",
+      srBoundBd: S.srTab === "bound" ? "var(--navy)" : "var(--border-default)", srBoundBg: S.srTab === "bound" ? "var(--navy)" : "transparent", srBoundCo: S.srTab === "bound" ? "#FFF9F1" : "var(--navy)",
       joinStat: (() => {
         const js = [
           ["15,000+", " students tutored since 2020", "Proof-bank pending (pb:scale_stat)"],
