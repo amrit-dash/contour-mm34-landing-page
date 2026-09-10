@@ -1147,7 +1147,7 @@ svg.leaflet-image-layer.leaflet-interactive path {
 h2{text-wrap:balance}
 .g2>*,.g3>*,.g4>*{min-width:0}
 section[id],div[id]{scroll-margin-top:calc(var(--hdr,120px) - 1px)}
-#secrail{position:fixed;left:14px;top:50%;transform:translateY(-50%);z-index:55;display:flex;flex-direction:column;gap:3px;background:rgba(255,249,241,.9);backdrop-filter:blur(12px);border:1px solid var(--border-subtle);border-radius:18px;padding:8px;box-shadow:var(--shadow-sm);opacity:0;pointer-events:none;transition:opacity .25s ease}
+#secrail{position:fixed;left:14px;top:50%;transform:translateY(-50%);z-index:55;display:flex;flex-direction:column;gap:3px;background:rgba(255,255,255,.92);backdrop-filter:blur(12px);border:1px solid var(--border-subtle);border-radius:18px;padding:8px;box-shadow:var(--shadow-sm);opacity:0;pointer-events:none;transition:opacity .25s ease}
 #secrail.on{opacity:1;pointer-events:auto}
 #secrail a{position:relative;display:flex;align-items:center;justify-content:center;width:36px;height:36px;color:var(--text-muted);border-radius:12px;text-decoration:none;transition:background .15s ease,color .15s ease}
 #secrail a svg{flex:none}
@@ -1303,7 +1303,7 @@ section[id],div[id]{scroll-margin-top:calc(var(--hdr,120px) - 1px)}
     #secrail{padding:14px 8px}
     #secrail::before{content:"";position:absolute;left:50%;top:14px;bottom:14px;width:2px;background:var(--border-subtle);transform:translateX(-50%);border-radius:2px;z-index:0}
     #secrail .prog{position:absolute;left:50%;top:14px;width:2px;height:calc(var(--sp,0)*(100% - 28px));background:var(--navy);transform:translateX(-50%);border-radius:2px;transition:height .25s linear;z-index:0}
-    #secrail a{position:relative;z-index:1;background:rgba(255,249,241,.96)}
+    #secrail a{position:relative;z-index:1;background:var(--surface-raised)}
     #secrail a.on{box-shadow:0 0 0 3px rgba(12,49,102,.12)}
     @media (max-width:1250px){#secrail{padding:7px 10px}#secrail::before{left:0;right:0;top:0;bottom:auto;width:auto;height:2px;transform:none}#secrail .prog{left:0;top:0;height:2px;width:calc(var(--sp,0)*100%);transform:none;transition:width .25s linear}}
     /* CTA rows */
@@ -1386,7 +1386,7 @@ section[id],div[id]{scroll-margin-top:calc(var(--hdr,120px) - 1px)}
     /* spine: one line, first pill centre to last; each pill masks its own span */
     #secrail::before{top:calc(var(--rail-pad) + var(--rail-dot)/2);bottom:calc(var(--rail-pad) + var(--rail-dot)/2);background:var(--border-default)}
     #secrail .prog{top:calc(var(--rail-pad) + var(--rail-dot)/2);height:calc(var(--rp,0)*(100% - var(--rail-pad)*2 - var(--rail-dot)))}
-    #secrail a{--p:0;overflow:visible;background:var(--cream)}
+    #secrail a{--p:0;overflow:visible;background:var(--surface-raised)}
     /* FILL view (default): active pill fills OG blue top to bottom */
     #secrail a.on{background:linear-gradient(to bottom,var(--og-blue) calc(var(--p)*100%),var(--navy) 0);color:var(--cream);box-shadow:none}
     #secrail a.done{color:var(--og-blue)}
@@ -1396,7 +1396,7 @@ section[id],div[id]{scroll-margin-top:calc(var(--hdr,120px) - 1px)}
     #secrail[data-rail="ring"] a.on{background:var(--navy);color:var(--cream)}
     #secrail[data-rail="ring"] a.on::before{opacity:1}
     /* pill plate: hides the spine behind the pill and its ring band, so only the gaps show */
-    #secrail[data-rail="ring"] a,#secrail[data-rail="ring"] a.on{box-shadow:0 0 0 var(--rail-ring) var(--cream)}
+    #secrail[data-rail="ring"] a,#secrail[data-rail="ring"] a.on{box-shadow:0 0 0 var(--rail-ring) var(--surface-raised)}
     @media (max-width:1250px){#secrail{gap:var(--rail-gap);padding:10px 14px}#secrail::before,#secrail .prog{display:none}#secrail a.on{background:linear-gradient(to right,var(--og-blue) calc(var(--p)*100%),var(--navy) 0)}#secrail[data-rail="ring"] a.on{background:var(--navy);color:var(--cream)}#secrail a::after{content:"";position:absolute;left:calc(100% + var(--rail-ring));top:50%;width:calc(var(--rail-gap) - var(--rail-ring)*2);height:2px;transform:translateY(-50%);border-radius:2px;background:linear-gradient(to right,var(--navy) calc(var(--p)*100%),var(--border-default) 0)}#secrail a:last-child::after{display:none}}
 
     /* ── Responsive layer 2026-09 · one gutter token, mobile rhythm, tablet reflow ── */
