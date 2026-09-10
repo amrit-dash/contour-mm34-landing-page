@@ -1151,7 +1151,7 @@ section[id],div[id]{scroll-margin-top:calc(var(--hdr,120px) - 1px)}
 #secrail.on{opacity:1;pointer-events:auto}
 #secrail a{position:relative;display:flex;align-items:center;justify-content:center;width:36px;height:36px;color:var(--text-muted);border-radius:12px;text-decoration:none;transition:background .15s ease,color .15s ease}
 #secrail a svg{flex:none}
-#secrail .lbl{position:absolute;left:calc(100% + 12px);top:50%;transform:translateY(-50%) translateX(-4px);background:var(--navy);color:var(--cream);font:600 11.5px/1 var(--font-body);padding:8px 12px;border-radius:999px;white-space:nowrap;opacity:0;pointer-events:none;box-shadow:var(--shadow-md);transition:opacity .18s ease,transform .18s ease}
+#secrail .lbl{position:absolute;left:calc(100% + 18px);top:50%;transform:translateY(-50%) translateX(-4px);background:var(--navy);color:var(--cream);font:600 11.5px/1 var(--font-body);padding:8px 12px;border-radius:999px;white-space:nowrap;opacity:0;pointer-events:none;box-shadow:var(--shadow-md);transition:opacity .18s ease,transform .18s ease}
 #secrail a:hover .lbl{opacity:1;transform:translateY(-50%) translateX(0)}
 #secrail a:hover{background:var(--cream-m);color:var(--navy)}
 #secrail a.on{background:var(--navy);color:var(--cream)}
@@ -1334,7 +1334,7 @@ section[id],div[id]{scroll-margin-top:calc(var(--hdr,120px) - 1px)}
     .eyebrow::before{content:counter(chap,decimal-leading-zero);width:auto;height:auto;border-radius:0;background:none;font:700 11px/1 var(--font-body);color:var(--og-blue);letter-spacing:.04em}
     .sec.dark .eyebrow::before{color:var(--highlighter)}
     /* ── side rail: per-section progress rings + connectors ── */
-    #secrail{gap:22px;padding:16px 8px}
+    #secrail{--rail-ring:6px;--rail-gap:20px;gap:var(--rail-gap);padding:16px}
     #secrail::before,#secrail .prog{display:none!important}
     #secrail a{--p:0;overflow:visible}
     /* FILL view (default): active pill fills OG blue top to bottom */
@@ -1342,13 +1342,13 @@ section[id],div[id]{scroll-margin-top:calc(var(--hdr,120px) - 1px)}
     #secrail a.done{color:var(--og-blue)}
     #secrail a.done:hover{color:var(--navy)}
     /* RING view: set data-rail="ring" on #secrail to switch */
-    #secrail a::before{content:"";position:absolute;inset:-6px;border-radius:17px;padding:3.5px;background:conic-gradient(var(--og-blue) calc(var(--p)*360deg),rgba(12,49,102,.10) 0);-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);mask-composite:exclude;opacity:0;transition:opacity .25s ease}
+    #secrail a::before{content:"";position:absolute;inset:calc(var(--rail-ring)*-1);border-radius:17px;padding:3.5px;background:conic-gradient(var(--og-blue) calc(var(--p)*360deg),rgba(12,49,102,.10) 0);-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);mask-composite:exclude;opacity:0;transition:opacity .25s ease}
     #secrail[data-rail="ring"] a.on{background:var(--navy)}
     #secrail[data-rail="ring"] a.on::before{opacity:1}
-    /* connector: grey until reached, fills navy top to bottom, clear of both pills */
-    #secrail a::after{content:"";position:absolute;left:50%;top:calc(100% + 8px);width:2px;height:6px;transform:translateX(-50%);border-radius:2px;background:linear-gradient(to bottom,var(--navy) calc(var(--p)*100%),var(--border-default) 0)}
+    /* connector: grey until reached, fills navy top to bottom, flush with both rings */
+    #secrail a::after{content:"";position:absolute;left:50%;top:calc(100% + var(--rail-ring));width:2px;height:calc(var(--rail-gap) - var(--rail-ring)*2);transform:translateX(-50%);border-radius:2px;background:linear-gradient(to bottom,var(--navy) calc(var(--p)*100%),var(--border-default) 0)}
     #secrail a:last-child::after{display:none}
-    @media (max-width:1250px){#secrail{gap:22px;padding:8px 12px}#secrail a.on{background:linear-gradient(to right,var(--og-blue) calc(var(--p)*100%),var(--navy) 0)}#secrail[data-rail="ring"] a.on{background:var(--navy)}#secrail a::after{left:calc(100% + 8px);top:50%;width:6px;height:2px;transform:translateY(-50%);background:linear-gradient(to right,var(--navy) calc(var(--p)*100%),var(--border-default) 0)}}
+    @media (max-width:1250px){#secrail{gap:var(--rail-gap);padding:12px 16px}#secrail a.on{background:linear-gradient(to right,var(--og-blue) calc(var(--p)*100%),var(--navy) 0)}#secrail[data-rail="ring"] a.on{background:var(--navy)}#secrail a::after{left:calc(100% + var(--rail-ring));top:50%;width:calc(var(--rail-gap) - var(--rail-ring)*2);height:2px;transform:translateY(-50%);background:linear-gradient(to right,var(--navy) calc(var(--p)*100%),var(--border-default) 0)}}
   </style>
 </helmet>
 
