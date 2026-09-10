@@ -1162,31 +1162,43 @@ section[id],div[id]{scroll-margin-top:calc(var(--hdr,120px) - 1px)}
     /* ── FAQ: groups are cards that open one at a time, questions are rows inside the open one ── */
     .faqgrp{background:var(--surface-raised);border:1px solid var(--border-subtle);border-radius:var(--radius-xl);box-shadow:var(--shadow-xs);overflow:hidden;transition:border-color var(--dur-s) var(--ease),box-shadow var(--dur-s) var(--ease)}
     .faqgrp:has(>.faqgrp-h[aria-expanded="true"]){border-color:var(--navy);box-shadow:var(--shadow-sm)}
-    .faqgrp-h{appearance:none;width:100%;display:flex;align-items:center;gap:14px;padding:18px 22px;border:0;background:transparent;cursor:pointer;text-align:left;font-family:var(--font-body);transition:background var(--dur-s) var(--ease)}
+    .faqgrp-h{appearance:none;width:100%;display:flex;align-items:center;gap:16px;padding:18px 22px;border:0;background:transparent;cursor:pointer;text-align:left;font-family:var(--font-body);transition:background var(--dur-s) var(--ease)}
     .faqgrp-h:hover{background:color-mix(in srgb,var(--cream-m) 34%,var(--surface-raised))}
-    .faqgrp-n{flex:none;font:600 12px/1 var(--font-body);color:var(--text-muted);letter-spacing:.04em}
-    .faqgrp-t{min-width:0;font-family:var(--font-display);font-weight:700;font-size:19px;letter-spacing:-.015em;line-height:1.2;color:var(--navy)}
-    .faqgrp-c{margin-left:auto;flex:none;font:500 12px/1 var(--font-body);color:var(--text-muted);white-space:nowrap}
-    /* the +/- is drawn, like the system section's group toggle, so it centres on the circle */
-    .faq-chev{flex:none;position:relative;width:28px;height:28px;border-radius:50%;border:1.5px solid var(--border-default);color:var(--navy);transition:background var(--dur-s) var(--ease),border-color var(--dur-s) var(--ease),color var(--dur-s) var(--ease)}
-    .faq-chev::before,.faq-chev::after{content:"";position:absolute;top:50%;left:50%;width:11px;height:1.5px;border-radius:1px;background:currentColor;transform:translate(-50%,-50%)}
-    .faq-chev::after{transform:translate(-50%,-50%) rotate(90deg);transition:opacity var(--dur-s) var(--ease)}
-    .faq-chev-s{width:26px;height:26px}
-    .faq-chev-s::before,.faq-chev-s::after{width:10px}
-    [aria-expanded="true"]>.faq-chev{background:var(--navy);border-color:var(--navy);color:var(--cream)}
-    [aria-expanded="true"]>.faq-chev::after{opacity:0}
-    .faqgrp-b{border-top:1px solid var(--border-subtle);animation:sysIn var(--dur-m) var(--ease) both}
+    .faqgrp-n{flex:none;align-self:center;font:600 12px/1 var(--font-body);color:var(--text-muted);letter-spacing:.04em}
+    .faqgrp-t{flex:1 1 auto;min-width:0;padding-right:8px;font-family:var(--font-display);font-weight:700;font-size:19px;letter-spacing:-.015em;line-height:1.2;color:var(--navy)}
+    /* count and chevron travel together: side by side with room, stacked under it without */
+    .faqgrp-r{flex:none;margin-left:auto;display:flex;align-items:center;gap:14px}
+    .faqgrp-c{font:500 12px/1 var(--font-body);color:var(--text-muted);white-space:nowrap}
+    /* a bare chevron marks the group, so the +/- can stay the question's own mark */
+    .faqgrp-x{display:inline-flex;align-items:center;justify-content:center;color:var(--navy);transition:transform var(--dur-m) var(--ease),color var(--dur-s) var(--ease)}
+    /* the open group is navy: the section always has one obvious anchor */
+    .faqgrp-h[aria-expanded="true"]{background:var(--navy)}
+    .faqgrp-h[aria-expanded="true"]:hover{background:var(--navy)}
+    .faqgrp-h[aria-expanded="true"] .faqgrp-t{color:var(--cream)}
+    .faqgrp-h[aria-expanded="true"] .faqgrp-n{color:rgba(255,249,241,.55)}
+    .faqgrp-h[aria-expanded="true"] .faqgrp-c{color:var(--text-on-navy-muted)}
+    .faqgrp-h[aria-expanded="true"] .faqgrp-x{color:var(--cream);transform:rotate(180deg)}
+    /* questions sit a shade off the collapsed cards, so an open group reads as a different surface */
+    .faqgrp-b{background:color-mix(in srgb,var(--cream-m) 16%,var(--surface-raised));animation:sysIn var(--dur-m) var(--ease) both}
     .faqq+.faqq{border-top:1px solid var(--border-subtle)}
     .faqq-h{appearance:none;width:100%;display:flex;align-items:center;gap:14px;padding:15px 22px;border:0;background:transparent;cursor:pointer;text-align:left;font-family:var(--font-body);transition:background var(--dur-s) var(--ease)}
-    .faqq-h:hover{background:color-mix(in srgb,var(--cream-m) 26%,var(--surface-raised))}
+    .faqq-h:hover{background:var(--surface-raised)}
+    /* the open question is already marked by its answer; a hover tint on top just flickers */
+    .faqq-h[aria-expanded="true"],.faqq-h[aria-expanded="true"]:hover{background:transparent}
     .faqq-q{min-width:0;font:600 14.5px/1.45 var(--font-body);color:var(--navy)}
-    .faqq-h>.faq-chev{margin-left:auto}
+    /* the +/- is drawn, like the system section's group toggle, so it centres on the circle */
+    .faq-chev{flex:none;margin-left:auto;position:relative;width:26px;height:26px;border-radius:50%;border:1.5px solid var(--border-default);color:var(--navy);transition:background var(--dur-s) var(--ease),border-color var(--dur-s) var(--ease),color var(--dur-s) var(--ease)}
+    .faq-chev::before,.faq-chev::after{content:"";position:absolute;top:50%;left:50%;width:10px;height:1.5px;border-radius:1px;background:currentColor;transform:translate(-50%,-50%)}
+    .faq-chev::after{transform:translate(-50%,-50%) rotate(90deg);transition:opacity var(--dur-s) var(--ease)}
+    [aria-expanded="true"]>.faq-chev{background:var(--navy);border-color:var(--navy);color:var(--cream)}
+    [aria-expanded="true"]>.faq-chev::after{opacity:0}
     .faqq-a{margin:0;padding:0 22px 18px;max-width:64ch;font-size:14px;line-height:1.65;color:var(--charcoal);animation:sysIn var(--dur-m) var(--ease) both}
     @media (max-width:880px){
-      .faqgrp-h{gap:10px;padding:16px 16px}
-      .faqgrp-t{font-size:17px}
-      /* the count would push the title into two lines on a phone; the chevron carries the state */
-      .faqgrp-c{display:none}
+      .faqgrp-h{gap:12px;padding:15px 16px}
+      .faqgrp-t{font-size:17px;padding-right:4px}
+      /* no room for a row: the chevron holds the right edge and the count tucks beneath it */
+      .faqgrp-r{flex-direction:column-reverse;align-items:center;gap:3px}
+      .faqgrp-c{font-size:11px}
       .faqq-h{gap:10px;padding:14px 16px}
       .faqq-q{font-size:14px}
       .faqq-a{padding:0 16px 16px;font-size:13.5px}
@@ -3121,8 +3133,10 @@ section[id],div[id]{scroll-margin-top:calc(var(--hdr,120px) - 1px)}
             <button class="faqgrp-h" sc-camel-on-click="{{ g.toggle }}" aria-expanded="{{ g.ariaExp }}">
               <span class="faqgrp-n">{{ g.n }}</span>
               <span class="faqgrp-t">{{ g.h }}</span>
-              <span class="faqgrp-c">{{ g.count }}</span>
-              <span class="faq-chev" aria-hidden="true"></span>
+              <span class="faqgrp-r">
+                <span class="faqgrp-x" aria-hidden="true"><svg width="20" height="20" sc-camel-view-box="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 8l5 5 5-5"></path></svg></span>
+                <span class="faqgrp-c">{{ g.count }}</span>
+              </span>
             </button>
             <sc-if value="{{ g.open }}" hint-placeholder-val="{{ true }}">
               <div class="faqgrp-b">
