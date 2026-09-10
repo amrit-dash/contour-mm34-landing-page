@@ -1433,6 +1433,11 @@ section[id],div[id]{scroll-margin-top:calc(var(--hdr,120px) - 1px)}
       .herovid{margin:0!important;max-width:640px;width:100%}
       .herovid>div:first-child{aspect-ratio:4/3!important}
       .h1r{margin-bottom:18px!important}
+      /* free-week card: stacked and left-aligned — big illustration, then the headline at full measure.
+         Beside-the-icon was tried and rejected: it left the headline a ~170px column, which broke
+         "Try a full week, free. Then decide." into five two-word lines. */
+      .wksticky{padding:24px 22px!important}
+      .wksticky>.wkicon{width:auto;height:116px!important;margin:0 0 18px!important}
       /* partnership card: icon and eyebrow share the top line, headline and copy run full width,
          and the arrow parks in the bottom-right corner of the navy panel */
       .partcta{grid-template-columns:auto minmax(0,1fr)!important;gap:0 16px!important;align-items:start!important;padding:22px 22px 16px!important}
@@ -2947,7 +2952,7 @@ section[id],div[id]{scroll-margin-top:calc(var(--hdr,120px) - 1px)}
   <div class="ctrp" style="max-width:var(--container-max);margin:0 auto;padding:0 clamp(32px,11vw,210px)">
     <div class="g2" style="display:grid;grid-template-columns:3fr 2fr;gap:clamp(24px,3.5vw,48px);align-items:start">
         <div class="wksticky" style="position:sticky;top:130px;align-self:start;background:var(--navy);border-radius:var(--radius-2xl);padding:clamp(26px,3vw,44px);box-shadow:var(--shadow-lg)">
-          <img loading="lazy" decoding="async" src="assets/ds/special-events.svg" alt="" style="height:60px;display:block;margin-bottom:22px">
+          <img class="wkicon" loading="lazy" decoding="async" src="assets/ds/weekly-program.svg" alt="" style="height:60px;display:block;margin-bottom:22px">
           <h2 style="font-family:var(--font-display);font-weight:700;font-size:clamp(32px,3.4vw,40px);letter-spacing:-0.02em;line-height:1.14;color:var(--cream);margin:0 0 14px;max-width:16ch">{{ explTitle }}</h2>
           <p style="font-size:16.5px;line-height:1.62;color:var(--text-on-navy-muted);margin:0 0 24px;max-width:44ch">{{ finalLine }}</p>
           <div style="display:flex;gap:8px;flex-wrap:wrap;margin:0 0 30px">
