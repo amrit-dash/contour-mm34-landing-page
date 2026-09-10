@@ -1583,6 +1583,11 @@ section[id],div[id]{scroll-margin-top:calc(var(--hdr,120px) - 1px)}
     #mwfbar>span{display:block;height:100%;width:calc(var(--p,0)*100%);background:var(--og-blue);border-radius:0 3px 3px 0;box-shadow:0 1px 3px rgba(0,122,255,.28);transition:width .16s linear}
     @media (max-width:760px){
       html.mwf-live #mwfbar{display:block}
+      /* campuses: one swipeable row rather than a tall two-column grid */
+      .campusg{display:flex!important;grid-template-columns:none!important;gap:12px!important;overflow-x:auto;overflow-y:hidden;scroll-snap-type:x mandatory;scroll-padding-inline:var(--gx);margin:0 calc(-1*var(--gx)) 6px!important;padding:4px var(--gx) 16px;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+      .campusg::-webkit-scrollbar{display:none}
+      .campusg>button{flex:0 0 78%;scroll-snap-align:start}
+      .campusg>button>div:first-child{height:168px!important}
       /* origin album: the fanned back cards overhang the deck, so inset it or they crowd the screen edge */
       #story [title^="The origin album"]{margin-inline:14px;height:clamp(300px,76vw,380px)!important}
       #mlens{display:inline-flex}
