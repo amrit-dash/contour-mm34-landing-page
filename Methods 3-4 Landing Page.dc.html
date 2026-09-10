@@ -1494,8 +1494,12 @@ section[id],div[id]{scroll-margin-top:calc(var(--hdr,120px) - 1px)}
       .ctarow button{width:100%;justify-content:center}
       .ctarow>span,.ctarow>p{text-align:center;max-width:none!important}
       /* tutor card stats: keep three on one line */
-      .headstats{display:grid!important;grid-template-columns:repeat(3,auto);justify-content:space-between;gap:12px!important}
+      /* tutor card: 42px side padding leaves the three stats fighting for room on a phone */
+      .headbio{padding:26px 20px!important}
+      /* stats keep the lime dash under each number; the group and the watch pill centre in the card */
+      .headstats{display:grid!important;grid-template-columns:repeat(3,auto);justify-content:center;gap:clamp(14px,5vw,30px)!important}
       .headstats>div>div:first-child{font-size:clamp(22px,6.6vw,30px)!important;white-space:nowrap}
+      .headact{justify-content:center!important}
       .viscap{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
       /* reviews: cards sized so the next one peeks in, which is what says "swipe" */
       .revhead{margin-bottom:22px!important;gap:14px!important}
@@ -2070,7 +2074,7 @@ section[id],div[id]{scroll-margin-top:calc(var(--hdr,120px) - 1px)}
     <div style="background:var(--navy);border-radius:var(--radius-2xl);overflow:hidden;margin-bottom:26px;box-shadow:var(--shadow-lg)">
       <div class="g2" style="display:grid;grid-template-columns:.85fr 1.15fr;gap:0;align-items:stretch">
         <div style="min-height:360px;position:relative"><img loading="lazy" decoding="async" src="assets/opt/df97af1f.jpg" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block"></div>
-        <div style="padding:40px 42px;display:flex;flex-direction:column;justify-content:center">
+        <div class="headbio" style="padding:40px 42px;display:flex;flex-direction:column;justify-content:center">
           <h3 style="font-family:var(--font-display);font-weight:700;font-size:30px;letter-spacing:-0.01em;color:var(--cream);margin:0 0 6px">Meet <span title="Placeholder ref (people.head)" style="border-bottom:2px dotted rgba(215,252,61,.6);cursor:help">Aisha Patel</span></h3>
           <p style="font:500 12.5px/1.6 var(--font-body);color:var(--text-on-navy-muted);margin:0 0 18px">Head of VCE Maths Methods</p>
           <p style="font-size:15.5px;line-height:1.65;color:var(--cream);margin:0 0 18px;max-width:56ch">"Methods rewards systems, not heroics. We teach every topic before your school does, then drill it until exam pressure feels familiar. Come sit in a class. You'll feel the difference in twenty minutes."</p>
@@ -2082,7 +2086,7 @@ section[id],div[id]{scroll-margin-top:calc(var(--hdr,120px) - 1px)}
               <p style="font-size:14.5px;line-height:1.7;color:var(--text-on-navy-muted);margin:0">My promise is simple. Do the week, week after week, and you will walk into November knowing exactly what to expect, because you will have already done it dozens of times. No surprises. No heroics. A score that reflects the work. I hope to meet you in a trial class soon.</p>
             </div>
           </sc-if>
-          <div style="display:flex;align-items:center;gap:18px;flex-wrap:wrap;margin-bottom:22px">
+          <div class="headact" style="display:flex;align-items:center;gap:18px;flex-wrap:wrap;margin-bottom:22px">
             <button sc-camel-on-click="{{ toggleHead }}" style="appearance:none;border:none;background:transparent;cursor:pointer;font:600 13.5px/1 var(--font-body);color:var(--cream);padding:0;text-decoration:underline;text-underline-offset:3px">{{ headBtn }}</button>
             <span style="display:inline-flex;align-items:center;gap:8px;font:600 13px/1 var(--font-body);color:var(--cream);border:1px solid var(--border-on-navy);border-radius:999px;padding:8px 13px;cursor:pointer" title="Video slot · 60-second version pending"><span style="width:0;height:0;border-left:8px solid var(--cream);border-top:5px solid transparent;border-bottom:5px solid transparent"></span>Watch the 60-second version</span>
           </div>
