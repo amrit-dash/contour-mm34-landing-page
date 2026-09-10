@@ -1345,13 +1345,13 @@ section[id],div[id]{scroll-margin-top:176px}
   <span style="display:flex;align-items:center;gap:6px">
     <span style="font:500 10px/1 var(--font-body);color:#9A9A9A;letter-spacing:.08em">STATE</span>
     <sc-for list="{{ lcBtns }}" as="b" hint-placeholder-count="5">
-      <button sc-camel-on-click="{{ b.pick }}" style="appearance:none;border:1px solid var(--charcoal-m);cursor:pointer;font:600 11px/1 var(--font-body);padding:6px 10px;border-radius:999px;background:{{ b.bg }};color:{{ b.co }}" aria-pressed="{{ b.pressed }}">{{ b.label }}</button>
+      <button sc-camel-on-click="{{ b.pick }}" style="--tv-background: {{ b.bg }};--tv-color: {{ b.co }};appearance:none;border:1px solid var(--charcoal-m);cursor:pointer;font:600 11px/1 var(--font-body);padding:6px 10px;border-radius:999px;background:var(--tv-background);color:var(--tv-color)" aria-pressed="{{ b.pressed }}">{{ b.label }}</button>
     </sc-for>
   </span>
   <span style="display:flex;align-items:center;gap:6px">
     <span style="font:500 10px/1 var(--font-body);color:#9A9A9A;letter-spacing:.08em">LENS</span>
     <sc-for list="{{ lensBtns }}" as="b" hint-placeholder-count="2">
-      <button sc-camel-on-click="{{ b.pick }}" style="appearance:none;border:1px solid var(--charcoal-m);cursor:pointer;font:600 11px/1 var(--font-body);padding:6px 10px;border-radius:999px;background:{{ b.bg }};color:{{ b.co }}" aria-pressed="{{ b.pressed }}">{{ b.label }}</button>
+      <button sc-camel-on-click="{{ b.pick }}" style="--tv-background: {{ b.bg }};--tv-color: {{ b.co }};appearance:none;border:1px solid var(--charcoal-m);cursor:pointer;font:600 11px/1 var(--font-body);padding:6px 10px;border-radius:999px;background:var(--tv-background);color:var(--tv-color)" aria-pressed="{{ b.pressed }}">{{ b.label }}</button>
     </sc-for>
   </span>
   <span style="display:flex;align-items:center;gap:6px">
@@ -1364,8 +1364,8 @@ section[id],div[id]{scroll-margin-top:176px}
       <option value="top">Paid · top</option>
     </sc-raw-select>
   </span>
-  <button sc-camel-on-click="{{ toggleAnno }}" style="appearance:none;border:1px solid var(--charcoal-m);cursor:pointer;font:600 11px/1 var(--font-body);padding:6px 10px;border-radius:999px;background:{{ annoBg }};color:{{ annoCo }}" aria-pressed="{{ annoPressed }}">Annotations</button>
-  <button sc-camel-on-click="{{ toggleDots }}" style="appearance:none;border:1px solid var(--charcoal-m);cursor:pointer;font:600 11px/1 var(--font-body);padding:6px 10px;border-radius:999px;background:{{ dotsBg }};color:{{ dotsCo }}" aria-pressed="{{ dotsPressed }}">Proof dots</button>
+  <button sc-camel-on-click="{{ toggleAnno }}" style="--tv-background: {{ annoBg }};--tv-color: {{ annoCo }};appearance:none;border:1px solid var(--charcoal-m);cursor:pointer;font:600 11px/1 var(--font-body);padding:6px 10px;border-radius:999px;background:var(--tv-background);color:var(--tv-color)" aria-pressed="{{ annoPressed }}">Annotations</button>
+  <button sc-camel-on-click="{{ toggleDots }}" style="--tv-background: {{ dotsBg }};--tv-color: {{ dotsCo }};appearance:none;border:1px solid var(--charcoal-m);cursor:pointer;font:600 11px/1 var(--font-body);padding:6px 10px;border-radius:999px;background:var(--tv-background);color:var(--tv-color)" aria-pressed="{{ dotsPressed }}">Proof dots</button>
   <span class="hide-m" style="font:500 11px/1 var(--font-body);color:#9A9A9A;margin-left:auto">Family A → offer object: <span style="color:var(--highlighter);font-weight:600">{{ offer.objectLabel }}</span> · dotted values = proof-bank pending (hover)</span>
 </div>
 <div style="height:48px"></div>
@@ -1413,8 +1413,8 @@ section[id],div[id]{scroll-margin-top:176px}
         <span style="display:inline-flex;align-items:center;gap:10px;flex-wrap:wrap">
           <span style="font:500 12.5px/1.3 var(--font-body);color:var(--text-on-navy-muted);white-space:nowrap">This page is for:</span>
           <span style="display:inline-flex;border:1px solid rgba(255,249,241,.35);border-radius:999px;padding:3px;gap:2px;background:rgba(255,249,241,.06)">
-            <button class="lensbtn" sc-camel-on-click="{{ setLensStudent }}" style="white-space:nowrap;appearance:none;border:none;cursor:pointer;font:700 12.5px/1 var(--font-body);padding:9px 16px;border-radius:999px;background:{{ lensS.bg }};color:{{ lensS.co }};transition:background .15s ease,color .15s ease" aria-pressed="{{ lensSPressed }}">I'm a student</button>
-            <button class="lensbtn" sc-camel-on-click="{{ setLensGuardian }}" style="white-space:nowrap;appearance:none;border:none;cursor:pointer;font:700 12.5px/1 var(--font-body);padding:9px 16px;border-radius:999px;background:{{ lensG.bg }};color:{{ lensG.co }};transition:background .15s ease,color .15s ease" aria-pressed="{{ lensGPressed }}">I'm a parent or guardian</button>
+            <button class="lensbtn" sc-camel-on-click="{{ setLensStudent }}" style="--tv-background: {{ lensS.bg }};--tv-color: {{ lensS.co }};white-space:nowrap;appearance:none;border:none;cursor:pointer;font:700 12.5px/1 var(--font-body);padding:9px 16px;border-radius:999px;background:var(--tv-background);color:var(--tv-color);transition:background .15s ease,color .15s ease" aria-pressed="{{ lensSPressed }}">I'm a student</button>
+            <button class="lensbtn" sc-camel-on-click="{{ setLensGuardian }}" style="--tv-background: {{ lensG.bg }};--tv-color: {{ lensG.co }};white-space:nowrap;appearance:none;border:none;cursor:pointer;font:700 12.5px/1 var(--font-body);padding:9px 16px;border-radius:999px;background:var(--tv-background);color:var(--tv-color);transition:background .15s ease,color .15s ease" aria-pressed="{{ lensGPressed }}">I'm a parent or guardian</button>
           </span>
         </span>
       </sc-if>
@@ -1516,9 +1516,9 @@ section[id],div[id]{scroll-margin-top:176px}
       <div>
         <div style="position:relative;height:clamp(330px,30vw,420px)" title="The origin album · drop real photos onto each card">
           <sc-for list="{{ albumCards }}" as="c" hint-placeholder-count="3">
-            <div style="position:absolute;inset:0;display:flex;flex-direction:column;background:var(--surface-raised);border:1px solid var(--border-subtle);border-radius:var(--radius-xl);box-shadow:var(--shadow-md);padding:12px 12px 0;transition:transform .5s cubic-bezier(.22,1,.36,1);z-index:{{ c.z }};transform:{{ c.tf }};pointer-events:{{ c.pe }}">
+            <div style="--tv-z-index: {{ c.z }};--tv-transform: {{ c.tf }};--tv-pointer-events: {{ c.pe }};position:absolute;inset:0;display:flex;flex-direction:column;background:var(--surface-raised);border:1px solid var(--border-subtle);border-radius:var(--radius-xl);box-shadow:var(--shadow-md);padding:12px 12px 0;transition:transform .5s cubic-bezier(.22,1,.36,1);z-index:var(--tv-z-index);transform:var(--tv-transform);pointer-events:var(--tv-pointer-events)">
               <div style="flex:1;border-radius:14px;overflow:hidden;background:var(--cream-m)"><image-slot id="{{ c.slot }}" shape="rect" placeholder="{{ c.ph }}"></image-slot></div>
-              <div style="height:52px;display:flex;align-items:center;justify-content:space-between;gap:12px;transition:opacity .3s ease;opacity:{{ c.capOp }}">
+              <div style="--tv-opacity: {{ c.capOp }};height:52px;display:flex;align-items:center;justify-content:space-between;gap:12px;transition:opacity .3s ease;opacity:var(--tv-opacity)">
                 <span style="font:600 13.5px/1.3 var(--font-body);color:var(--navy)">{{ c.cap }}</span>
                 <span style="font:500 12px/1 var(--font-body);color:var(--text-muted);white-space:nowrap">{{ c.n }}</span>
               </div>
@@ -1564,7 +1564,7 @@ section[id],div[id]{scroll-margin-top:176px}
         <h3 style="display:flex;align-items:center;gap:10px;font:700 17px/1.3 var(--font-body);color:var(--navy);margin:0"><img loading="lazy" decoding="async" src="assets/ds/success-star.png" alt="" style="height:30px">Methods 3/4 leaderboard</h3>
         <span style="display:inline-flex;background:var(--cream-m);border-radius:999px;padding:3px;gap:2px">
           <sc-for list="{{ lbModes }}" as="m" hint-placeholder-count="2">
-            <button sc-camel-on-click="{{ m.pick }}" aria-pressed="{{ m.pressed }}" style="appearance:none;border:none;cursor:pointer;font:600 12.5px/1 var(--font-body);color:{{ m.co }};background:{{ m.bg }};border-radius:999px;padding:9px 14px;white-space:nowrap;transition:background .15s ease">{{ m.label }}</button>
+            <button sc-camel-on-click="{{ m.pick }}" aria-pressed="{{ m.pressed }}" style="--tv-color: {{ m.co }};--tv-background: {{ m.bg }};appearance:none;border:none;cursor:pointer;font:600 12.5px/1 var(--font-body);color:var(--tv-color);background:var(--tv-background);border-radius:999px;padding:9px 14px;white-space:nowrap;transition:background .15s ease">{{ m.label }}</button>
           </sc-for>
         </span>
         <span style="display:flex;align-items:center;gap:14px;flex-wrap:wrap;font:500 12.5px/1 var(--font-body);color:var(--text-muted)"><span><span style="display:inline-block;width:8px;height:8px;border-radius:2px;background:var(--highlighter);margin-right:6px"></span>Dux of their school</span><span title="Proof-bank pending (pb:vtac_verification)" style="border-bottom:2px dotted rgba(0,122,255,.45);cursor:help">Verified against VTAC data</span></span>
@@ -1675,7 +1675,7 @@ section[id],div[id]{scroll-margin-top:176px}
       <sc-for list="{{ vids }}" as="v" hint-placeholder-count="6">
         <div style="flex:none;width:250px;scroll-snap-align:start;background:var(--surface-raised);border:1px solid var(--border-subtle);border-radius:var(--radius-xl);overflow:hidden;box-shadow:var(--shadow-xs)">
           <div style="position:relative;height:140px;background:var(--cream-m)">
-            <sc-if value="{{ v.hasImg }}" hint-placeholder-val="{{ false }}"><div aria-hidden="true" style="position:absolute;inset:0;background-image:url({{ v.img }});background-size:cover;background-position:center"></div></sc-if>
+            <sc-if value="{{ v.hasImg }}" hint-placeholder-val="{{ false }}"><div aria-hidden="true" style="--tv-background-image: url({{ v.img }});position:absolute;inset:0;background-image:var(--tv-background-image);background-size:cover;background-position:center"></div></sc-if>
             <span style="position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:44px;height:44px;border-radius:50%;background:var(--cream);display:inline-flex;align-items:center;justify-content:center;box-shadow:var(--shadow-md);pointer-events:none"><span style="width:0;height:0;border-left:13px solid var(--navy);border-top:8px solid transparent;border-bottom:8px solid transparent;margin-left:3px"></span></span>
           </div>
           <div style="padding:13px 16px 15px">
@@ -1746,9 +1746,9 @@ section[id],div[id]{scroll-margin-top:176px}
     
     <div ref="{{ railRef }}" class="hscroll" style="gap:16px;scroll-snap-type:x mandatory;scroll-behavior:smooth;margin-bottom:20px">
       <sc-for list="{{ tutors }}" as="t" hint-placeholder-count="8">
-        <button sc-camel-on-click="{{ t.pick }}" aria-pressed="{{ t.pressed }}" style="appearance:none;text-align:left;padding:0;flex:none;width:262px;background:var(--surface-raised);border:1.5px solid {{ t.bd }};border-radius:var(--radius-lg);overflow:hidden;scroll-snap-align:start;cursor:pointer;box-shadow:var(--shadow-xs);transition:transform .2s ease,box-shadow .2s ease" style-hover="transform:translateY(-2px);box-shadow:var(--shadow-md)">
+        <button sc-camel-on-click="{{ t.pick }}" aria-pressed="{{ t.pressed }}" style="--tv-border: 1.5px solid {{ t.bd }};appearance:none;text-align:left;padding:0;flex:none;width:262px;background:var(--surface-raised);border:var(--tv-border);border-radius:var(--radius-lg);overflow:hidden;scroll-snap-align:start;cursor:pointer;box-shadow:var(--shadow-xs);transition:transform .2s ease,box-shadow .2s ease" style-hover="transform:translateY(-2px);box-shadow:var(--shadow-md)">
           <div style="height:230px;position:relative;background:var(--cream-m)">
-            <div aria-hidden="true" style="position:absolute;inset:0;background-image:url({{ t.img }});background-size:cover;background-position:center"></div>
+            <div aria-hidden="true" style="--tv-background-image: url({{ t.img }});position:absolute;inset:0;background-image:var(--tv-background-image);background-size:cover;background-position:center"></div>
           </div>
           <div style="padding:16px 18px 16px">
             <div style="font:700 15px/1.2 var(--font-body);color:var(--navy)">{{ t.name }}</div>
@@ -1765,7 +1765,7 @@ section[id],div[id]{scroll-margin-top:176px}
     </div>
     <sc-if value="{{ tutorBioShow }}" hint-placeholder-val="{{ false }}">
       <div style="background:var(--surface-raised);border:1px solid var(--border-subtle);border-radius:var(--radius-xl);padding:24px 28px;margin-bottom:20px;display:flex;gap:20px;align-items:flex-start;flex-wrap:wrap;box-shadow:var(--shadow-sm)">
-        <span style="flex:none;width:54px;height:54px;border-radius:50%;overflow:hidden;position:relative;display:inline-flex;background:var(--cream-m)"><div aria-hidden="true" style="position:absolute;inset:0;background-image:url({{ tutorBio.img }});background-size:cover;background-position:center"></div></span>
+        <span style="flex:none;width:54px;height:54px;border-radius:50%;overflow:hidden;position:relative;display:inline-flex;background:var(--cream-m)"><div aria-hidden="true" style="--tv-background-image: url({{ tutorBio.img }});position:absolute;inset:0;background-image:var(--tv-background-image);background-size:cover;background-position:center"></div></span>
         <div style="flex:1;min-width:260px">
           <div style="display:flex;align-items:baseline;gap:12px;flex-wrap:wrap"><h4 style="font:700 17px/1.3 var(--font-body);color:var(--navy);margin:0">{{ tutorBio.name }}</h4><span style="font:500 13px/1 var(--font-body);color:var(--text-muted)">{{ tutorBio.creds }}</span></div>
           <p style="font-size:14.5px;line-height:1.6;color:var(--charcoal);margin:8px 0 6px;max-width:78ch">{{ tutorBio.bio }}</p>
@@ -1788,7 +1788,7 @@ section[id],div[id]{scroll-margin-top:176px}
           <p style="font-size:15.5px;line-height:1.6;color:var(--text-on-navy-muted);margin:0 0 36px;max-width:44ch">Your tutor shouldn't be a lottery ticket. Ours all clear the same gates, every term.</p>
           <div aria-hidden="true" style="display:grid;grid-template-columns:repeat(20,minmax(0,1fr));gap:6px;max-width:440px;margin:0 0 16px">
             <sc-for list="{{ funnelDots }}" as="d" hint-placeholder-count="100">
-              <span style="aspect-ratio:1;border-radius:50%;background:{{ d.bg }}"></span>
+              <span style="--tv-background: {{ d.bg }};aspect-ratio:1;border-radius:50%;background:var(--tv-background)"></span>
             </sc-for>
           </div>
           <div style="display:flex;gap:20px;flex-wrap:wrap;margin:0 0 28px">
@@ -2137,8 +2137,8 @@ section[id],div[id]{scroll-margin-top:176px}
     <div style="display:flex;flex-direction:column;gap:12px;margin-bottom:16px">
       <sc-for list="{{ terms }}" as="t" hint-placeholder-count="4">
         <div style="background:var(--surface-raised);border:1px solid var(--border-subtle);border-radius:var(--radius-lg);overflow:hidden;box-shadow:var(--shadow-xs)">
-          <button sc-camel-on-click="{{ t.toggle }}" aria-expanded="{{ t.ariaExp }}" style="appearance:none;border:none;background:{{ t.headBg }};cursor:pointer;width:100%;display:grid;grid-template-columns:auto 1fr auto;align-items:center;column-gap:16px;padding:14px 20px 14px 14px;text-align:left;transition:background .15s ease" style-hover="background:rgba(12,49,102,.045)">
-            <span style="width:46px;height:46px;border-radius:13px;background:{{ t.tileBg }};color:{{ t.tileCo }};display:inline-flex;flex-direction:column;align-items:center;justify-content:center;gap:1px"><span style="font:600 8.5px/1 var(--font-body);letter-spacing:.08em">{{ t.kind }}</span><span style="font-family:var(--font-display);font-weight:700;font-size:19px;line-height:1">{{ t.num }}</span></span>
+          <button sc-camel-on-click="{{ t.toggle }}" aria-expanded="{{ t.ariaExp }}" style="--tv-background: {{ t.headBg }};appearance:none;border:none;background:var(--tv-background);cursor:pointer;width:100%;display:grid;grid-template-columns:auto 1fr auto;align-items:center;column-gap:16px;padding:14px 20px 14px 14px;text-align:left;transition:background .15s ease" style-hover="background:rgba(12,49,102,.045)">
+            <span style="--tv-background: {{ t.tileBg }};--tv-color: {{ t.tileCo }};width:46px;height:46px;border-radius:13px;background:var(--tv-background);color:var(--tv-color);display:inline-flex;flex-direction:column;align-items:center;justify-content:center;gap:1px"><span style="font:600 8.5px/1 var(--font-body);letter-spacing:.08em">{{ t.kind }}</span><span style="font-family:var(--font-display);font-weight:700;font-size:19px;line-height:1">{{ t.num }}</span></span>
             <span style="min-width:0;display:flex;flex-direction:column;gap:3px">
               <span style="font:700 16px/1.25 var(--font-body);color:var(--navy)">{{ t.title }}</span>
               <span style="font:500 12px/1.35 var(--font-body);color:var(--text-muted)">{{ t.meta }}</span>
@@ -2329,8 +2329,8 @@ section[id],div[id]{scroll-margin-top:176px}
         <h2 style="font-family:var(--font-display);font-weight:700;font-size:clamp(32px,3.4vw,40px);letter-spacing:-0.02em;line-height:1.14;color:var(--navy);margin:0 0 14px;max-width:18ch">Built for Methods. Not adapted to it.</h2>
         <p style="font-size:17px;line-height:1.6;color:var(--text-muted);margin:0 0 22px;max-width:46ch">The tools only a Methods team would bother building, included for every student.</p>
         <div style="display:flex;gap:8px;flex-wrap:wrap;margin:0 0 24px">
-          <button sc-camel-on-click="{{ srPickCas }}" style="appearance:none;cursor:pointer;border-radius:999px;padding:10px 16px;font:600 13px/1 var(--font-body);transition:all .15s ease;border:1.5px solid {{ srCasBd }};background:{{ srCasBg }};color:{{ srCasCo }}">The CAS Hub</button>
-          <button sc-camel-on-click="{{ srPickBound }}" style="appearance:none;cursor:pointer;border-radius:999px;padding:10px 16px;font:600 13px/1 var(--font-body);transition:all .15s ease;border:1.5px solid {{ srBoundBd }};background:{{ srBoundBg }};color:{{ srBoundCo }}">Bound Reference</button>
+          <button sc-camel-on-click="{{ srPickCas }}" style="--tv-border: 1.5px solid {{ srCasBd }};--tv-background: {{ srCasBg }};--tv-color: {{ srCasCo }};appearance:none;cursor:pointer;border-radius:999px;padding:10px 16px;font:600 13px/1 var(--font-body);transition:all .15s ease;border:var(--tv-border);background:var(--tv-background);color:var(--tv-color)">The CAS Hub</button>
+          <button sc-camel-on-click="{{ srPickBound }}" style="--tv-border: 1.5px solid {{ srBoundBd }};--tv-background: {{ srBoundBg }};--tv-color: {{ srBoundCo }};appearance:none;cursor:pointer;border-radius:999px;padding:10px 16px;font:600 13px/1 var(--font-body);transition:all .15s ease;border:var(--tv-border);background:var(--tv-background);color:var(--tv-color)">Bound Reference</button>
         </div>
         <sc-if value="{{ srCas }}" hint-placeholder-val="{{ true }}">
         <div style="display:flex;flex-direction:column;gap:14px">
@@ -2698,7 +2698,7 @@ section[id],div[id]{scroll-margin-top:176px}
     <div class="g4" data-stagger="" style="display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:6px">
       <sc-for list="{{ campusCards }}" as="c" hint-placeholder-count="8">
         <button sc-camel-on-click="{{ c.open }}" style="appearance:none;padding:0;text-align:left;cursor:pointer;background:var(--surface-raised);border:1px solid var(--border-subtle);border-radius:var(--radius-lg);overflow:hidden;box-shadow:var(--shadow-xs);transition:transform .2s ease,box-shadow .2s ease" style-hover="transform:translateY(-2px);box-shadow:var(--shadow-md)">
-          <div style="position:relative;height:130px;background:var(--cream-m)"><div aria-hidden="true" style="position:absolute;inset:0;background-image:url({{ c.img }});background-size:cover;background-position:center"></div><span style="position:absolute;right:10px;bottom:10px;font:600 11px/1 var(--font-body);color:var(--navy);background:rgba(255,249,241,.94);white-space:nowrap;border-radius:999px;padding:6px 10px">{{ c.count }} photos</span></div>
+          <div style="position:relative;height:130px;background:var(--cream-m)"><div aria-hidden="true" style="--tv-background-image: url({{ c.img }});position:absolute;inset:0;background-image:var(--tv-background-image);background-size:cover;background-position:center"></div><span style="position:absolute;right:10px;bottom:10px;font:600 11px/1 var(--font-body);color:var(--navy);background:rgba(255,249,241,.94);white-space:nowrap;border-radius:999px;padding:6px 10px">{{ c.count }} photos</span></div>
           <div style="padding:14px 16px 16px">
             <div style="font:700 14px/1.25 var(--font-body);color:var(--navy)">{{ c.name }}</div>
             <div style="font:400 12px/1.5 var(--font-body);color:var(--text-muted);margin-top:4px">{{ c.addr }}</div>
@@ -3146,14 +3146,14 @@ section[id],div[id]{scroll-margin-top:176px}
         <button sc-camel-on-click="{{ closeGallery }}" aria-label="Close gallery" style="appearance:none;border:none;background:var(--surface-sunken);border-radius:50%;width:34px;height:34px;cursor:pointer;font:600 14px/1 var(--font-body);color:var(--navy)">✕</button>
       </div>
       <div style="position:relative;border-radius:var(--radius-lg);overflow:hidden;height:400px;background:var(--cream-m)">
-        <div aria-hidden="true" style="position:absolute;inset:0;background-image:url({{ gallery.img }});background-size:cover;background-position:center"></div>
+        <div aria-hidden="true" style="--tv-background-image: url({{ gallery.img }});position:absolute;inset:0;background-image:var(--tv-background-image);background-size:cover;background-position:center"></div>
         <button sc-camel-on-click="{{ galleryPrev }}" aria-label="Previous photo" style="position:absolute;left:12px;top:50%;transform:translateY(-50%);appearance:none;cursor:pointer;width:44px;height:44px;border-radius:50%;border:none;background:rgba(255,249,241,.92);color:var(--navy);font:600 17px/1 var(--font-body);box-shadow:var(--shadow-md)">←</button>
         <button sc-camel-on-click="{{ galleryNext }}" aria-label="Next photo" style="position:absolute;right:12px;top:50%;transform:translateY(-50%);appearance:none;cursor:pointer;width:44px;height:44px;border-radius:50%;border:none;background:rgba(255,249,241,.92);color:var(--navy);font:600 17px/1 var(--font-body);box-shadow:var(--shadow-md)">→</button>
         <span style="position:absolute;right:14px;bottom:14px;font:600 12px/1 var(--font-body);color:var(--navy);background:rgba(255,249,241,.94);border-radius:999px;padding:7px 11px">{{ gallery.counter }}</span>
       </div>
       <div style="display:flex;gap:8px;margin-top:10px;overflow-x:auto">
         <sc-for list="{{ gallery.thumbs }}" as="th" hint-placeholder-count="5">
-          <button sc-camel-on-click="{{ th.pick }}" style="appearance:none;padding:0;flex:none;width:86px;height:58px;border-radius:10px;overflow:hidden;cursor:pointer;position:relative;background:var(--cream-m);border:2.5px solid {{ th.bd }}"><div aria-hidden="true" style="position:absolute;inset:0;background-image:url({{ th.img }});background-size:cover;background-position:center"></div></button>
+          <button sc-camel-on-click="{{ th.pick }}" style="--tv-border: 2.5px solid {{ th.bd }};appearance:none;padding:0;flex:none;width:86px;height:58px;border-radius:10px;overflow:hidden;cursor:pointer;position:relative;background:var(--cream-m);border:var(--tv-border)"><div aria-hidden="true" style="--tv-background-image: url({{ th.img }});position:absolute;inset:0;background-image:var(--tv-background-image);background-size:cover;background-position:center"></div></button>
         </sc-for>
       </div>
       <p style="font:400 12px/1.5 var(--font-body);color:var(--text-muted);margin:10px 0 0">Placeholder gallery: the live page reads each campus gallery from the CMS.</p>
@@ -3179,7 +3179,7 @@ section[id],div[id]{scroll-margin-top:176px}
           <p style="font:600 12px/1 var(--font-body);color:var(--navy);letter-spacing:.04em;margin:0 0 8px">Pick a time</p>
           <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px">
             <sc-for list="{{ callSlots }}" as="cs" hint-placeholder-count="5">
-              <button sc-camel-on-click="{{ cs.pick }}" style="appearance:none;cursor:pointer;border-radius:999px;padding:9px 14px;border:1.5px solid {{ cs.bd }};background:{{ cs.bg }};font:600 12.5px/1 var(--font-body);color:var(--navy);transition:border-color .15s ease,background .15s ease" style-hover="border-color:var(--navy)" aria-pressed="{{ cs.pressed }}">{{ cs.label }}</button>
+              <button sc-camel-on-click="{{ cs.pick }}" style="--tv-border: 1.5px solid {{ cs.bd }};--tv-background: {{ cs.bg }};appearance:none;cursor:pointer;border-radius:999px;padding:9px 14px;border:var(--tv-border);background:var(--tv-background);font:600 12.5px/1 var(--font-body);color:var(--navy);transition:border-color .15s ease,background .15s ease" style-hover="border-color:var(--navy)" aria-pressed="{{ cs.pressed }}">{{ cs.label }}</button>
             </sc-for>
           </div>
         </sc-if>
