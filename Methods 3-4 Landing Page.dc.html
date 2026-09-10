@@ -1170,7 +1170,7 @@ section[id],div[id]{scroll-margin-top:calc(var(--hdr,120px) - 1px)}
     @media (max-width:1020px){.g4{grid-template-columns:repeat(2,1fr)!important}}
     @media (max-width:880px){.hero-g{grid-template-columns:1fr!important;gap:44px!important}.g2{grid-template-columns:1fr!important}.g3{grid-template-columns:1fr 1fr!important}.hide-m{display:none!important}.sec{padding:64px 0!important}}
     @media (max-width:760px){.only-m{display:flex}}
-    @media (max-width:620px){.g3,.g4{grid-template-columns:1fr!important}.ctrp{padding:0 20px!important}}
+    @media (max-width:620px){.g3,.g4{grid-template-columns:1fr!important}}
     @media (max-width:880px){.lvlrow{grid-template-columns:1fr!important}}
     @media (max-width:680px){.lb2{grid-template-columns:1fr!important}}
     .wbspread>*{min-width:0}
@@ -1350,6 +1350,94 @@ section[id],div[id]{scroll-margin-top:calc(var(--hdr,120px) - 1px)}
     /* pill plate: hides the spine behind the pill and its ring band, so only the gaps show */
     #secrail[data-rail="ring"] a,#secrail[data-rail="ring"] a.on{box-shadow:0 0 0 var(--rail-ring) var(--cream)}
     @media (max-width:1250px){#secrail{gap:var(--rail-gap);padding:10px 14px}#secrail::before,#secrail .prog{display:none}#secrail a.on{background:linear-gradient(to right,var(--og-blue) calc(var(--p)*100%),var(--navy) 0)}#secrail[data-rail="ring"] a.on{background:var(--navy);color:var(--highlighter)}#secrail a::after{content:"";position:absolute;left:calc(100% + var(--rail-ring));top:50%;width:calc(var(--rail-gap) - var(--rail-ring)*2);height:2px;transform:translateY(-50%);border-radius:2px;background:linear-gradient(to right,var(--navy) calc(var(--p)*100%),var(--border-default) 0)}#secrail a:last-child::after{display:none}}
+
+    /* ── Responsive layer 2026-09 · one gutter token, mobile rhythm, tablet reflow ── */
+    :root{--gx:clamp(32px,11vw,210px)}
+    @media (max-width:1100px){:root{--gx:clamp(28px,6.5vw,72px)}}
+    @media (max-width:1000px){
+      /* results: the faded score cloud only reads on a wide canvas */
+      #results>div[aria-hidden="true"]{display:none}
+    }
+    @media (min-width:881px) and (max-width:1100px){
+      /* tablet landscape: hero stays two-up, but the film gets real width and keeps its rating chip */
+      .hero-g{grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr)!important;gap:36px!important;padding:44px 0 88px!important}
+      .hero-g>div{min-width:0}
+      .chipTR{display:block!important}
+    }
+    @media (max-width:760px){
+      /* phones: the sticky trial bar is the one fixed element; the section rail would stack a second bar on top of it */
+      #secrail{display:none!important}
+      footer>div{padding-bottom:112px!important}
+    }
+    @media (min-width:601px) and (max-width:900px){
+      .prtlist{display:grid!important;grid-template-columns:1fr 1fr;gap:12px;max-width:680px}
+    }
+    @media (max-width:880px){
+      :root{--gx:clamp(22px,6vw,40px);--sec-pad:clamp(56px,15vw,72px)}
+      .sec{padding:var(--sec-pad) 0!important}
+      /* every container shares one gutter, so text, cards and the header logo align */
+      section>.ctrp,footer>.ctrp,header .ctrp{padding-left:var(--gx)!important;padding-right:var(--gx)!important}
+      footer>.ctrp{padding-top:52px!important}
+      /* carousels bleed to the viewport edge; the first card lines up with the text above it */
+      .ctrp>.hscroll{margin-left:calc(-1*var(--gx))!important;margin-right:calc(-1*var(--gx))!important;padding-left:var(--gx)!important;padding-right:var(--gx)!important;scroll-padding:var(--gx)}
+      /* header: logo and CTA fit a phone without the CTA clipping at the right edge */
+      header .ctrp{gap:12px!important}
+      header .ctrp>img{height:22px!important;flex:none}
+      /* hero: shorter stack, media cropped for a phone, not a portrait column */
+      .hero-g{padding:28px 0 64px!important;gap:44px!important}
+      .herovid{margin:0!important;max-width:640px;width:100%}
+      .herovid>div:first-child{aspect-ratio:4/3!important}
+      .h1r{margin-bottom:18px!important}
+      /* 2-up grids: a lone third card spans the row instead of sitting half-width */
+      .g3>*:last-child:nth-child(odd){grid-column:1/-1}
+      .pillarcards>a:last-child:nth-child(odd) img{height:200px!important}
+      /* proof chips scale with the viewport */
+      .chipTR,.chipBL{padding:clamp(11px,3vw,14px) clamp(13px,3.6vw,18px)!important}
+      .chipTR>div:first-child,.chipBL>div:first-child{font-size:clamp(18px,5vw,22px)!important}
+      .chipTR>div:last-child,.chipBL>div:last-child{font-size:clamp(11.5px,3.1vw,12.5px)!important}
+    }
+    @media (max-width:620px){
+      /* campuses: two-up keeps eight cards to four rows */
+      .campusg{grid-template-columns:1fr 1fr!important;gap:12px!important}
+      .campusg button>div:first-child{height:108px!important}
+      .campusg button>div:last-child{padding:12px 13px 14px!important}
+      .campusg button>div:last-child>div:first-child{font-size:13.5px!important}
+      .campusg button>div:last-child>div:last-child{font-size:11.5px!important;line-height:1.45!important}
+      .campusg button>div:first-child>span{font-size:10.5px!important;padding:5px 8px!important}
+    }
+    @media (max-width:560px){
+      .hero-g{padding:20px 0 56px!important;gap:40px!important}
+      .herovid>div:first-child{aspect-ratio:5/6!important}
+      .chipBL{left:14px!important;bottom:14px!important}
+      /* hero stats: one column of rows, number left, claim right */
+      .herostats{display:grid!important;grid-template-columns:1fr;gap:0!important;margin:0 0 36px!important}
+      .herostats>div{display:grid;grid-template-columns:minmax(92px,auto) 1fr;column-gap:18px;align-items:center;padding:13px 0}
+      .herostats>div+div{border-top:1px solid rgba(255,249,241,.14)}
+      .herostats>div>div:nth-child(2){display:none}
+      .herostats .statn{font-size:30px!important}
+      .herostats>div>div:last-child{max-width:none!important;font-size:14px!important;line-height:1.45!important}
+      /* CTA rows: full-width buttons, centred supporting line */
+      .ctarow{flex-direction:column;align-items:stretch!important;gap:12px!important}
+      .ctarow button{width:100%;justify-content:center}
+      .ctarow>span,.ctarow>p{text-align:center;max-width:none!important}
+      /* tutor card stats: keep three on one line */
+      .headstats{display:grid!important;grid-template-columns:repeat(3,auto);justify-content:space-between;gap:12px!important}
+      .headstats>div>div:first-child{font-size:clamp(22px,6.6vw,30px)!important;white-space:nowrap}
+      .viscap{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+      /* pricing week chips: let labels wrap instead of truncating */
+      .wkchips{height:auto!important}
+      .wkchips>span{padding:10px 8px!important;min-height:56px}
+      .wkchips>span>span:last-child{white-space:normal!important;overflow:visible!important;text-overflow:clip!important;font-size:11px!important}
+    }
+    @media (max-width:400px){
+      :root{--gx:18px}
+      header .ctrp>img{height:18px!important}
+      header .ctrp>div{flex:none}
+    }
+    @media (max-width:360px){
+      header .ctrp>img{height:16px!important}
+      .herostats>div{grid-template-columns:minmax(84px,auto) 1fr;column-gap:14px}
+    }
   </style>
 </helmet>
 
@@ -1443,7 +1531,7 @@ section[id],div[id]{scroll-margin-top:calc(var(--hdr,120px) - 1px)}
         </sc-if>
         <h1 class="h1r" style="font-family:var(--font-display);font-weight:700;font-size:56px;line-height:1.18;letter-spacing:-0.02em;margin:0 0 22px;animation:heroRise .6s cubic-bezier(.22,1,.36,1) both"><span style="display:block;font-size:clamp(24px,3vw,32px);line-height:1.15;color:var(--text-on-navy-muted)">VCE</span><span style="display:block;font-size:clamp(32px,4.9vw,52px);line-height:1.18;white-space:nowrap">Maths Methods 3/4</span><span style="display:block;font-size:clamp(32px,4.9vw,52px);line-height:1.12">Tutoring</span></h1>
         <p style="font-size:19px;line-height:1.6;color:var(--text-on-navy-muted);margin:0 0 40px;max-width:46ch;font-weight:400;animation:heroRise .6s cubic-bezier(.22,1,.36,1) .07s both">{{ subline }} <strong style="color: var(--cream); font-weight: 600; font-style: normal">Built by students, for students.</strong></p>
-        <div style="display:flex;gap:clamp(18px,3vw,40px);margin:0 0 44px;flex-wrap:nowrap;animation:heroRise .6s cubic-bezier(.22,1,.36,1) .13s both">
+        <div class="herostats" style="display:flex;gap:clamp(18px,3vw,40px);margin:0 0 44px;flex-wrap:nowrap;animation:heroRise .6s cubic-bezier(.22,1,.36,1) .13s both">
           <div style="flex:1;min-width:0"><div class="statn" style="font-family:var(--font-display);font-weight:700;font-size:34px;line-height:1;letter-spacing:-0.01em;color:var(--cream)"><span title="Proof-bank pending (pb:atar_99_share)" style="border-bottom:3px dotted rgba(215,252,61,.5);cursor:help">1 in 7</span></div><div style="width:30px;height:4px;background:var(--highlighter);border-radius:2px;margin:12px 0 10px"></div><div style="font: 600 13.5px/1.4 var(--font-body); color: var(--text-on-navy-muted); max-width: 19ch; font-weight: 400">Contour students achieve a 99+ ATAR</div></div>
           <div style="flex:1;min-width:0"><div class="statn" style="font-family:var(--font-display);font-weight:700;font-size:34px;line-height:1;letter-spacing:-0.01em;color:var(--cream)">1 in 5</div><div style="width:30px;height:4px;background:var(--highlighter);border-radius:2px;margin:12px 0 10px"></div><div style="font: 600 13.5px/1.4 var(--font-body); color: var(--text-on-navy-muted); max-width: 19ch; font-weight: 400">of Victoria’s 99+ ATAR scorers are Contour students</div></div>
           <div style="flex:1;min-width:0"><div class="statn" style="font-family:var(--font-display);font-weight:700;font-size:34px;line-height:1;letter-spacing:-0.01em;color:var(--cream)"><span title="Proof-bank pending (pb:raw50_dux_count)" style="border-bottom:3px dotted rgba(215,252,61,.5);cursor:help">40+</span></div><div style="width:30px;height:4px;background:var(--highlighter);border-radius:2px;margin:12px 0 10px"></div><div style="font: 600 13.5px/1.4 var(--font-body); color: var(--text-on-navy-muted); max-width: 19ch; font-weight: 400">raw 50 scores and school duxes</div></div>
@@ -1455,7 +1543,7 @@ section[id],div[id]{scroll-margin-top:calc(var(--hdr,120px) - 1px)}
         <p style="font:500 13.5px/1.5 var(--font-body);color:var(--text-on-navy-muted);margin:12px 0 0;animation:heroRise .6s cubic-bezier(.22,1,.36,1) .28s both">{{ offer.risk }}</p>
       </div>
       <!-- Hero video with floating proof chips -->
-      <div style="position:relative;margin:0 4px 0 0;animation:heroCard .7s cubic-bezier(.22,1,.36,1) .15s both">
+      <div class="herovid" style="position:relative;margin:0 4px 0 0;animation:heroCard .7s cubic-bezier(.22,1,.36,1) .15s both">
         <div style="position:relative;border-radius:var(--radius-2xl);overflow:hidden;box-shadow:var(--shadow-lg);aspect-ratio:6/7;background:var(--navy-m)">
           <img src="assets/opt/c473f05f.jpg" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block">
           <button sc-camel-on-click="{{ playHero }}" aria-label="Play video" style="position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:74px;height:74px;border-radius:50%;background:var(--cream);border:none;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;box-shadow:var(--shadow-lg);transition:transform .2s ease" style-hover="transform:translate(-50%,-50%) scale(1.08)"><span style="width:0;height:0;border-left:23px solid var(--navy);border-top:14px solid transparent;border-bottom:14px solid transparent;margin-left:6px"></span></button>
@@ -1625,7 +1713,7 @@ section[id],div[id]{scroll-margin-top:calc(var(--hdr,120px) - 1px)}
         </div>
       </div>
     </div>
-    <div style="display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-top:30px">
+    <div class="ctarow" style="display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-top:30px">
       <x-import component-from-global-scope="ContourDesignSystem_0483dc.Button" class="ctab" style="white-space:nowrap" variant="primary" size="md" sc-camel-on-click="{{ openModal }}" hint-size="200px,44px">{{ offer.cta }}<span aria-hidden="true">→</span></x-import>
       <a href="#results" style="display:inline-flex;align-items:center;gap:8px;font:600 14px/1 var(--font-body);color:var(--navy);border:1.5px solid var(--border-default);border-radius:999px;padding:13px 20px;transition:background .15s ease" style-hover="background:var(--cream-m)">View all results <span aria-hidden="true">→</span></a>
       <span style="font:500 12.5px/1.6 var(--font-body);color:var(--text-muted)">Whole-cohort figures, never selected samples. No entrance exam, nobody turned away on results. Methodology at <a href="#results">contour.com.au/results</a>.</span>
@@ -1667,7 +1755,7 @@ section[id],div[id]{scroll-margin-top:calc(var(--hdr,120px) - 1px)}
         </div>
       </sc-for>
     </div>
-    <div style="display:flex;align-items:center;gap:14px;flex-wrap:wrap">
+    <div class="ctarow" style="display:flex;align-items:center;gap:14px;flex-wrap:wrap">
       <x-import component-from-global-scope="ContourDesignSystem_0483dc.Button" class="ctab" style="white-space:nowrap" variant="primary" size="md" sc-camel-on-click="{{ openModal }}" hint-size="200px,44px">{{ offer.cta }}<span aria-hidden="true">→</span></x-import>
       <span style="font:500 13px/1.4 var(--font-body);color:var(--text-muted)">{{ offer.risk }}</span>
     </div>
@@ -1704,7 +1792,7 @@ section[id],div[id]{scroll-margin-top:calc(var(--hdr,120px) - 1px)}
             <button sc-camel-on-click="{{ toggleHead }}" style="appearance:none;border:none;background:transparent;cursor:pointer;font:600 13.5px/1 var(--font-body);color:var(--cream);padding:0;text-decoration:underline;text-underline-offset:3px">{{ headBtn }}</button>
             <span style="display:inline-flex;align-items:center;gap:8px;font:600 13px/1 var(--font-body);color:var(--cream);border:1px solid var(--border-on-navy);border-radius:999px;padding:8px 13px;cursor:pointer" title="Video slot · 60-second version pending"><span style="width:0;height:0;border-left:8px solid var(--cream);border-top:5px solid transparent;border-bottom:5px solid transparent"></span>Watch the 60-second version</span>
           </div>
-          <div style="display:flex;gap:clamp(20px,4vw,44px)">
+          <div class="headstats" style="display:flex;gap:clamp(20px,4vw,44px)">
             <div><div style="font-family:var(--font-display);font-weight:700;font-size:30px;line-height:1;color:var(--cream)">50 raw</div><div style="width:20px;height:3.5px;background:var(--highlighter);border-radius:2px;margin:8px 0 7px"></div><div style="font:600 12.5px/1.4 var(--font-body);color:var(--text-on-navy-muted)">Maths Methods</div></div>
             <div><div style="font-family:var(--font-display);font-weight:700;font-size:30px;line-height:1;color:var(--cream)">99.95</div><div style="width:20px;height:3.5px;background:var(--highlighter);border-radius:2px;margin:8px 0 7px"></div><div style="font:600 12.5px/1.4 var(--font-body);color:var(--text-on-navy-muted)">ATAR</div></div>
             <div><div style="font-family:var(--font-display);font-weight:700;font-size:30px;line-height:1;color:var(--cream)"><span title="Proof-bank pending (pb:head_students_tutored)" style="border-bottom:3px dotted rgba(215,252,61,.6);cursor:help">500+</span></div><div style="width:20px;height:3.5px;background:var(--highlighter);border-radius:2px;margin:8px 0 7px"></div><div style="font:600 12.5px/1.4 var(--font-body);color:var(--text-on-navy-muted)">Students tutored</div></div>
@@ -1751,7 +1839,7 @@ section[id],div[id]{scroll-margin-top:calc(var(--hdr,120px) - 1px)}
       </div>
     </sc-if>
     <p style="display:inline-flex;align-items:center;gap:8px;font:500 12.5px/1.5 var(--font-body);color:var(--text-muted);margin:0"><svg width="14" height="14" sc-camel-view-box="0 0 16 16" fill="none" stroke="#0C3166" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 1.8l5 2v3.7c0 3.4-2.1 5.9-5 6.7-2.9-.8-5-3.3-5-6.7V3.8l5-2z"></path><path d="M5.7 8l1.6 1.6L10.5 6.4"></path></svg>Every tutor and team member at Contour holds a Working with Children Check.</p>
-    <div style="display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-top:30px">
+    <div class="ctarow" style="display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-top:30px">
       <x-import component-from-global-scope="ContourDesignSystem_0483dc.Button" class="ctab" style="white-space:nowrap" variant="primary" size="md" sc-camel-on-click="{{ openModal }}" hint-size="200px,44px">{{ offer.cta }}<span aria-hidden="true">→</span></x-import>
       <span style="font:500 13px/1.4 var(--font-body);color:var(--text-muted)">Your trial is taught by one of these tutors. Come meet them.</span>
     </div>
@@ -1818,7 +1906,7 @@ section[id],div[id]{scroll-margin-top:calc(var(--hdr,120px) - 1px)}
               <p style="font:400 14.5px/1.55 var(--font-body);color:var(--charcoal);margin:0;max-width:44ch">Student feedback, class results and observed lessons, for as long as they teach here.</p>
             </div>
           </div>
-          <div style="display:flex;align-items:center;gap:16px;flex-wrap:wrap;margin-top:26px;padding-top:22px;border-top:1px solid var(--border-subtle)">
+          <div class="ctarow" style="display:flex;align-items:center;gap:16px;flex-wrap:wrap;margin-top:26px;padding-top:22px;border-top:1px solid var(--border-subtle)">
             <x-import component-from-global-scope="ContourDesignSystem_0483dc.Button" class="ctab" style="white-space:nowrap" variant="primary" size="md" sc-camel-on-click="{{ openModal }}" hint-size="200px,44px">{{ offer.cta }}<span aria-hidden="true">→</span></x-import>
             <p style="font:500 13px/1.5 var(--font-body);color:var(--text-muted);margin:0;max-width:30ch">Meet one of the 5 in 100.</p>
           </div>
@@ -1837,7 +1925,7 @@ section[id],div[id]{scroll-margin-top:calc(var(--hdr,120px) - 1px)}
     <span class="eyebrow">The Contour System</span>
     <h2 style="font-family:var(--font-display);font-weight:700;font-size:clamp(32px,3.4vw,40px);letter-spacing:-0.02em;line-height:1.14;color:var(--navy);margin:0 0 14px;max-width:32ch">Most tutoring sells hours. We built a system.</h2>
     <p style="font-size:17px;line-height:1.6;color:var(--text-muted);margin:0 0 44px">A class alone doesn't move a mark. Everything around it does. Three pillars, nineteen parts, and everything on this page lives inside one.</p>
-    <div class="g3" data-stagger="" style="display:grid;grid-template-columns:repeat(3,1fr);gap:18px;align-items:stretch">
+    <div class="g3 pillarcards" data-stagger="" style="display:grid;grid-template-columns:repeat(3,1fr);gap:18px;align-items:stretch">
       <a href="#pillar-1" style="display:flex;flex-direction:column;background:var(--surface-raised);border:1px solid var(--border-subtle);border-radius:var(--radius-xl);overflow:hidden;box-shadow:var(--shadow-xs);text-decoration:none;transition:transform .2s ease,box-shadow .2s ease" style-hover="transform:translateY(-3px);box-shadow:var(--shadow-lg)"><div style="height:170px"><img loading="lazy" decoding="async" src="assets/ramodh/pillar-1.jpg" alt="" style="width:100%;height:170px;object-fit:cover;display:block"></div><div style="padding:22px 24px 24px;display:flex;flex-direction:column;gap:12px"><span style="align-self:flex-start;font:700 12px/1.35 var(--font-body);color:var(--cream);background:var(--navy);border-radius:999px;padding:6px 12px">Pillar 1 · Expert Tutoring</span><p style="font-family:var(--font-display);font-weight:700;font-size:21px;letter-spacing:-0.01em;line-height:1.35;color:var(--navy);margin:0">Learn it properly, from people who just did it.</p></div></a>
       <a href="#pillar-2" style="display:flex;flex-direction:column;background:var(--surface-raised);border:1px solid var(--border-subtle);border-radius:var(--radius-xl);overflow:hidden;box-shadow:var(--shadow-xs);text-decoration:none;transition:transform .2s ease,box-shadow .2s ease" style-hover="transform:translateY(-3px);box-shadow:var(--shadow-lg)"><div style="height:170px"><img loading="lazy" decoding="async" src="assets/ramodh/pillar-2.jpg" alt="" style="width:100%;height:170px;object-fit:cover;display:block"></div><div style="padding:22px 24px 24px;display:flex;flex-direction:column;gap:12px"><span style="align-self:flex-start;font:700 12px/1.35 var(--font-body);color:#FFF9F1;background:var(--og-blue);border-radius:999px;padding:6px 12px">Pillar 2 · Comprehensive Resources</span><p style="font-family:var(--font-display);font-weight:700;font-size:21px;letter-spacing:-0.01em;line-height:1.35;color:var(--navy);margin:0">Every mark rehearsed before it counts.</p></div></a>
       <a href="#pillar-3" style="display:flex;flex-direction:column;background:var(--surface-raised);border:1px solid var(--border-subtle);border-radius:var(--radius-xl);overflow:hidden;box-shadow:var(--shadow-xs);text-decoration:none;transition:transform .2s ease,box-shadow .2s ease" style-hover="transform:translateY(-3px);box-shadow:var(--shadow-lg)"><div style="height:170px"><img loading="lazy" decoding="async" src="assets/ramodh/pillar-3.jpg" alt="" style="width:100%;height:170px;object-fit:cover;display:block"></div><div style="padding:22px 24px 24px;display:flex;flex-direction:column;gap:12px"><span style="align-self:flex-start;font:700 12px/1.35 var(--font-body);color:var(--navy);background:var(--highlighter);border-radius:999px;padding:6px 12px">Pillar 3 · Personalised Support</span><p style="font-family:var(--font-display);font-weight:700;font-size:21px;letter-spacing:-0.01em;line-height:1.35;color:var(--navy);margin:0">Never stuck for longer than one message.</p></div></a>
@@ -1929,7 +2017,7 @@ section[id],div[id]{scroll-margin-top:calc(var(--hdr,120px) - 1px)}
           <img loading="lazy" decoding="async" src="{{ s.src }}" alt="" style="--tv-opacity: {{ s.op }};position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;transition:opacity .5s ease;opacity:var(--tv-opacity)">
         </sc-for>
         <div style="position:absolute;left:0;right:0;bottom:0;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:14px 16px;background:linear-gradient(transparent,rgba(12,49,102,.55))">
-          <span style="font:600 12.5px/1.3 var(--font-body);color:var(--cream)">{{ clsCap }}</span>
+          <span class="viscap" style="font:600 12.5px/1.3 var(--font-body);color:var(--cream)">{{ clsCap }}</span>
           <span style="display:inline-flex;align-items:center;gap:6px">
             <span style="display:inline-flex;gap:5px;margin-right:6px">
               <sc-for list="{{ clsDots }}" as="d" hint-placeholder-count="4">
@@ -2075,7 +2163,7 @@ section[id],div[id]{scroll-margin-top:calc(var(--hdr,120px) - 1px)}
       </sc-for>
     </div>
     <p style="font-size:13.5px;line-height:1.6;color:var(--text-muted);margin:0 0 30px">School in a different order? We teach ahead and cater to your school's SAC order. <a href="#faq">See the FAQ</a>.</p>
-    <div style="display:flex;align-items:center;gap:14px;flex-wrap:wrap">
+    <div class="ctarow" style="display:flex;align-items:center;gap:14px;flex-wrap:wrap">
       <x-import component-from-global-scope="ContourDesignSystem_0483dc.Button" class="ctab" style="white-space:nowrap" variant="primary" size="md" sc-camel-on-click="{{ openModal }}" hint-size="200px,44px">{{ offer.cta }}<span aria-hidden="true">→</span></x-import>
       <span style="font:500 13px/1.4 var(--font-body);color:var(--text-muted)">{{ offer.risk }}</span>
     </div>
@@ -2385,7 +2473,7 @@ section[id],div[id]{scroll-margin-top:calc(var(--hdr,120px) - 1px)}
         <span style="display:inline-flex;align-items:center;gap:7px;font:600 12px/1 var(--font-body);color:var(--navy);background:rgba(255,249,241,.94);border-radius:999px;padding:8px 13px;box-shadow:var(--shadow-xs)"><span style="width:14px;height:3px;background:var(--og-blue);border-radius:2px"></span>Train lines to our campuses</span>
       </div>
     </div>
-    <div class="g4" data-stagger="" style="display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:6px">
+    <div class="g4 campusg" data-stagger="" style="display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:6px">
       <sc-for list="{{ campusCards }}" as="c" hint-placeholder-count="8">
         <button sc-camel-on-click="{{ c.open }}" style="appearance:none;padding:0;text-align:left;cursor:pointer;background:var(--surface-raised);border:1px solid var(--border-subtle);border-radius:var(--radius-lg);overflow:hidden;box-shadow:var(--shadow-xs);transition:transform .2s ease,box-shadow .2s ease" style-hover="transform:translateY(-2px);box-shadow:var(--shadow-md)">
           <div style="position:relative;height:130px;background:var(--cream-m)"><div aria-hidden="true" style="--tv-background-image: url({{ c.img }});position:absolute;inset:0;background-image:var(--tv-background-image);background-size:cover;background-position:center"></div><span style="position:absolute;right:10px;bottom:10px;font:600 11px/1 var(--font-body);color:var(--navy);background:rgba(255,249,241,.94);white-space:nowrap;border-radius:999px;padding:6px 10px">{{ c.count }} photos</span></div>
@@ -2545,7 +2633,7 @@ section[id],div[id]{scroll-margin-top:calc(var(--hdr,120px) - 1px)}
       <div style="display:flex;flex-direction:column;gap:22px">
         <div style="background:var(--surface-raised);border:1px solid var(--border-subtle);border-radius:var(--radius-2xl);padding:28px 32px 26px;box-shadow:var(--shadow-sm)">
           <h3 style="font-family:var(--font-display);font-weight:700;font-size:24px;letter-spacing:-0.01em;color:var(--navy);margin:0 0 18px">Your week</h3>
-          <div style="display:flex;gap:4px;height:56px;margin-bottom:14px"><span style="flex:2;min-width:0;background:var(--navy);color:var(--cream);border-radius:12px 4px 4px 12px;display:flex;flex-direction:column;justify-content:center;gap:3px;padding:0 14px"><span style="font:700 14px/1 var(--font-body)">2h</span><span style="font:500 11.5px/1.3 var(--font-body);white-space:nowrap;overflow:hidden;text-overflow:ellipsis">Weekly Class</span></span><span style="flex:2;min-width:0;border:1.5px dashed var(--border-default);color:var(--navy);border-radius:4px;display:flex;flex-direction:column;justify-content:center;gap:3px;padding:0 14px"><span style="font:700 14px/1 var(--font-body)">+2h</span><span style="font:500 11.5px/1.3 var(--font-body);white-space:nowrap;overflow:hidden;text-overflow:ellipsis">Workshop</span></span><span style="flex:1.2;min-width:0;border:1.5px dashed var(--border-default);color:var(--navy);border-radius:4px 12px 12px 4px;display:flex;flex-direction:column;justify-content:center;gap:3px;padding:0 14px"><span style="font:700 14px/1 var(--font-body)">+1h</span><span style="font:500 11.5px/1.3 var(--font-body);white-space:nowrap;overflow:hidden;text-overflow:ellipsis">1-on-1</span></span></div>
+          <div class="wkchips" style="display:flex;gap:4px;height:56px;margin-bottom:14px"><span style="flex:2;min-width:0;background:var(--navy);color:var(--cream);border-radius:12px 4px 4px 12px;display:flex;flex-direction:column;justify-content:center;gap:3px;padding:0 14px"><span style="font:700 14px/1 var(--font-body)">2h</span><span style="font:500 11.5px/1.3 var(--font-body);white-space:nowrap;overflow:hidden;text-overflow:ellipsis">Weekly Class</span></span><span style="flex:2;min-width:0;border:1.5px dashed var(--border-default);color:var(--navy);border-radius:4px;display:flex;flex-direction:column;justify-content:center;gap:3px;padding:0 14px"><span style="font:700 14px/1 var(--font-body)">+2h</span><span style="font:500 11.5px/1.3 var(--font-body);white-space:nowrap;overflow:hidden;text-overflow:ellipsis">Workshop</span></span><span style="flex:1.2;min-width:0;border:1.5px dashed var(--border-default);color:var(--navy);border-radius:4px 12px 12px 4px;display:flex;flex-direction:column;justify-content:center;gap:3px;padding:0 14px"><span style="font:700 14px/1 var(--font-body)">+1h</span><span style="font:500 11.5px/1.3 var(--font-body);white-space:nowrap;overflow:hidden;text-overflow:ellipsis">1-on-1</span></span></div>
           <p style="font:500 13.5px/1.55 var(--font-body);color:var(--charcoal);margin:0">Only the class is fixed. Use everything, and $110 covers five hours.</p>
           <div style="border-top:1px solid var(--border-subtle);margin:24px 0 8px"></div>
           <h3 style="font-family:var(--font-display);font-weight:700;font-size:24px;letter-spacing:-0.01em;color:var(--navy);margin:0 0 4px">Five hours a week, elsewhere</h3>
@@ -2575,7 +2663,7 @@ section[id],div[id]{scroll-margin-top:calc(var(--hdr,120px) - 1px)}
             <span style="display:inline-flex;align-items:center;gap:7px;font:600 12.5px/1 var(--font-body);color:var(--cream);border:1px solid var(--border-on-navy);border-radius:999px;padding:8px 12px;white-space:nowrap"><span style="color:var(--highlighter)">✓</span>Weekly Workbook</span>
             <span style="display:inline-flex;align-items:center;gap:7px;font:600 12.5px/1 var(--font-body);color:var(--cream);border:1px solid var(--border-on-navy);border-radius:999px;padding:8px 12px;white-space:nowrap"><span style="color:var(--highlighter)">✓</span>Weekly Homework</span>
           </div>
-          <div style="display:flex;gap:14px;flex-wrap:wrap;align-items:center">
+          <div class="ctarow" style="display:flex;gap:14px;flex-wrap:wrap;align-items:center">
             <x-import component-from-global-scope="ContourDesignSystem_0483dc.Button" class="ctab" variant="primary" size="lg" style="white-space:nowrap" sc-camel-on-click="{{ openModal }}" hint-size="240px,52px">{{ offer.cta }}<span aria-hidden="true">→</span></x-import>
             <a href="tel:1800888300" style="font:600 15px/1 var(--font-body);color:var(--cream);border:1.5px solid var(--border-on-navy);border-radius:999px;padding:15px 22px;white-space:nowrap">Talk to the team first</a>
           </div>
