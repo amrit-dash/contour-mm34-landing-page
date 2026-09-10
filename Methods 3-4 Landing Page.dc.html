@@ -1169,7 +1169,11 @@ section[id],div[id]{scroll-margin-top:calc(var(--hdr,120px) - 1px)}
     .only-m{display:none}
     @media (max-width:1020px){.g4{grid-template-columns:repeat(2,1fr)!important}}
     @media (max-width:880px){.hero-g{grid-template-columns:1fr!important;gap:44px!important}.g2{grid-template-columns:1fr!important}.g3{grid-template-columns:1fr 1fr!important}.hide-m{display:none!important}.sec{padding:64px 0!important}}
-    @media (max-width:760px){.only-m{display:flex}}
+    @media (max-width:760px){
+      .only-m{display:flex;transform:translateY(110%);transition:transform var(--dur-m) var(--ease)}
+      html.past-hero .only-m{transform:none}
+      @media (prefers-reduced-motion:reduce){.only-m{transition:none}}
+    }
     @media (max-width:620px){.g3,.g4{grid-template-columns:1fr!important}}
     @media (max-width:880px){.lvlrow{grid-template-columns:1fr!important}}
     @media (max-width:680px){.lb2{grid-template-columns:1fr!important}}
@@ -3374,6 +3378,8 @@ class Component extends DCLogic {
               if (footerIn && document.documentElement.classList.contains("mwf-open")) document.documentElement.classList.remove("mwf-open");
               // back-to-top: after the hero and the first section are behind the reader
               document.documentElement.classList.toggle("totop-on", y > vh * 1.6 && !footerIn);
+              // the sticky CTA bar waits until the hero, and its own CTA, are scrolled past
+              document.documentElement.classList.toggle("past-hero", y > vh * 0.72);
               try { const sb = document.querySelector(".only-m"); if (sb && sb.getBoundingClientRect().height > 0) document.documentElement.style.setProperty("--barh", Math.round(sb.getBoundingClientRect().height) + "px"); } catch (e) {}
               const dots = rail.querySelectorAll(".raildot");
               let head = 0;
