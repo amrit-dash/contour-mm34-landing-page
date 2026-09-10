@@ -1524,8 +1524,7 @@ section[id],div[id]{scroll-margin-top:calc(var(--hdr,120px) - 1px)}
       .lbhead{justify-content:flex-start!important;padding:20px 20px 16px!important;gap:14px!important}
       .lbhead>h3{flex:1 0 100%}
       .lbhead>span{margin:0!important}
-      /* "also look at": the catch-all link becomes a pill like its siblings; the intensive strip drops its dot */
-      .alllink{text-decoration:none!important;border:1px solid var(--border-default);border-radius:999px;padding:9px 15px!important;white-space:nowrap}
+      /* "also look at": the intensive strip drops its dot on phones */
       .intensive{align-items:flex-start;line-height:1.35!important;padding:10px 14px!important}
       .intensive>span:first-child{display:none}
       /* pricing: hourly rate sits beside its caption once the card is a single column */
@@ -1658,6 +1657,9 @@ section[id],div[id]{scroll-margin-top:calc(var(--hdr,120px) - 1px)}
 
     /* ── Workbook viewer: full-screen mode on narrow layouts ── */
     .pc-go-m{display:none}
+    /* "also look at": the catch-all link is a pill like its siblings, filled a shade deeper than the section */
+    .alllink{text-decoration:none!important;border:1px solid var(--border-subtle);border-radius:999px;background:color-mix(in srgb,var(--cream-m) 42%,var(--surface-raised));padding:9px 15px!important;white-space:nowrap;transition:background var(--dur-s) var(--ease),border-color var(--dur-s) var(--ease)}
+    .alllink:hover{background:var(--cream-m);border-color:var(--border-default);color:var(--navy)}
     .wbfull-b{display:none;appearance:none;border:0;background:rgba(255,249,241,.12);color:var(--cream);width:30px;height:30px;border-radius:8px;align-items:center;justify-content:center;cursor:pointer;flex:none;-webkit-tap-highlight-color:transparent}
     .wbfull-o{display:none}
     html.wb-full .wbfull-i{display:none}
