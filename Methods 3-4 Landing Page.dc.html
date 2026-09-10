@@ -1438,6 +1438,8 @@ section[id],div[id]{scroll-margin-top:calc(var(--hdr,120px) - 1px)}
       .teamhead>h3{flex:1 1 auto;min-width:0}
       .teamhead>div{flex:none}
       .teamhead>div>button{width:40px!important;height:40px!important}
+      /* WWCC line: the shield is too small to read next to two lines of copy on a phone */
+      .wwcc>svg{width:17px!important;height:17px!important;flex:none;align-self:center;stroke-width:1.5}
       /* free-week card: stacked and left-aligned — big illustration, then the headline at full measure.
          Beside-the-icon was tried and rejected: it left the headline a ~170px column, which broke
          "Try a full week, free. Then decide." into five two-word lines. */
@@ -2141,7 +2143,7 @@ section[id],div[id]{scroll-margin-top:calc(var(--hdr,120px) - 1px)}
         <button sc-camel-on-click="{{ closeTutor }}" aria-label="Close bio" style="appearance:none;border:none;background:var(--surface-raised);border-radius:50%;width:32px;height:32px;cursor:pointer;font:600 13px/1 var(--font-body);color:var(--navy);box-shadow:var(--shadow-xs)">✕</button>
       </div>
     </sc-if>
-    <p style="display:inline-flex;align-items:center;gap:8px;font:500 12.5px/1.5 var(--font-body);color:var(--text-muted);margin:0"><svg width="14" height="14" sc-camel-view-box="0 0 16 16" fill="none" stroke="#0C3166" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 1.8l5 2v3.7c0 3.4-2.1 5.9-5 6.7-2.9-.8-5-3.3-5-6.7V3.8l5-2z"></path><path d="M5.7 8l1.6 1.6L10.5 6.4"></path></svg>Every tutor and team member at Contour holds a Working with Children Check.</p>
+    <p class="wwcc" style="display:inline-flex;align-items:center;gap:8px;font:500 12.5px/1.5 var(--font-body);color:var(--text-muted);margin:0"><svg width="14" height="14" sc-camel-view-box="0 0 16 16" fill="none" stroke="#0C3166" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 1.8l5 2v3.7c0 3.4-2.1 5.9-5 6.7-2.9-.8-5-3.3-5-6.7V3.8l5-2z"></path><path d="M5.7 8l1.6 1.6L10.5 6.4"></path></svg>Every tutor and team member at Contour holds a Working with Children Check.</p>
     <div class="ctarow" style="display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-top:30px">
       <x-import component-from-global-scope="ContourDesignSystem_0483dc.Button" class="ctab" style="white-space:nowrap" variant="primary" size="md" sc-camel-on-click="{{ openModal }}" hint-size="200px,44px">{{ offer.cta }}<span aria-hidden="true">→</span></x-import>
       <span style="font:500 13px/1.4 var(--font-body);color:var(--text-muted)">Your trial is taught by one of these tutors. Come meet them.</span>
