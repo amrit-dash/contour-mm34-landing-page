@@ -1588,6 +1588,14 @@ section[id],div[id]{scroll-margin-top:calc(var(--hdr,120px) - 1px)}
       .campusg::-webkit-scrollbar{display:none}
       .campusg>button{flex:0 0 78%;scroll-snap-align:start}
       .campusg>button>div:first-child{height:168px!important}
+      /* campus gallery: full-height sheet with room for the controls */
+      .galwrap{padding:12px!important;align-items:flex-end!important}
+      .galbox{padding:16px!important;max-height:calc(100dvh - 24px);overflow-y:auto;-webkit-overflow-scrolling:touch}
+      .galimg{height:clamp(210px,42vh,320px)!important}
+      .galthumbs{gap:6px!important;margin-left:-16px;margin-right:-16px;padding:0 16px;scroll-padding-inline:16px;scrollbar-width:none}
+      .galthumbs::-webkit-scrollbar{display:none}
+      .galthumbs>button{width:66px!important;height:46px!important}
+      .galbox button[aria-label="Close gallery"]{width:40px!important;height:40px!important;flex:none}
       /* origin album: the fanned back cards overhang the deck, so inset it or they crowd the screen edge */
       #story [title^="The origin album"]{margin-inline:14px;height:clamp(300px,76vw,380px)!important}
       #mlens{display:inline-flex}
@@ -3107,19 +3115,19 @@ section[id],div[id]{scroll-margin-top:calc(var(--hdr,120px) - 1px)}
 
 <!-- ══ Campus gallery lightbox ══ -->
 <sc-if value="{{ galleryShow }}" hint-placeholder-val="{{ false }}">
-  <div sc-camel-on-click="{{ closeGallery }}" style="position:fixed;inset:0;z-index:100;background:rgba(12,49,102,.6);backdrop-filter:blur(4px);display:flex;align-items:center;justify-content:center;padding:20px">
-    <div sc-camel-on-click="{{ eatClick }}" role="dialog" aria-modal="true" aria-label="Campus photos" style="background:var(--surface-raised);border-radius:var(--radius-xl);max-width:820px;width:100%;padding:22px;box-shadow:var(--shadow-lg)">
+  <div class="galwrap" sc-camel-on-click="{{ closeGallery }}" style="position:fixed;inset:0;z-index:100;background:rgba(12,49,102,.6);backdrop-filter:blur(4px);display:flex;align-items:center;justify-content:center;padding:20px">
+    <div class="galbox" sc-camel-on-click="{{ eatClick }}" role="dialog" aria-modal="true" aria-label="Campus photos" style="background:var(--surface-raised);border-radius:var(--radius-xl);max-width:820px;width:100%;padding:22px;box-shadow:var(--shadow-lg)">
       <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:14px">
         <div><h2 style="font-family:var(--font-display);font-weight:700;font-size:21px;color:var(--navy);margin:0">{{ gallery.name }}</h2><p style="font:400 12.5px/1.5 var(--font-body);color:var(--text-muted);margin:2px 0 0">{{ gallery.addr }}</p></div>
         <button sc-camel-on-click="{{ closeGallery }}" aria-label="Close gallery" style="appearance:none;border:none;background:var(--surface-sunken);border-radius:50%;width:34px;height:34px;cursor:pointer;font:600 14px/1 var(--font-body);color:var(--navy)">✕</button>
       </div>
-      <div style="position:relative;border-radius:var(--radius-lg);overflow:hidden;height:400px;background:var(--cream-m)">
+      <div class="galimg" style="position:relative;border-radius:var(--radius-lg);overflow:hidden;height:400px;background:var(--cream-m)">
         <div aria-hidden="true" style="--tv-background-image: url({{ gallery.img }});position:absolute;inset:0;background-image:var(--tv-background-image);background-size:cover;background-position:center"></div>
         <button sc-camel-on-click="{{ galleryPrev }}" aria-label="Previous photo" style="position:absolute;left:12px;top:50%;transform:translateY(-50%);appearance:none;cursor:pointer;width:44px;height:44px;border-radius:50%;border:none;background:rgba(255,249,241,.92);color:var(--navy);font:600 17px/1 var(--font-body);box-shadow:var(--shadow-md)">←</button>
         <button sc-camel-on-click="{{ galleryNext }}" aria-label="Next photo" style="position:absolute;right:12px;top:50%;transform:translateY(-50%);appearance:none;cursor:pointer;width:44px;height:44px;border-radius:50%;border:none;background:rgba(255,249,241,.92);color:var(--navy);font:600 17px/1 var(--font-body);box-shadow:var(--shadow-md)">→</button>
         <span style="position:absolute;right:14px;bottom:14px;font:600 12px/1 var(--font-body);color:var(--navy);background:rgba(255,249,241,.94);border-radius:999px;padding:7px 11px">{{ gallery.counter }}</span>
       </div>
-      <div style="display:flex;gap:8px;margin-top:10px;overflow-x:auto">
+      <div class="galthumbs" style="display:flex;gap:8px;margin-top:10px;overflow-x:auto">
         <sc-for list="{{ gallery.thumbs }}" as="th" hint-placeholder-count="5">
           <button sc-camel-on-click="{{ th.pick }}" style="--tv-border: 2.5px solid {{ th.bd }};appearance:none;padding:0;flex:none;width:86px;height:58px;border-radius:10px;overflow:hidden;cursor:pointer;position:relative;background:var(--cream-m);border:var(--tv-border)"><div aria-hidden="true" style="--tv-background-image: url({{ th.img }});position:absolute;inset:0;background-image:var(--tv-background-image);background-size:cover;background-position:center"></div></button>
         </sc-for>
