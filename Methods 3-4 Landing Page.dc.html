@@ -1528,6 +1528,9 @@ section[id],div[id]{scroll-margin-top:calc(var(--hdr,120px) - 1px)}
       .alllink{text-decoration:none!important;border:1px solid var(--border-default);border-radius:999px;padding:9px 15px!important;white-space:nowrap}
       .intensive{align-items:flex-start;line-height:1.35!important;padding:10px 14px!important}
       .intensive>span:first-child{display:none}
+      /* pricing: hourly rate sits beside its caption once the card is a single column */
+      .pricehr{display:flex;align-items:baseline;gap:8px;flex-wrap:wrap;text-align:left!important}
+      .pricehr>div:last-child{margin-top:0!important}
       /* pricing week chips: let labels wrap instead of truncating */
       .wkchips{height:auto!important}
       .wkchips>span{padding:10px 8px!important;min-height:56px}
@@ -2926,7 +2929,7 @@ section[id],div[id]{scroll-margin-top:calc(var(--hdr,120px) - 1px)}
         <div style="border-bottom:1px solid var(--border-on-navy);padding-bottom:24px;margin-bottom:24px">
           <div style="display:flex;align-items:flex-end;justify-content:space-between;gap:20px;flex-wrap:wrap">
             <div style="display:flex;align-items:baseline;gap:12px"><span style="font-family:var(--font-display);font-weight:700;font-size:62px;line-height:1;letter-spacing:-0.02em;color:var(--cream)"><span title="Model field (commercials.price_week)" style="border-bottom:4px dotted rgba(215,252,61,.4);cursor:help">$110</span></span><span style="font:500 15px/1.4 var(--font-body);color:var(--text-on-navy-muted)">per week</span></div>
-            <div style="text-align:right"><div style="font-family:var(--font-display);font-weight:700;font-size:28px;line-height:1;letter-spacing:-0.01em;color:var(--highlighter)">$22</div><div style="font:500 12.5px/1.4 var(--font-body);color:var(--text-on-navy-muted);margin-top:5px">an hour, using all five</div></div>
+            <div class="pricehr" style="text-align:right"><div style="font-family:var(--font-display);font-weight:700;font-size:28px;line-height:1;letter-spacing:-0.01em;color:var(--highlighter)">$22</div><div style="font:500 12.5px/1.4 var(--font-body);color:var(--text-on-navy-muted);margin-top:5px">an hour, using all five</div></div>
           </div>
         </div>
         <p style="font:700 13px/1 var(--font-body);color:var(--cream);margin:0 0 16px">Every week includes</p>
