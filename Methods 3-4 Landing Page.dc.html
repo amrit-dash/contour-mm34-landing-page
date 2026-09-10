@@ -1512,7 +1512,6 @@ section[id],div[id]{scroll-margin-top:calc(var(--hdr,120px) - 1px)}
     #mwf{--p:0;display:none;position:relative;appearance:none;border:1px solid var(--border-subtle);background:var(--surface-raised);color:var(--navy);height:40px;padding:0 3px 0 14px;border-radius:12px;align-items:center;gap:10px;cursor:pointer;font:600 13px/1 var(--font-body);box-shadow:var(--shadow-xs);-webkit-tap-highlight-color:transparent;transition:background var(--dur-s) var(--ease),border-color var(--dur-s) var(--ease),box-shadow var(--dur-s) var(--ease),padding var(--dur-s) var(--ease),gap var(--dur-s) var(--ease)}
     #mwf .mwf-lbl{order:1;max-width:11ch;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;transition:opacity var(--dur-s) var(--ease),max-width var(--dur-s) var(--ease)}
     #mwf .mwf-ring{order:2;position:relative;width:32px;height:32px;border-radius:9px;background:var(--navy);color:var(--cream);display:inline-flex;align-items:center;justify-content:center;isolation:isolate;transition:background var(--dur-s) var(--ease),color var(--dur-s) var(--ease)}
-    #mwf .mwf-ring::before{content:"";position:absolute;inset:0;z-index:1;pointer-events:none;border-radius:inherit;padding:3px;background:conic-gradient(var(--highlighter) calc(var(--p)*360deg),transparent 0);-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);mask-composite:exclude;transition:opacity var(--dur-s) var(--ease)}
     #mwf .mwf-ico{position:absolute;inset:0;overflow:hidden;border-radius:inherit}
     #mwf .mwf-i{position:absolute;inset:0;display:inline-flex;align-items:center;justify-content:center;opacity:0;transform:translateY(14px) scale(.7);transition:opacity var(--dur-m) var(--ease),transform var(--dur-m) var(--ease)}
     #mwf .mwf-i.out{transform:translateY(-14px) scale(.7)}
@@ -1524,7 +1523,7 @@ section[id],div[id]{scroll-margin-top:calc(var(--hdr,120px) - 1px)}
     html.mwf-open #mwf{background:transparent;border-color:transparent;box-shadow:none;padding:0 3px;gap:0}
     html.mwf-open #mwf .mwf-lbl{opacity:0;max-width:0}
     html.mwf-open #mwf .mwf-ring{background:transparent;color:var(--navy)}
-    html.mwf-open #mwf .mwf-ring::before,html.mwf-open #mwf .mwf-i.cur{opacity:0}
+    html.mwf-open #mwf .mwf-i.cur{opacity:0}
     html.mwf-open #mwf .mwf-i.cur{transform:scale(.5)}
     html.mwf-open #mwf .mwf-x{opacity:1;transform:none}
     /* menu: icon squares in a frosted column, the active one navy with its ring and a small label tag */
@@ -1552,7 +1551,12 @@ section[id],div[id]{scroll-margin-top:calc(var(--hdr,120px) - 1px)}
     html.mwf-open #totop{opacity:0;pointer-events:none}
     @media (min-width:761px){#totop{right:22px;bottom:22px;width:46px;height:46px;border-radius:14px;border-bottom:1px solid var(--border-subtle);box-shadow:var(--shadow-md);align-items:center;padding-top:0;transform:translateY(12px) scale(.92)}#totop:hover{box-shadow:var(--shadow-lg);transform:translateY(-2px)}}
     @media (min-width:761px) and (max-width:1250px){#totop{bottom:57px;width:48px;height:46px;border-radius:14px 14px 0 0;border-bottom:0;box-shadow:0 -6px 18px rgba(12,49,102,.10);align-items:flex-start;padding-top:9px;transform:translateY(110%)}html.totop-on #totop{transform:none}#totop:hover{transform:none;box-shadow:0 -8px 22px rgba(12,49,102,.14)}}
+    /* section progress: a hairline under the header that fills as the current section is read, then restarts on the next one */
+    #mwfbar{display:none;position:fixed;top:calc(var(--hdr,107px) - 3px);left:0;right:0;height:6px;z-index:59;background:rgba(12,49,102,.08);pointer-events:none;transition:opacity var(--dur-s) var(--ease)}
+
+    #mwfbar>span{display:block;height:100%;width:calc(var(--p,0)*100%);background:var(--og-blue);border-radius:0 3px 3px 0;box-shadow:0 1px 3px rgba(0,122,255,.28);transition:width .16s linear}
     @media (max-width:760px){
+      html.mwf-live #mwfbar{display:block}
       #mlens{display:inline-flex}
       html.mwf-live #mlens,html.mwf-foot #mlens{display:none}
       html.mwf-live #mwf{display:inline-flex}
@@ -1688,7 +1692,8 @@ section[id],div[id]{scroll-margin-top:calc(var(--hdr,120px) - 1px)}
     </div>
   </div>
 </header>
-<!-- ══ Mobile wayfinder: section menu under the header (phones only) ══ -->
+<!-- ══ Mobile wayfinder: section progress bar + section menu under the header (phones only) ══ -->
+<div id="mwfbar" aria-hidden="true"><span></span></div>
 <div id="mwfdrop">
   <div class="mwf-scrim"></div>
   <nav class="mwf-list" aria-label="Page sections">
@@ -3365,6 +3370,7 @@ class Component extends DCLogic {
                 if (ai < 0) ai = Math.min(lastDone + 1, dots.length - 1);
                 const p = parseFloat(dots[ai].style.getPropertyValue("--p")) || 0;
                 mwf.style.setProperty("--p", p.toFixed(3));
+                const bar = document.getElementById("mwfbar"); if (bar) bar.style.setProperty("--p", p.toFixed(3));
                 const prev = Number(mwf.dataset.i);
                 if (prev !== ai) {
                   mwf.dataset.i = String(ai);
