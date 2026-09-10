@@ -1411,6 +1411,8 @@ section[id],div[id]{scroll-margin-top:calc(var(--hdr,120px) - 1px)}
       /* header: logo and CTA fit a phone without the CTA clipping at the right edge */
       header .ctrp{gap:12px!important}
       header .brand img{height:26px!important}
+      /* hero: the breadcrumb needs air under it before the h1 starts */
+      .hcrumb{padding:34px 0 22px!important}
       /* hero: shorter stack, media cropped for a phone, not a portrait column */
       .hero-g{padding:28px 0 64px!important;gap:44px!important}
       .herovid{margin:0!important;max-width:640px;width:100%}
@@ -1734,7 +1736,7 @@ section[id],div[id]{scroll-margin-top:calc(var(--hdr,120px) - 1px)}
     <sc-if value="{{ anno }}" hint-placeholder-val="{{ false }}">
       <div style="margin:18px 0 0;display:inline-flex;flex-wrap:wrap;gap:10px;font:500 11px/1.5 ui-monospace,Menlo,monospace;color:#B6C4DA;background:rgba(255,249,241,.07);border:1px dashed rgba(255,249,241,.35);border-radius:8px;padding:8px 12px">S1 · Hero · job: "I'm in the right place, this is credible, I can act right now." · title: "VCE Maths Methods 3/4 Tutoring | VIC &amp; Online | Contour" · slug: /vce/maths-methods-3-4-tutoring · refs: pb:google_aggregate · pb:atar_99_share · pb:vic_99plus_share (cleared) · pb:raw50_dux_count · pb:scale_stat</div>
     </sc-if>
-    <div style="display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;padding:24px 0 0">
+    <div class="hcrumb" style="display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;padding:24px 0 0">
       <nav aria-label="Breadcrumb" style="display:flex;align-items:center;gap:9px;flex-wrap:wrap;font:500 13px/1 var(--font-body);color:rgba(255,249,241,.55)">
         <a href="#top" style="color:rgba(255,249,241,.55)">VCE</a><span aria-hidden="true" style="color:rgba(255,249,241,.3)">/</span>
         <a href="#top" style="color:rgba(255,249,241,.55)">Methods</a><span aria-hidden="true" style="color:rgba(255,249,241,.3)">/</span>
