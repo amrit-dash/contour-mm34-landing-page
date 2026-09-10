@@ -1325,7 +1325,11 @@ section[id],div[id]{scroll-margin-top:calc(var(--hdr,120px) - 1px)}
     .sysgrp-top{display:flex;align-items:center;gap:10px;width:100%}
     .sysgrp-chip{font:700 11px/1 var(--font-body);border-radius:999px;padding:6px 10px;letter-spacing:.02em}
     .sysgrp-n{font:600 12px/1 var(--font-body);color:var(--text-muted)}
-    .sysgrp-chev{margin-left:auto;width:26px;height:26px;border-radius:50%;border:1.5px solid var(--border-default);color:var(--navy);display:inline-flex;align-items:center;justify-content:center;font:500 15px/1 var(--font-body)}
+    /* the +/- is drawn, not typed: glyph centring sits on the font's math axis, which reads high inside the circle */
+    .sysgrp-chev{margin-left:auto;flex:none;position:relative;width:26px;height:26px;border-radius:50%;border:1.5px solid var(--border-default);color:var(--navy);display:inline-block;font-size:0;line-height:0}
+    .sysgrp-chev::before,.sysgrp-chev::after{content:"";position:absolute;top:50%;left:50%;width:10px;height:1.5px;border-radius:1px;background:currentColor;transform:translate(-50%,-50%)}
+    .sysgrp-chev::after{transform:translate(-50%,-50%) rotate(90deg);transition:opacity var(--dur-s) var(--ease)}
+    .sysgrp.on .sysgrp-chev::after{opacity:0}
     .sysgrp.on .sysgrp-chev{border-color:var(--navy);background:var(--navy);color:var(--cream)}
     .sysgrp-name{font-family:var(--font-display);font-weight:700;font-size:22px;letter-spacing:-0.015em;line-height:1.15;color:var(--navy)}
     .sysgrp-lead{font:400 13.5px/1.5 var(--font-body);color:var(--text-muted);display:none}
