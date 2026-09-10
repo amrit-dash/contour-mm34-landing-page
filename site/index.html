@@ -1508,7 +1508,8 @@ section[id],div[id]{scroll-margin-top:calc(var(--hdr,120px) - 1px)}
       /* stats keep the lime dash under each number; the group and the watch pill centre in the card */
       .headstats{display:grid!important;grid-template-columns:repeat(3,auto);justify-content:center;gap:clamp(14px,5vw,30px)!important}
       .headstats>div>div:first-child{font-size:clamp(22px,6.6vw,30px)!important;white-space:nowrap}
-      .headact{justify-content:center!important}
+      .headact{flex-direction:column;align-items:center!important;gap:12px!important}
+      .headact>button{align-self:flex-start}
       .viscap{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
       /* reviews: cards sized so the next one peeks in, which is what says "swipe" */
       .revhead{margin-bottom:22px!important;gap:14px!important}
