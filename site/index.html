@@ -1161,6 +1161,38 @@ section[id],div[id]{scroll-margin-top:calc(var(--hdr,120px) - 1px)}
 @media (max-width:1150px) and (min-width:881px){.chipTR{display:none!important}}
     @media (max-width:1250px){#secrail{left:0;right:0;top:auto;bottom:0;transform:none;flex-direction:row;justify-content:center;overflow:visible;border-radius:0;border:none;border-top:1px solid var(--border-subtle);padding:7px 10px;gap:2px}#secrail .lbl{left:50%;top:auto;bottom:calc(100% + 20px);transform:translate(-50%,4px)}#secrail a:hover .lbl{transform:translate(-50%,0)}}
 @media (max-width:760px){#secrail{bottom:calc(58px + env(safe-area-inset-bottom,0px))}}
+    /* ── FAQ: groups are cards that open one at a time, questions are rows inside the open one ── */
+    .faqgrp{background:var(--surface-raised);border:1px solid var(--border-subtle);border-radius:var(--radius-xl);box-shadow:var(--shadow-xs);overflow:hidden;transition:border-color var(--dur-s) var(--ease),box-shadow var(--dur-s) var(--ease)}
+    .faqgrp:has(>.faqgrp-h[aria-expanded="true"]){border-color:var(--navy);box-shadow:var(--shadow-sm)}
+    .faqgrp-h{appearance:none;width:100%;display:flex;align-items:center;gap:14px;padding:18px 22px;border:0;background:transparent;cursor:pointer;text-align:left;font-family:var(--font-body);transition:background var(--dur-s) var(--ease)}
+    .faqgrp-h:hover{background:color-mix(in srgb,var(--cream-m) 34%,var(--surface-raised))}
+    .faqgrp-n{flex:none;font:600 12px/1 var(--font-body);color:var(--text-muted);letter-spacing:.04em}
+    .faqgrp-t{min-width:0;font-family:var(--font-display);font-weight:700;font-size:19px;letter-spacing:-.015em;line-height:1.2;color:var(--navy)}
+    .faqgrp-c{margin-left:auto;flex:none;font:500 12px/1 var(--font-body);color:var(--text-muted);white-space:nowrap}
+    /* the +/- is drawn, like the system section's group toggle, so it centres on the circle */
+    .faq-chev{flex:none;position:relative;width:28px;height:28px;border-radius:50%;border:1.5px solid var(--border-default);color:var(--navy);transition:background var(--dur-s) var(--ease),border-color var(--dur-s) var(--ease),color var(--dur-s) var(--ease)}
+    .faq-chev::before,.faq-chev::after{content:"";position:absolute;top:50%;left:50%;width:11px;height:1.5px;border-radius:1px;background:currentColor;transform:translate(-50%,-50%)}
+    .faq-chev::after{transform:translate(-50%,-50%) rotate(90deg);transition:opacity var(--dur-s) var(--ease)}
+    .faq-chev-s{width:26px;height:26px}
+    .faq-chev-s::before,.faq-chev-s::after{width:10px}
+    [aria-expanded="true"]>.faq-chev{background:var(--navy);border-color:var(--navy);color:var(--cream)}
+    [aria-expanded="true"]>.faq-chev::after{opacity:0}
+    .faqgrp-b{border-top:1px solid var(--border-subtle);animation:sysIn var(--dur-m) var(--ease) both}
+    .faqq+.faqq{border-top:1px solid var(--border-subtle)}
+    .faqq-h{appearance:none;width:100%;display:flex;align-items:center;gap:14px;padding:15px 22px;border:0;background:transparent;cursor:pointer;text-align:left;font-family:var(--font-body);transition:background var(--dur-s) var(--ease)}
+    .faqq-h:hover{background:color-mix(in srgb,var(--cream-m) 26%,var(--surface-raised))}
+    .faqq-q{min-width:0;font:600 14.5px/1.45 var(--font-body);color:var(--navy)}
+    .faqq-h>.faq-chev{margin-left:auto}
+    .faqq-a{margin:0;padding:0 22px 18px;max-width:64ch;font-size:14px;line-height:1.65;color:var(--charcoal);animation:sysIn var(--dur-m) var(--ease) both}
+    @media (max-width:880px){
+      .faqgrp-h{gap:10px;padding:16px 16px}
+      .faqgrp-t{font-size:17px}
+      /* the count would push the title into two lines on a phone; the chevron carries the state */
+      .faqgrp-c{display:none}
+      .faqq-h{gap:10px;padding:14px 16px}
+      .faqq-q{font-size:14px}
+      .faqq-a{padding:0 16px 16px;font-size:13.5px}
+    }
     /* free-week card: the illustration carries the headline beside it rather than sitting on its own row */
     @media (min-width:761px){
       .wksticky{display:grid;grid-template-columns:auto minmax(0,1fr);column-gap:clamp(16px,1.9vw,30px);align-items:center}
@@ -3085,23 +3117,30 @@ section[id],div[id]{scroll-margin-top:calc(var(--hdr,120px) - 1px)}
     </div>
     <p style="font-size:16px;line-height:1.6;color:var(--text-muted);margin:0 0 40px;max-width:52ch">Missed something? <a href="tel:1800888300">Talk to the team</a>, we reply fast.</p>
     <div class="g2" style="display:grid;grid-template-columns:1.25fr .75fr;gap:36px;align-items:start">
-      <div style="display:flex;flex-direction:column;gap:28px">
+      <div style="display:flex;flex-direction:column;gap:14px">
         <sc-for list="{{ faqGroups }}" as="g" hint-placeholder-count="3">
-          <div>
-            <h3 style="font-family:var(--font-display);font-weight:700;font-size:20px;letter-spacing:-0.01em;color:var(--navy);margin:0 0 12px">{{ g.h }}</h3>
-            <div style="display:flex;flex-direction:column;gap:10px">
-              <sc-for list="{{ g.items }}" as="f" hint-placeholder-count="4">
-                <div style="background:var(--surface-raised);border:1px solid var(--border-subtle);border-radius:var(--radius-xl);overflow:hidden">
-                  <button sc-camel-on-click="{{ f.toggle }}" style="appearance:none;border:none;background:transparent;cursor:pointer;width:100%;display:flex;align-items:center;gap:12px;padding:20px 24px;text-align:left;transition:background .15s ease" style-hover="background:var(--cream-m)" aria-expanded="{{ f.ariaExp }}">
-                    <span style="font:600 14.5px/1.4 var(--font-body);color:var(--navy)">{{ f.q }}</span>
-                    <span style="flex:none;margin-left:auto;width:30px;height:30px;border-radius:50%;border:1.5px solid var(--navy);color:var(--navy);display:inline-flex;align-items:center;justify-content:center;font:500 16px/1 var(--font-body)">{{ f.chev }}</span>
-                  </button>
-                  <sc-if value="{{ f.open }}" hint-placeholder-val="{{ false }}">
-                    <p style="font-size:14px;line-height:1.65;color:var(--charcoal);margin:0;padding:0 20px 18px;max-width:64ch">{{ f.a }}</p>
-                  </sc-if>
-                </div>
-              </sc-for>
-            </div>
+          <div class="faqgrp">
+            <button class="faqgrp-h" sc-camel-on-click="{{ g.toggle }}" aria-expanded="{{ g.ariaExp }}">
+              <span class="faqgrp-n">{{ g.n }}</span>
+              <span class="faqgrp-t">{{ g.h }}</span>
+              <span class="faqgrp-c">{{ g.count }}</span>
+              <span class="faq-chev" aria-hidden="true"></span>
+            </button>
+            <sc-if value="{{ g.open }}" hint-placeholder-val="{{ true }}">
+              <div class="faqgrp-b">
+                <sc-for list="{{ g.items }}" as="f" hint-placeholder-count="4">
+                  <div class="faqq">
+                    <button class="faqq-h" sc-camel-on-click="{{ f.toggle }}" aria-expanded="{{ f.ariaExp }}">
+                      <span class="faqq-q">{{ f.q }}</span>
+                      <span class="faq-chev faq-chev-s" aria-hidden="true"></span>
+                    </button>
+                    <sc-if value="{{ f.open }}" hint-placeholder-val="{{ false }}">
+                      <p class="faqq-a">{{ f.a }}</p>
+                    </sc-if>
+                  </div>
+                </sc-for>
+              </div>
+            </sc-if>
           </div>
         </sc-for>
       </div>
@@ -3288,7 +3327,7 @@ const RES = (id, p) => R(RESMAP[id] || p);
 class Component extends DCLogic {
   state = {
     lifecycle: "inseason", lens: "student", variant: "default", anno: false, dots: false, resTab: 0, weaponIdx: 0,
-    level: "mastery", pickedClass: 1, openTerm: 0, openFaq: 0,
+    level: "mastery", pickedClass: 1, openTerm: 0, openFaq: 0, openFaqG: 0,
     modalOpen: false, modalKind: "offer", sent: false, eoiSent: false, shared: false, nurtured: false,
     storyOpen: false, lbOpen: false, lbMode: "atar", galleryIdx: -1, galleryImg: 0, albumIdx: 0, wbPage: 0, headOpen: false, tutorCampus: "All", openTutor: -1, activeSec: "top", railOn: false,
     sysP: 1,
@@ -4077,11 +4116,21 @@ class Component extends DCLogic {
       const i = off + j;
       return { ...q, open: S.openFaq === i, ariaExp: (S.openFaq === i) + "", chev: S.openFaq === i ? "−" : "+", toggle: () => this.setState({ openFaq: S.openFaq === i ? -1 : i }) };
     });
+    // groups are an accordion too: opening one closes the rest and opens its first question,
+    // so the section always shows exactly one group and one answer
     const faqGroups = [
-      { h: "About Maths Methods 3/4", items: mkFaq(shared, 0) },
-      { h: "About the program", items: mkFaq(uni, shared.length) },
-      { h: "About Contour", items: mkFaq([...lensQ, ...contourQ], shared.length + uni.length) },
-    ];
+      { h: "About Maths Methods 3/4", arr: shared, off: 0 },
+      { h: "About the program", arr: uni, off: shared.length },
+      { h: "About Contour", arr: [...lensQ, ...contourQ], off: shared.length + uni.length },
+    ].map((g, gi) => {
+      const on = S.openFaqG === gi;
+      return {
+        h: g.h, items: mkFaq(g.arr, g.off), n: "0" + (gi + 1),
+        count: g.arr.length + (g.arr.length === 1 ? " question" : " questions"),
+        open: on, ariaExp: on + "",
+        toggle: () => this.setState({ openFaqG: on ? -1 : gi, openFaq: on ? -1 : g.off }),
+      };
+    });
 
     // ---- S16 ----
     const finalLines = {
