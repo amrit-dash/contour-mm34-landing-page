@@ -1673,7 +1673,10 @@ section[id],div[id]{scroll-margin-top:calc(var(--hdr,120px) - 1px)}
     html.mwf-open #mwf .mwf-x{opacity:1;transform:none}
     /* menu: icon squares in a frosted column, the active one navy with its ring and a small label tag */
     #mwfdrop{position:fixed;inset:0;z-index:58;display:none;pointer-events:none}
-    html.mwf-open #mwfdrop{display:block}
+    html.mwf-open #mwfdrop,html.mwf-closing #mwfdrop{display:block}
+    html.mwf-closing #mwfdrop{pointer-events:none}
+    html.mwf-closing .mwf-list,html.mwf-closing .mwf-list::before{animation:mwfOut 200ms var(--ease) both}
+    html.mwf-closing .mwfrow>.mwf-sq,html.mwf-closing .mwfrow>.mwf-name{animation:none}
     .mwf-scrim{display:none}
     .mwf-list{position:absolute;top:var(--hdr,107px);right:calc(max(10px,var(--gx) - 12px) - 10px);display:flex;flex-direction:column;gap:16px;align-items:center;pointer-events:auto;padding:16px 10px}
     .mwfrow{--p:0;position:relative;display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--navy)}
@@ -1689,6 +1692,7 @@ section[id],div[id]{scroll-margin-top:calc(var(--hdr,120px) - 1px)}
     .mwfrow:focus-visible{outline:none}.mwfrow:focus-visible .mwf-sq{outline:3px solid rgba(0,122,255,.45);outline-offset:3px}
     @keyframes mwfIn{from{opacity:0;transform:translateY(-10px)}to{opacity:1;transform:none}}
     @keyframes mwfNameIn{from{opacity:0;transform:translateY(-50%) translateX(8px)}to{opacity:1;transform:translateY(-50%)}}
+    @keyframes mwfOut{from{opacity:1;transform:none}to{opacity:0;transform:translateY(-8px)}}
     @keyframes mwfScrim{from{opacity:0}to{opacity:1}}
     /* ── Back to top ── phones: a tab that rises out of the sticky trial bar; desktop: small FAB bottom-right */
     #totop{--tt-h:38px;--tt-tuck:10px;box-sizing:border-box;position:fixed;right:14px;bottom:calc(var(--barh,76px) - var(--tt-tuck));z-index:57;width:46px;height:var(--tt-h);border-radius:14px 14px 0 0;background:var(--surface-raised);color:var(--navy);border:1px solid var(--border-subtle);border-bottom:0;box-shadow:0 -6px 18px rgba(12,49,102,.10);display:inline-flex;align-items:center;justify-content:center;padding-bottom:var(--tt-tuck);opacity:0;transform:translateY(110%);pointer-events:none;transition:opacity var(--dur-s) var(--ease),transform var(--dur-m) var(--ease),box-shadow var(--dur-s) var(--ease),height var(--dur-s) var(--ease)}
@@ -3611,7 +3615,15 @@ class Component extends DCLogic {
         {
           const html = document.documentElement;
           const setOpen = (o) => {
+            const was = html.classList.contains("mwf-open");
             html.classList.toggle("mwf-open", o);
+            if (was && !o) {
+              html.classList.add("mwf-closing");
+              clearTimeout(W.__mwfShut);
+              W.__mwfShut = setTimeout(() => html.classList.remove("mwf-closing"), 220);
+            } else if (o) {
+              clearTimeout(W.__mwfShut); html.classList.remove("mwf-closing");
+            }
             const b = document.getElementById("mwf"); if (b) b.setAttribute("aria-expanded", o ? "true" : "false");
             if (o) { const f = document.querySelector("#mwfdrop .mwfrow.on") || document.querySelector("#mwfdrop .mwfrow"); if (f) f.focus({ preventScroll: true }); }
           };
