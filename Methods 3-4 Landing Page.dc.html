@@ -1527,21 +1527,23 @@ section[id],div[id]{scroll-margin-top:calc(var(--hdr,120px) - 1px)}
     html.mwf-open #mwf .mwf-i.cur{transform:scale(.5)}
     html.mwf-open #mwf .mwf-x{opacity:1;transform:none}
     /* menu: icon squares in a frosted column, the active one navy with its ring and a small label tag */
-    #mwfdrop{position:fixed;left:0;right:0;top:var(--hdr,107px);bottom:0;z-index:58;display:none;pointer-events:none}
+    #mwfdrop{position:fixed;inset:0;z-index:58;display:none;pointer-events:none}
     html.mwf-open #mwfdrop{display:block}
     .mwf-scrim{display:none}
-    .mwf-list{position:absolute;top:0;right:calc(var(--gx) - 10px);display:flex;flex-direction:column;gap:10px;align-items:flex-end;pointer-events:auto;padding:12px 10px 14px;isolation:isolate;animation:mwfScrim var(--dur-s) var(--ease) both}
-    .mwfrow{--p:0;display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--navy)}
-    .mwfrow>.mwf-name,.mwfrow>.mwf-sq{animation:mwfIn var(--dur-m) var(--ease) both;animation-delay:calc(var(--i,0)*40ms)}
-    .mwf-list::before{content:"";position:absolute;z-index:-1;pointer-events:none;top:6px;bottom:8px;right:4px;width:56px;border-radius:20px;background:rgba(255,253,249,.62);border:1px solid rgba(255,255,255,.75);backdrop-filter:blur(16px) saturate(1.1);-webkit-backdrop-filter:blur(16px) saturate(1.1);box-shadow:0 0 34px 14px rgba(255,249,241,.85),0 8px 24px rgba(12,49,102,.06)}
-    .mwf-name{display:none;font:600 12px/1 var(--font-body);color:var(--cream);background:var(--navy);padding:8px 10px;border-radius:9px;white-space:nowrap}
+    .mwf-list{position:absolute;top:var(--hdr,107px);right:calc(max(10px,var(--gx) - 12px) - 10px);display:flex;flex-direction:column;gap:16px;align-items:center;pointer-events:auto;padding:16px 10px}
+    .mwfrow{--p:0;position:relative;display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--navy)}
+    .mwfrow>.mwf-sq{animation:mwfIn var(--dur-m) var(--ease) both;animation-delay:calc(var(--i,0)*40ms)}
+    .mwfrow>.mwf-name{animation:mwfNameIn var(--dur-m) var(--ease) both;animation-delay:calc(var(--i,0)*40ms)}
+    .mwf-list::before{content:"";position:absolute;z-index:-1;pointer-events:none;inset:-30px -44px -52px -24px;animation:mwfScrim var(--dur-s) var(--ease) both;backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);-webkit-mask-image:linear-gradient(to right,transparent,#000 22%),linear-gradient(to bottom,#000,#000 84%,transparent);-webkit-mask-composite:source-in;mask-image:linear-gradient(to right,transparent,#000 22%),linear-gradient(to bottom,#000,#000 84%,transparent);mask-composite:intersect}
+    .mwf-name{display:none;position:absolute;right:calc(100% + 12px);top:50%;transform:translateY(-50%);font:600 12px/1 var(--font-body);color:var(--cream);background:var(--og-blue);padding:8px 10px;border-radius:9px;white-space:nowrap}
     .mwfrow.on .mwf-name{display:block}
     .mwf-sq{position:relative;isolation:isolate;width:44px;height:44px;border-radius:13px;background:#fff;border:1px solid var(--border-subtle);color:var(--text-muted);box-shadow:var(--shadow-xs);display:inline-flex;align-items:center;justify-content:center;transition:background var(--dur-s) var(--ease),color var(--dur-s) var(--ease)}
     .mwfrow.done .mwf-sq{color:var(--og-blue)}
-    .mwfrow.on .mwf-sq{background:var(--navy);color:var(--cream);border-color:var(--navy)}
-    .mwfrow.on .mwf-sq::before{content:"";position:absolute;inset:-1px;z-index:1;pointer-events:none;border-radius:13px;padding:3.5px;background:conic-gradient(var(--highlighter) calc(var(--p)*360deg),transparent 0);-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);mask-composite:exclude}
+    .mwfrow.on .mwf-sq{background:var(--navy);color:var(--cream);border-color:var(--navy);box-shadow:0 0 0 4px var(--cream)}
+    .mwfrow.on .mwf-sq::before{content:"";position:absolute;inset:-4px;z-index:1;pointer-events:none;border-radius:17px;padding:4px;background:conic-gradient(var(--og-blue) calc(var(--p)*360deg),rgba(12,49,102,.10) 0);-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);mask-composite:exclude}
     .mwfrow:focus-visible{outline:none}.mwfrow:focus-visible .mwf-sq{outline:3px solid rgba(0,122,255,.45);outline-offset:3px}
     @keyframes mwfIn{from{opacity:0;transform:translateY(-10px)}to{opacity:1;transform:none}}
+    @keyframes mwfNameIn{from{opacity:0;transform:translateY(-50%) translateX(8px)}to{opacity:1;transform:translateY(-50%)}}
     @keyframes mwfScrim{from{opacity:0}to{opacity:1}}
     /* ── Back to top ── phones: a tab that rises out of the sticky trial bar; desktop: small FAB bottom-right */
     #totop{position:fixed;right:14px;bottom:calc(var(--barh,76px) - 12px);z-index:57;width:48px;height:46px;border-radius:14px 14px 0 0;background:var(--surface-raised);color:var(--navy);border:1px solid var(--border-subtle);border-bottom:0;box-shadow:0 -6px 18px rgba(12,49,102,.10);display:inline-flex;align-items:center;justify-content:center;padding-bottom:12px;opacity:0;transform:translateY(110%);pointer-events:none;transition:opacity var(--dur-s) var(--ease),transform var(--dur-m) var(--ease),box-shadow var(--dur-s) var(--ease)}
