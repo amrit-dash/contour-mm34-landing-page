@@ -1556,6 +1556,9 @@ section[id],div[id]{scroll-margin-top:calc(var(--hdr,120px) - 1px)}
       #mlens{display:inline-flex}
       html.mwf-live #mlens,html.mwf-foot #mlens{display:none}
       html.mwf-live #mwf{display:inline-flex}
+      /* the right cluster sits closer to the edge than the text gutter; the logo keeps the full gutter */
+      header .ctrp{padding-right:max(10px,calc(var(--gx) - 12px))!important}
+      #mwf{padding-right:2px}
       header .ctrp>div>.sc-host-x{display:none!important}
       /* the hero's own lens chip moves into the header on phones */
       .herolens{display:none!important}
