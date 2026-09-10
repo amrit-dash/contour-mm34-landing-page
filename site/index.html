@@ -1640,19 +1640,19 @@ section[id],div[id]{scroll-margin-top:calc(var(--hdr,120px) - 1px)}
     @keyframes mwfNameIn{from{opacity:0;transform:translateY(-50%) translateX(8px)}to{opacity:1;transform:translateY(-50%)}}
     @keyframes mwfScrim{from{opacity:0}to{opacity:1}}
     /* ── Back to top ── phones: a tab that rises out of the sticky trial bar; desktop: small FAB bottom-right */
-    #totop{position:fixed;right:14px;bottom:calc(var(--barh,76px) - 10px);z-index:57;width:46px;height:38px;border-radius:14px 14px 0 0;background:var(--surface-raised);color:var(--navy);border:1px solid var(--border-subtle);border-bottom:0;box-shadow:0 -6px 18px rgba(12,49,102,.10);display:inline-flex;align-items:center;justify-content:center;padding-bottom:10px;opacity:0;transform:translateY(110%);pointer-events:none;transition:opacity var(--dur-s) var(--ease),transform var(--dur-m) var(--ease),box-shadow var(--dur-s) var(--ease)}
+    #totop{--tt-h:38px;--tt-tuck:10px;box-sizing:border-box;position:fixed;right:14px;bottom:calc(var(--barh,76px) - var(--tt-tuck));z-index:57;width:46px;height:var(--tt-h);border-radius:14px 14px 0 0;background:color-mix(in srgb,var(--cream-m) 30%,var(--surface-raised));color:var(--navy);border:1px solid var(--border-subtle);border-bottom:0;box-shadow:0 -6px 18px rgba(12,49,102,.10);display:inline-flex;align-items:center;justify-content:center;padding-bottom:var(--tt-tuck);opacity:0;transform:translateY(110%);pointer-events:none;transition:opacity var(--dur-s) var(--ease),transform var(--dur-m) var(--ease),box-shadow var(--dur-s) var(--ease),height var(--dur-s) var(--ease)}
     html.totop-on #totop{opacity:1;transform:none;pointer-events:auto}
     #totop>svg{transition:transform var(--dur-s) var(--ease)}
-    /* hover lifts the whole tab and nudges the chevron; the click keeps the chevron up until the top is reached */
-    html.totop-on #totop:hover>svg,#totop.tt-go>svg{transform:translateY(-3px)}
+    html.totop-on #totop:hover,html.totop-on #totop:focus-visible,#totop.tt-go{--tt-h:48px}
+    html.totop-on #totop:hover>svg,html.totop-on #totop:focus-visible>svg,#totop.tt-go>svg{transform:translateY(-2px)}
     html.mwf-open #totop{opacity:0;pointer-events:none}
-    @media (min-width:761px){#totop{right:22px;bottom:22px;width:42px;height:42px;border-radius:13px;border-bottom:1px solid var(--border-subtle);box-shadow:var(--shadow-md);align-items:center;padding-bottom:0;transform:translateY(12px) scale(.92)}html.totop-on #totop:hover{box-shadow:var(--shadow-lg);transform:translateY(-3px) scale(1.06)}}
-    @media (min-width:761px) and (max-width:1250px){#totop{z-index:54;bottom:52px;width:46px;height:39px;border-radius:14px 14px 0 0;border-bottom:0;box-shadow:0 -6px 18px rgba(12,49,102,.10);align-items:center;padding-top:0;padding-bottom:5px;transform:translateY(110%)}html.totop-on #totop{transform:none}html.totop-on #totop:hover{transform:translateY(-3px) scale(1.05);box-shadow:0 -8px 22px rgba(12,49,102,.14)}}
+    @media (min-width:761px){#totop{--tt-h:42px;--tt-tuck:0px;right:22px;bottom:22px;width:42px;border-radius:13px;border-bottom:1px solid var(--border-subtle);box-shadow:var(--shadow-md);align-items:center;transform:translateY(12px) scale(.92)}html.totop-on #totop:hover{--tt-h:42px;box-shadow:var(--shadow-lg);transform:translateY(-3px)}}
+    @media (min-width:761px) and (max-width:1250px){#totop{--tt-h:39px;--tt-tuck:5px;z-index:54;bottom:calc(57px - var(--tt-tuck));width:46px;border-radius:14px 14px 0 0;border-bottom:0;box-shadow:0 -6px 18px rgba(12,49,102,.10);align-items:center;padding-top:0;transform:translateY(110%)}html.totop-on #totop{transform:none}html.totop-on #totop:hover,html.totop-on #totop:focus-visible,#totop.tt-go{--tt-h:49px;box-shadow:0 -8px 22px rgba(12,49,102,.14)}}
     /* wide desktop: the rail stands on the left, so the tab rides its top edge the same way it rides the bottom bar */
     @media (min-width:1251px){
-      #totop{z-index:54;left:var(--rail-l,14px);right:auto;top:calc(var(--rail-t,50vh) - 34px);bottom:auto;width:var(--rail-w,62px);height:40px;border-radius:16px 16px 0 0;border-bottom:0;box-shadow:0 -6px 18px rgba(12,49,102,.10);align-items:center;padding-top:0;padding-bottom:6px;transform:translateY(14px) scale(1)}
+      #totop{--tt-h:40px;--tt-tuck:6px;z-index:54;left:var(--rail-l,14px);right:auto;top:calc(var(--rail-t,50vh) - var(--tt-h) + var(--tt-tuck));bottom:auto;width:var(--rail-w,62px);border-radius:16px 16px 0 0;border-bottom:0;box-shadow:0 -6px 18px rgba(12,49,102,.10);align-items:center;padding-top:0;transform:translateY(14px) scale(1);transition:opacity var(--dur-s) var(--ease),transform var(--dur-m) var(--ease),box-shadow var(--dur-s) var(--ease),height var(--dur-s) var(--ease),top var(--dur-s) var(--ease)}
       html.totop-on #totop{transform:none}
-      html.totop-on #totop:hover{transform:translateY(-3px) scale(1.05);box-shadow:0 -8px 22px rgba(12,49,102,.14)}
+      html.totop-on #totop:hover,html.totop-on #totop:focus-visible,#totop.tt-go{--tt-h:50px;transform:none;box-shadow:0 -10px 24px rgba(12,49,102,.14)}
       /* no rail on screen, no tab to hang off it */
       html:not(.rail-on) #totop{opacity:0;pointer-events:none;transform:translateY(14px)}
     }
@@ -3456,8 +3456,9 @@ class Component extends DCLogic {
           try {
             document.documentElement.dataset.spyTick = String(Date.now());
             const y = W.scrollY, vh = W.innerHeight;
-            if (y === W.__mm34Y && vh === W.__mm34H) return;
-            W.__mm34Y = y; W.__mm34H = vh;
+            const vw = W.innerWidth;
+            if (y === W.__mm34Y && vh === W.__mm34H && vw === W.__mm34W) return;
+            W.__mm34Y = y; W.__mm34H = vh; W.__mm34W = vw;
             try {
               const hd = document.querySelector("header");
               const hb = hd ? Math.max(0, hd.getBoundingClientRect().bottom) : 120;
@@ -3472,10 +3473,17 @@ class Component extends DCLogic {
               const footerIn = ft ? ft.getBoundingClientRect().top < vh * 0.72 : false;
               rail.classList.toggle("on", cur !== "top" && y > vh * 0.6 && !footerIn);
               try {
-                const rr = rail.getBoundingClientRect(), ds = document.documentElement.style;
-                ds.setProperty("--rail-t", Math.round(rr.top) + "px");
-                ds.setProperty("--rail-l", Math.round(rr.left) + "px");
-                ds.setProperty("--rail-w", Math.round(rr.width) + "px");
+                const ds = document.documentElement.style;
+                // the tab only rides the rail's top edge while the rail is the vertical column;
+                // below that the rail is a full-width bar and its rect must not size the tab
+                if (vw > 1250) {
+                  const rr = rail.getBoundingClientRect();
+                  ds.setProperty("--rail-t", Math.round(rr.top) + "px");
+                  ds.setProperty("--rail-l", Math.round(rr.left) + "px");
+                  ds.setProperty("--rail-w", Math.round(rr.width) + "px");
+                } else {
+                  ds.removeProperty("--rail-t"); ds.removeProperty("--rail-l"); ds.removeProperty("--rail-w");
+                }
               } catch (e) {}
               document.documentElement.classList.toggle("rail-on", rail.classList.contains("on"));
               // phones: the header shows the lens switch until the story begins, then the wayfinder pill takes over
@@ -3568,7 +3576,7 @@ class Component extends DCLogic {
         }
       }
       if (!W.__mm34SpyInt) W.__mm34SpyInt = setInterval(W.__mm34Drive, 300);
-      W.__mm34Y = -1; W.__mm34H = -1; W.__mm34Drive();
+      W.__mm34Y = -1; W.__mm34H = -1; W.__mm34W = -1; W.__mm34Drive();
       if (!W.__mm34SpyRaf) {
         W.__mm34SpyRaf = true;
         const loop = () => { try { W.__mm34Drive(); } catch (e) {} try { requestAnimationFrame(loop); } catch (e) {} };
