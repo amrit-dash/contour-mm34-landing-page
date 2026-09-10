@@ -1161,6 +1161,14 @@ section[id],div[id]{scroll-margin-top:calc(var(--hdr,120px) - 1px)}
 @media (max-width:1150px) and (min-width:881px){.chipTR{display:none!important}}
     @media (max-width:1250px){#secrail{left:0;right:0;top:auto;bottom:0;transform:none;flex-direction:row;justify-content:center;overflow:visible;border-radius:0;border:none;border-top:1px solid var(--border-subtle);padding:7px 10px;gap:2px}#secrail .lbl{left:50%;top:auto;bottom:calc(100% + 10px);transform:translate(-50%,4px)}#secrail a:hover .lbl{transform:translate(-50%,0)}}
 @media (max-width:760px){#secrail{bottom:calc(58px + env(safe-area-inset-bottom,0px))}}
+    /* free-week card: the illustration carries the headline beside it rather than sitting on its own row */
+    @media (min-width:901px){
+      .wksticky{display:grid;grid-template-columns:auto minmax(0,1fr);column-gap:clamp(18px,1.9vw,30px);align-items:center}
+      .wksticky>.wkicon{grid-column:1;grid-row:1;width:auto;height:clamp(92px,7.4vw,124px)!important;margin:0!important}
+      .wksticky>h2{grid-column:2;grid-row:1;margin:0!important}
+      .wksticky>*:not(.wkicon):not(h2){grid-column:1/-1}
+      .wksticky>p{margin-top:20px!important}
+    }
 @media (max-width:900px){.wksticky{position:static!important}.resrow{grid-template-columns:1fr!important;padding:30px 0!important}.resrow>div{order:0!important}}
     body{margin:0;background:var(--cream);color:var(--charcoal);font-family:var(--font-body,Inter,sans-serif);-webkit-font-smoothing:antialiased}
     a{color:var(--navy);text-decoration:none}a:hover{color:var(--og-blue)}
@@ -1225,16 +1233,36 @@ section[id],div[id]{scroll-margin-top:calc(var(--hdr,120px) - 1px)}
     button>div>[aria-hidden="true"]{transition:transform .55s cubic-bezier(.22,1,.36,1)}
     button:hover>div>[aria-hidden="true"]{transform:scale(1.045)}
     @media (max-width:880px){.g2>div{order:0!important}.fng{grid-template-columns:1fr!important}}
+    /* founders note: the headline is row 1 of the grid and spans every column, so it measures
+       against the whole container instead of the middle one. Sized off the container (19.35x per
+       em in PolySans Bulky, so 5cqi always leaves slack) it holds one line wherever it is wide. */
+    .fnhead{grid-column:1/-1;container-type:inline-size;margin:0}
+    .fnbr{display:none}
+    .fng>.hide-m{box-sizing:border-box}
+    @media (min-width:1201px),(min-width:701px) and (max-width:880px){
+      /* beats the section-h2 normaliser below, which would otherwise size it off vw and wrap it */
+      section.sec>.ctrp>.fng>.fnhead>.fnh2{font-size:min(42px,5cqi)!important;white-space:nowrap}
+    }
+    /* photos ride high beside the letter instead of centring on it, so they do not hang low */
+    @media (min-width:1201px){.fng>.hide-m{align-self:start;width:100%!important;margin-top:clamp(8px,1.2vw,22px)}}
     /* founders note: three columns only work when the letter still has a comfortable measure.
-       Between 881px and 1200px the two photo columns strangle it, so the letter moves left and the photos stack right. */
+       Between 881px and 1200px the two photo columns strangle it, so the headline and the letter
+       move left, the headline breaks over two lines, and the photos stack down the right and
+       stretch to fill the height of that block. */
     @media (min-width:881px) and (max-width:1200px){
-      .fng{grid-template-columns:minmax(0,1fr) clamp(180px,22vw,220px)!important;grid-template-rows:auto auto;gap:clamp(24px,3.4vw,40px)!important;align-items:start!important}
-      .fng>div:nth-child(2){grid-column:1;grid-row:1/3;text-align:left!important;align-self:center}
-      .fng>div:nth-child(2)>img:first-child{margin:0 0 20px!important}
-      .fng>div:nth-child(2)>div[title^="Placeholder signatures"]{justify-content:flex-start!important}
-      .fng>.hide-m{grid-column:2;width:auto!important;justify-self:stretch!important}
-      .fng>.hide-m:first-child{grid-row:1;transform:rotate(-2.5deg)}
-      .fng>.hide-m:last-child{grid-row:2;transform:rotate(2.5deg)}
+      .fng{grid-template-columns:minmax(0,1fr) clamp(200px,23vw,250px)!important;grid-template-rows:auto auto;column-gap:clamp(28px,3.6vw,48px)!important;row-gap:clamp(24px,3vw,36px)!important;align-items:start!important}
+      .fnhead{grid-column:1;grid-row:1;text-align:left!important}
+      .fnhead>img{margin:0 0 20px!important}
+      .fnbr{display:inline}
+      /* two lines: the longest of them runs 13.13x the font-size, so 7.3cqi keeps it inside the column */
+      section.sec>.ctrp>.fng>.fnhead>.fnh2{font-size:min(40px,7.3cqi)!important;white-space:normal}
+      .fnletter{grid-column:1;grid-row:2;text-align:left!important}
+      .fnletter>div[title^="Placeholder signatures"]{justify-content:flex-start!important}
+      /* both cards span the whole block: one pinned to the top of the headline, one to the
+         bottom of the letter, so the column reads full without stretching the rows */
+      .fng>.hide-m{grid-column:2;grid-row:1/3;width:auto!important;justify-self:stretch!important}
+      .fng>.fnph1{align-self:start;transform:rotate(-2.5deg)}
+      .fng>.fnph2{align-self:end;transform:rotate(2.5deg)}
     }
     @media (max-width:760px){footer>div{padding-bottom:180px!important}}
     @media (max-width:420px){#secrail{gap:0;padding:6px 4px}#secrail a{width:32px;height:32px}}
@@ -1307,7 +1335,11 @@ section[id],div[id]{scroll-margin-top:calc(var(--hdr,120px) - 1px)}
     .sysgrp-top{display:flex;align-items:center;gap:10px;width:100%}
     .sysgrp-chip{font:700 11px/1 var(--font-body);border-radius:999px;padding:6px 10px;letter-spacing:.02em}
     .sysgrp-n{font:600 12px/1 var(--font-body);color:var(--text-muted)}
-    .sysgrp-chev{margin-left:auto;width:26px;height:26px;border-radius:50%;border:1.5px solid var(--border-default);color:var(--navy);display:inline-flex;align-items:center;justify-content:center;font:500 15px/1 var(--font-body)}
+    /* the +/- is drawn, not typed: glyph centring sits on the font's math axis, which reads high inside the circle */
+    .sysgrp-chev{margin-left:auto;flex:none;position:relative;width:26px;height:26px;border-radius:50%;border:1.5px solid var(--border-default);color:var(--navy);display:inline-block;font-size:0;line-height:0}
+    .sysgrp-chev::before,.sysgrp-chev::after{content:"";position:absolute;top:50%;left:50%;width:10px;height:1.5px;border-radius:1px;background:currentColor;transform:translate(-50%,-50%)}
+    .sysgrp-chev::after{transform:translate(-50%,-50%) rotate(90deg);transition:opacity var(--dur-s) var(--ease)}
+    .sysgrp.on .sysgrp-chev::after{opacity:0}
     .sysgrp.on .sysgrp-chev{border-color:var(--navy);background:var(--navy);color:var(--cream)}
     .sysgrp-name{font-family:var(--font-display);font-weight:700;font-size:22px;letter-spacing:-0.015em;line-height:1.15;color:var(--navy)}
     .sysgrp-lead{font:400 13.5px/1.5 var(--font-body);color:var(--text-muted);display:none}
@@ -2895,14 +2927,16 @@ section[id],div[id]{scroll-margin-top:calc(var(--hdr,120px) - 1px)}
 <!-- ══ S11b · Founders note ══ -->
 <section id="founders-note" data-screen-label="S11b Founders note" class="sec thread" style="padding:110px 0;border-top:1px solid var(--border-subtle)">
   <div class="ctrp" style="max-width:var(--container-max);margin:0 auto;padding:0 clamp(32px,11vw,210px)">
-    <div class="fng" style="display:grid;grid-template-columns:1fr minmax(0,620px) 1fr;gap:clamp(24px,4vw,56px);align-items:center">
-      <div class="hide-m" style="transform:rotate(-4deg);justify-self:end;width:min(210px,100%);background:var(--surface-raised);border:1px solid var(--border-subtle);border-radius:var(--radius-xl);box-shadow:var(--shadow-md);padding:10px 10px 0" title="Drop a real photo here">
+    <div class="fng" style="display:grid;grid-template-columns:clamp(196px,15.5vw,228px) minmax(0,1fr) clamp(196px,15.5vw,228px);column-gap:clamp(28px,4.6vw,72px);row-gap:clamp(26px,3.4vw,42px);align-items:center">
+      <div class="fnhead" style="text-align:center">
+        <img loading="lazy" decoding="async" src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTM3IiBoZWlnaHQ9IjEzOSIgdmlld0JveD0iMCAyNSAxMzcgMTM4LjUiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxwYXRoIGQ9Ik04Mi44ODE5IDEzMS42ODVDNzguMTUwNyAxMzMuNTkgNzIuOTczNiAxMzQuNjAyIDY3LjU1NDYgMTM0LjUxNUM0Ni4wMTk3IDEzNC4xNyAyOC41Mzg0IDExNi4yNzMgMjguMzk0OCA5NC40MzQ1QzI4LjI0NjIgNzIuMDE2IDQ2LjEyNTYgNTMuNzk0NiA2OC4xOTk1IDUzLjc5NDZDNzMuMzkxOCA1My43OTQ2IDc4LjM0OTcgNTQuODAzNiA4Mi44OTcgNTYuNjM1MkM4Ni4wNjM3IDU3LjkxMjUgODkuNjcxNCA1Ny4xNjE1IDkyLjA4MjMgNTQuNzE5M0wxMDAuNjc2IDQ2LjAwNTlDMTA0Ljc3NyA0MS44NDcxIDEwMy42OTQgMzQuNzk2NiA5OC40OTY0IDMyLjE4MDhDODkuMzY5MSAyNy41ODUyIDc5LjA4MjggMjUgNjguMjAyIDI1QzMwLjUzNjIgMjUgMCA1NS45NjM0IDAgOTQuMTU2MUMwIDEzMi4zNDkgMzAuNTM2MiAxNjMuMzEyIDY4LjIwMiAxNjMuMzEyQzc5LjA4MjggMTYzLjMxMiA4OS4zNjkxIDE2MC43MjcgOTguNDk2NCAxNTYuMTMxQzEwMy42OTQgMTUzLjUxNiAxMDQuNzc3IDE0Ni40NjUgMTAwLjY3NiAxNDIuMzA2TDkyLjA4MjMgMTMzLjU5M0M4OS42Njg4IDEzMS4xNDggODYuMDUzNyAxMzAuNDA3IDgyLjg4MTkgMTMxLjY4NVoiIGZpbGw9IiMwQzMxNjYiPjwvcGF0aD4KPHBhdGggZD0iTTExNy43MyA1OS4xNTY1TDEwNi4wODQgNzAuOTY2MUMxMDQuMjM3IDcyLjgzODUgMTAzLjY4OCA3NS42Njg5IDEwNC43MjYgNzguMDk4M0MxMDUuNDU2IDc5LjgwNzMgMTA2LjA3NiA4MS41NzUgMTA2LjU3IDgzLjM5NjRIODguMTAzNkM4NC4zNyA3Ni4zMTI3IDc3LjA2NjYgNzEuNDUxNCA2OC42Mjk1IDcxLjI5MDVDNTYuMjg3NSA3MS4wNTU1IDQ1LjkzNTggODEuMDkyMiA0NS42NDYxIDkzLjYwNjhDNDUuMzQ2MyAxMDYuNDkyIDU1LjU1NjkgMTE3LjAzMiA2OC4xOTYyIDExNy4wMzJDNzYuODE3MiAxMTcuMDMyIDg0LjMwNyAxMTIuMTI3IDg4LjEwMzYgMTA0LjkyM0gxMDYuNTdDMTA2LjA3NCAxMDYuNzQ1IDEwNS40NTYgMTA4LjUxMiAxMDQuNzI2IDExMC4yMjFDMTAzLjY4NSAxMTIuNjUxIDEwNC4yMzUgMTE1LjQ4MSAxMDYuMDg0IDExNy4zNTRMMTE3LjczIDEyOS4xNjNDMTIwLjc0MyAxMzIuMjE4IDEyNS43ODcgMTMxLjQ3OCAxMjcuODU4IDEyNy42OTlDMTMzLjMwMiAxMTcuNzY1IDEzNi40MDEgMTA2LjMzMSAxMzYuNDAxIDk0LjE2MTFDMTM2LjQwMSA4MS45OTE0IDEzMy4zIDcwLjU1NzMgMTI3Ljg1OCA2MC42MjI4QzEyNS43ODcgNTYuODQyMSAxMjAuNzQzIDU2LjEwMTMgMTE3LjczIDU5LjE1NjVaIiBmaWxsPSIjMEMzMTY2Ij48L3BhdGg+Cjwvc3ZnPg==" alt="" style="height:30px;display:block;margin:0 auto 24px">
+        <h2 class="fnh2" style="font-family:var(--font-display);font-weight:700;font-size:clamp(28px,7.2vw,40px);letter-spacing:-0.02em;line-height:1.14;color:var(--navy);margin:0">Contour is built by students,<br class="fnbr"> for students.</h2>
+      </div>
+      <div class="hide-m fnph1" style="transform:rotate(-4deg);justify-self:end;width:min(210px,100%);background:var(--surface-raised);border:1px solid var(--border-subtle);border-radius:var(--radius-xl);box-shadow:var(--shadow-md);padding:10px 10px 0" title="Drop a real photo here">
         <div style="height:172px;border-radius:12px;overflow:hidden;background:var(--cream-m)"><image-slot id="fnote-then" shape="rect" placeholder="The two of us, back as students"></image-slot></div>
         <div style="height:44px;display:flex;align-items:center;justify-content:space-between;gap:10px;padding:0 4px"><span style="font:600 12.5px/1.3 var(--font-body);color:var(--navy)">Students, not long ago</span><span style="font:500 11.5px/1 var(--font-body);color:var(--text-muted)">01</span></div>
       </div>
-      <div style="text-align:center">
-        <img loading="lazy" decoding="async" src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTM3IiBoZWlnaHQ9IjEzOSIgdmlld0JveD0iMCAyNSAxMzcgMTM4LjUiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxwYXRoIGQ9Ik04Mi44ODE5IDEzMS42ODVDNzguMTUwNyAxMzMuNTkgNzIuOTczNiAxMzQuNjAyIDY3LjU1NDYgMTM0LjUxNUM0Ni4wMTk3IDEzNC4xNyAyOC41Mzg0IDExNi4yNzMgMjguMzk0OCA5NC40MzQ1QzI4LjI0NjIgNzIuMDE2IDQ2LjEyNTYgNTMuNzk0NiA2OC4xOTk1IDUzLjc5NDZDNzMuMzkxOCA1My43OTQ2IDc4LjM0OTcgNTQuODAzNiA4Mi44OTcgNTYuNjM1MkM4Ni4wNjM3IDU3LjkxMjUgODkuNjcxNCA1Ny4xNjE1IDkyLjA4MjMgNTQuNzE5M0wxMDAuNjc2IDQ2LjAwNTlDMTA0Ljc3NyA0MS44NDcxIDEwMy42OTQgMzQuNzk2NiA5OC40OTY0IDMyLjE4MDhDODkuMzY5MSAyNy41ODUyIDc5LjA4MjggMjUgNjguMjAyIDI1QzMwLjUzNjIgMjUgMCA1NS45NjM0IDAgOTQuMTU2MUMwIDEzMi4zNDkgMzAuNTM2MiAxNjMuMzEyIDY4LjIwMiAxNjMuMzEyQzc5LjA4MjggMTYzLjMxMiA4OS4zNjkxIDE2MC43MjcgOTguNDk2NCAxNTYuMTMxQzEwMy42OTQgMTUzLjUxNiAxMDQuNzc3IDE0Ni40NjUgMTAwLjY3NiAxNDIuMzA2TDkyLjA4MjMgMTMzLjU5M0M4OS42Njg4IDEzMS4xNDggODYuMDUzNyAxMzAuNDA3IDgyLjg4MTkgMTMxLjY4NVoiIGZpbGw9IiMwQzMxNjYiPjwvcGF0aD4KPHBhdGggZD0iTTExNy43MyA1OS4xNTY1TDEwNi4wODQgNzAuOTY2MUMxMDQuMjM3IDcyLjgzODUgMTAzLjY4OCA3NS42Njg5IDEwNC43MjYgNzguMDk4M0MxMDUuNDU2IDc5LjgwNzMgMTA2LjA3NiA4MS41NzUgMTA2LjU3IDgzLjM5NjRIODguMTAzNkM4NC4zNyA3Ni4zMTI3IDc3LjA2NjYgNzEuNDUxNCA2OC42Mjk1IDcxLjI5MDVDNTYuMjg3NSA3MS4wNTU1IDQ1LjkzNTggODEuMDkyMiA0NS42NDYxIDkzLjYwNjhDNDUuMzQ2MyAxMDYuNDkyIDU1LjU1NjkgMTE3LjAzMiA2OC4xOTYyIDExNy4wMzJDNzYuODE3MiAxMTcuMDMyIDg0LjMwNyAxMTIuMTI3IDg4LjEwMzYgMTA0LjkyM0gxMDYuNTdDMTA2LjA3NCAxMDYuNzQ1IDEwNS40NTYgMTA4LjUxMiAxMDQuNzI2IDExMC4yMjFDMTAzLjY4NSAxMTIuNjUxIDEwNC4yMzUgMTE1LjQ4MSAxMDYuMDg0IDExNy4zNTRMMTE3LjczIDEyOS4xNjNDMTIwLjc0MyAxMzIuMjE4IDEyNS43ODcgMTMxLjQ3OCAxMjcuODU4IDEyNy42OTlDMTMzLjMwMiAxMTcuNzY1IDEzNi40MDEgMTA2LjMzMSAxMzYuNDAxIDk0LjE2MTFDMTM2LjQwMSA4MS45OTE0IDEzMy4zIDcwLjU1NzMgMTI3Ljg1OCA2MC42MjI4QzEyNS43ODcgNTYuODQyMSAxMjAuNzQzIDU2LjEwMTMgMTE3LjczIDU5LjE1NjVaIiBmaWxsPSIjMEMzMTY2Ij48L3BhdGg+Cjwvc3ZnPg==" alt="" style="height:30px;display:block;margin:0 auto 24px">
-        <h2 style="font-family:var(--font-display);font-weight:700;font-size:clamp(32px,3.4vw,40px);letter-spacing:-0.02em;line-height:1.14;color:var(--navy);margin:0 0 18px">Contour is built by students, for students.</h2>
+      <div class="fnletter" style="text-align:center">
         <p style="font-size:17px;line-height:1.7;color:var(--charcoal);margin:0 0 14px">We sat these exams not long ago, and we've spent every year since building the program we wish we'd had: the classes, the workbooks, the portal, all of it. It's had our whole working lives, and we hope that shows on every page of this one.</p>
         <p style="font-size:17px;line-height:1.7;color:var(--charcoal);margin:0 0 26px">The rest is simple. One weekly fee, and a free week to see it for yourself.</p>
         <div style="display:flex;align-items:center;justify-content:center;gap:14px;margin:0 0 26px" title="Placeholder signatures · swap for the real scans">
@@ -2912,7 +2946,7 @@ section[id],div[id]{scroll-margin-top:calc(var(--hdr,120px) - 1px)}
         <p style="font:600 14px/1.4 var(--font-body);color:var(--navy);margin:0 0 26px">Angad &amp; Amitav <span style="font:400 12.5px/1.4 var(--font-body);color:var(--text-muted)">· Co-founders, Contour</span></p>
         <a href="#price" style="font:600 14px/1 var(--font-body);color:var(--navy);text-decoration:underline;text-underline-offset:3px">See what it costs ↓</a>
       </div>
-      <div class="hide-m" style="transform:rotate(3.5deg);justify-self:start;width:min(210px,100%);background:var(--surface-raised);border:1px solid var(--border-subtle);border-radius:var(--radius-xl);box-shadow:var(--shadow-md);padding:10px 10px 0" title="Drop a real photo here">
+      <div class="hide-m fnph2" style="transform:rotate(3.5deg);justify-self:start;width:min(210px,100%);background:var(--surface-raised);border:1px solid var(--border-subtle);border-radius:var(--radius-xl);box-shadow:var(--shadow-md);padding:10px 10px 0" title="Drop a real photo here">
         <div style="height:172px;border-radius:12px;overflow:hidden;background:var(--cream-m)"><image-slot id="fnote-now" shape="rect" placeholder="The two of us, on campus today"></image-slot></div>
         <div style="height:44px;display:flex;align-items:center;justify-content:space-between;gap:10px;padding:0 4px"><span style="font:600 12.5px/1.3 var(--font-body);color:var(--navy)">Contour, today</span><span style="font:500 11.5px/1 var(--font-body);color:var(--text-muted)">02</span></div>
       </div>
