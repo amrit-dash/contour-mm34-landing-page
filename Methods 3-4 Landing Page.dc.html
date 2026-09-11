@@ -1454,11 +1454,11 @@ section[id],div[id]{scroll-margin-top:calc(var(--hdr,120px) - 1px)}
     .fdot{position:relative;aspect-ratio:1;border-radius:50%;background:rgba(255,249,241,.16)}
     .fdot::after{content:"";position:absolute;inset:0;border-radius:50%;background:var(--highlighter)}
     html.fn-drop .fdot:not(.fkeep)::after{animation:fnDrop 620ms cubic-bezier(.5,0,.78,.32) both;animation-delay:var(--d,0ms)}
-    /* one smooth accelerating fall, gone well before it travels far */
+    /* one smooth accelerating fall. --f grades the distance by row, so the grid empties downward */
     @keyframes fnDrop{
       0%{transform:translateY(0);opacity:1}
       40%{opacity:.5}
-      100%{transform:translateY(34px);opacity:0}
+      100%{transform:translateY(var(--f,34px));opacity:0}
     }
     /* a rule parts the grid from the labels that read it */
     .fsep{width:100%;max-width:440px;height:2px;border-radius:2px;background:rgba(255,249,241,.24);margin:0 0 16px}
@@ -2366,7 +2366,7 @@ section[id],div[id]{scroll-margin-top:calc(var(--hdr,120px) - 1px)}
           <p style="font-size:15.5px;line-height:1.6;color:var(--text-on-navy-muted);margin:0 0 36px;max-width:44ch">Your tutor shouldn't be a lottery ticket. Ours all clear the same gates, every term.</p>
           <div class="fgrid" aria-hidden="true" style="display:grid;grid-template-columns:repeat(20,minmax(0,1fr));gap:6px;max-width:440px;margin:0 0 16px">
             <sc-for list="{{ funnelDots }}" as="d" hint-placeholder-count="100">
-              <span class="fdot {{ d.k }}" style="--d: {{ d.d }}ms"></span>
+              <span class="fdot {{ d.k }}" style="--d: {{ d.d }}ms;--f: {{ d.f }}px"></span>
             </sc-for>
           </div>
           <div class="fsep" aria-hidden="true"></div>
@@ -4643,24 +4643,25 @@ class Component extends DCLogic {
         return pv;
       })(),
       funnelDots: (() => {
-        // a fresh order for every fall. the seed is held on the instance and only replaced when a
-        // fall is (re)started, so the frequent re-renders mid-fall keep the order already in flight
-        const order = Array.from({ length: 95 }, (_, i) => i);
+        // a fresh draw for every fall. the seed is held on the instance and only replaced when a
+        // fall is (re)started, so the frequent re-renders mid-fall keep the draw already in flight
         let seed = this._fnSeed || (this._fnSeed = ((Date.now() ^ (Math.random() * 0x7fffffff)) & 0x7fffffff) || 1);
-        for (let i = order.length - 1; i > 0; i--) {
-          seed = (seed * 1103515245 + 12345) & 0x7fffffff;
-          const j = seed % (i + 1), t = order[i]; order[i] = order[j]; order[j] = t;
+        const rnd = () => { seed = (seed * 1103515245 + 12345) & 0x7fffffff; return seed / 0x7fffffff; };
+        // how many make it through varies: the legend reads "~5", so four to six
+        const keepCount = 4 + Math.floor(rnd() * 3);
+        const idx = Array.from({ length: 100 }, (_, i) => i);
+        for (let i = idx.length - 1; i > 0; i--) {
+          const j = Math.floor(rnd() * (i + 1)), t = idx[i]; idx[i] = idx[j]; idx[j] = t;
         }
-        // the gap between one ball and the next varies too, so the fall reads as scattered in
-        // time as well as in place rather than as a metronome
+        // the survivors are drawn from anywhere in the hundred, not off the end of it
+        const keep = new Set(idx.slice(0, keepCount));
         const delay = new Array(100).fill(0);
         let t = 0;
-        order.forEach((idx) => {
-          delay[idx] = Math.round(t);
-          seed = (seed * 1103515245 + 12345) & 0x7fffffff;
-          t += 5 + (seed % 1000) / 1000 * 15;
-        });
-        return Array.from({ length: 100 }, (_, i) => ({ i: i, k: i >= 95 ? "fkeep" : "", d: delay[i] }));
+        idx.slice(keepCount).forEach((id) => { delay[id] = Math.round(t); t += 5 + rnd() * 15; });
+        // a ball in the top row has the whole grid to clear, one in the bottom row barely any
+        return Array.from({ length: 100 }, (_, i) => ({
+          i: i, k: keep.has(i) ? "fkeep" : "", d: delay[i], f: 56 - Math.floor(i / 20) * 7
+        }));
       })(),
       srCas: (S.srTab || "cas") === "cas", srBound: S.srTab === "bound",
       srPickCas: () => this.setState({ srTab: "cas" }), srPickBound: () => this.setState({ srTab: "bound" }),
