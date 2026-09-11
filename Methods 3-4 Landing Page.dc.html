@@ -3473,7 +3473,9 @@ class Component extends DCLogic {
     window.__mmStatT = this._statT = setInterval(() => { if (this._dead) return; this.setState((s) => ({ statI: ((s.statI || 0) + 1) % 3 })); }, 3200);
     this._domPoll = setInterval(() => {
       try {
-        if (!document.getElementById("secrail") || !document.querySelector(".pwrap") || !document.querySelector("section h2")) return;
+        // .pwrap no longer exists in the markup, so requiring it held every DOM enhancement
+        // (reveals, hover lift, rail wiring, counters) until the 15s fallback fired
+        if (!document.getElementById("secrail") || !document.querySelector("section h2")) return;
         clearInterval(this._domPoll); this._domPoll = null;
         this._wireDom();
       } catch (e) {}
