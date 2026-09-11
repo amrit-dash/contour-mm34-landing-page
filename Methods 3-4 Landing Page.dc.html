@@ -3827,12 +3827,15 @@ class Component extends DCLogic {
       if (top < vh * 0.86) root.classList.add("fn-drop");
     };
     const onScroll = () => { if (!this._fnRaf) this._fnRaf = requestAnimationFrame(tick); };
-    // tap the grid to refill and run it again - the grid is decorative, so nothing is taken from it
+    // tap the grid to refill it - the grid is decorative, so nothing is taken from the tap. a new
+    // seed reshuffles the order, and tick decides whether the card is far enough up to fall again
     document.addEventListener("click", (e) => {
       if (!e.target || !e.target.closest || !e.target.closest(".fgrid")) return;
+      this._fnSeed = ((Date.now() ^ (Math.random() * 0x7fffffff)) & 0x7fffffff) || 1;
       root.classList.remove("fn-drop");
-      void document.documentElement.offsetWidth;
-      requestAnimationFrame(() => requestAnimationFrame(() => root.classList.add("fn-drop")));
+      this.setState({ fnNonce: (this.state.fnNonce || 0) + 1 }, () => {
+        requestAnimationFrame(() => requestAnimationFrame(tick));
+      });
     }, true);
     window.addEventListener("scroll", onScroll, { passive: true });
     window.addEventListener("resize", onScroll);
@@ -4640,10 +4643,10 @@ class Component extends DCLogic {
         return pv;
       })(),
       funnelDots: (() => {
-        // the 95 that fall go in a shuffled order, so the grid empties in scatter rather than in rows.
-        // seeded rather than Math.random: the delay has to survive a re-render unchanged
+        // a fresh order for every fall. the seed is held on the instance and only replaced when a
+        // fall is (re)started, so the frequent re-renders mid-fall keep the order already in flight
         const order = Array.from({ length: 95 }, (_, i) => i);
-        let seed = 20260911;
+        let seed = this._fnSeed || (this._fnSeed = ((Date.now() ^ (Math.random() * 0x7fffffff)) & 0x7fffffff) || 1);
         for (let i = order.length - 1; i > 0; i--) {
           seed = (seed * 1103515245 + 12345) & 0x7fffffff;
           const j = seed % (i + 1), t = order[i]; order[i] = order[j]; order[j] = t;
