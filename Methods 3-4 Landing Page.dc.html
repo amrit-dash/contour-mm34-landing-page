@@ -1467,8 +1467,9 @@ section[id],div[id]{scroll-margin-top:calc(var(--hdr,120px) - 1px)}
        is 53 steps in and a little past the keyframe, so the hold is sampled well inside the step
        rather than on its edge; that parks the C's leading edge on column 10, so the front crosses ten
        columns of the gap before it reaches a letter and the word starts showing from the halfway
-       mark. the scroll is handed back to the clock the moment the front is off the far edge, with no
-       still frame in between. the wave's own tail is the other half of that: at 640ms a column sat
+       mark. the scroll is handed back to the clock the moment the front reaches column 10 rather
+       than when it leaves the board, so the letters start moving as they are uncovered and the rest
+       of the sweep runs over the gap behind them. the wave's own tail is the other half of that: at 640ms a column sat
        dark for a fifth of a second after the front had gone before its letter appeared, which read
        as the sign arriving late. 420ms hands over just behind the peak */
 html.fn-mq .fwrap .fgrid .fdot:nth-child(n+1):nth-child(-n+20)::after{animation:mqRow0 13860ms linear infinite,mqWave 420ms var(--ease) backwards,mqFlashAll 520ms var(--ease);animation-delay:calc(-11760ms + var(--c,0) * -220ms),calc(560ms + var(--c,0) * 46ms + 0ms),0ms;animation-play-state:var(--mqp,paused),running,running}
@@ -3991,9 +3992,11 @@ class Component extends DCLogic {
     // blinking survivor. the top-right one runs the phrase; the bottom-left one runs it in negative,
     // the whole board lit and the letters cut out of it
     const MQ = { 19: { cls: "fn-mq", steps: 6 }, 80: { cls: "fn-mq2", steps: 5 } };
-    // the lit wave is off the far edge at 2134ms, the negative's last burst front at 2049ms; the
-    // scroll picks up there with nothing in between, so the reveal runs straight into the marquee
-    const MQ_GO = { "fn-mq": 2140, "fn-mq2": 2060 };
+    // the sign starts moving when the front reaches the word, not when it leaves the board. the
+    // word is parked from column 10, which the lit wave hands over at 1720ms on the last row and
+    // the negative's nearest burst at 1434ms; the front carries on across the empty right-hand
+    // columns while the letters it has already uncovered are walking off
+    const MQ_GO = { "fn-mq": 1720, "fn-mq2": 1440 };
     const resetEgg = () => {
       clearTimeout(this._mqGoT);
       root.classList.remove("fn-egg");
