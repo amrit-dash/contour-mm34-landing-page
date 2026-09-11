@@ -3822,6 +3822,25 @@ class Component extends DCLogic {
     if (this._tagRaf) return;
     this._tagRaf = requestAnimationFrame(() => { this._tagRaf = 0; this._tagReveal(); });
   }
+  _wireFunnel() {
+    if (this._fnWired) return;
+    this._fnWired = true;
+    const root = document.documentElement;
+    const tick = () => {
+      this._fnRaf = 0;
+      const g = document.querySelector(".fgrid");
+      if (!g) return;
+      const top = g.getBoundingClientRect().top, vh = window.innerHeight || 1;
+      // first the grid fills as it arrives, then the fall starts once it is properly on screen
+      if (top < vh * 0.84) root.classList.add("fn-fill");
+      if (root.classList.contains("fn-fill") && top < vh * 0.44) root.classList.add("fn-drop");
+    };
+    const onScroll = () => { if (!this._fnRaf) this._fnRaf = requestAnimationFrame(tick); };
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onScroll);
+    tick();
+    [60, 250, 800].forEach((ms) => setTimeout(tick, ms));
+  }
   _wireOfferCollapse() {
     if (this._offWired) return;
     this._offWired = true;
@@ -3956,6 +3975,7 @@ class Component extends DCLogic {
       this._tagReveal();
       this._wirePillarCar();
       this._wireOfferCollapse();
+      this._wireFunnel();
       // dev probe: ?probe=1 lists elements wider than the viewport in <html data-probe>
       if (/(?:\?|&)probe=1\b/.test(location.search)) setTimeout(() => {
         const vw = document.documentElement.clientWidth, out = [];
