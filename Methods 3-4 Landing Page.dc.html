@@ -3795,6 +3795,62 @@ class Component extends DCLogic {
     if (this._tagRaf) return;
     this._tagRaf = requestAnimationFrame(() => { this._tagRaf = 0; this._tagReveal(); });
   }
+  _wireOfferCollapse() {
+    if (this._offWired) return;
+    this._offWired = true;
+    const mq = () => window.matchMedia("(max-width:620px)").matches;
+    const num = (col) => {
+      const p = col.querySelector("p");
+      const m = p && (p.textContent || "").match(/Pillar\s*(\d+)/i);
+      return m ? Number(m[1]) : 0;
+    };
+    // the pg hooks are derived from the pill text, so child order and rewritten attributes don't matter
+    const ensure = () => {
+      const g = document.querySelector(".offerg");
+      if (!g) return;
+      Array.from(g.children).forEach((col) => {
+        const n = num(col);
+        if (!n) return;
+          const p = col.querySelector("p");
+        if (!p) return;
+        if (mq()) {
+          p.setAttribute("role", "button");
+          p.setAttribute("tabindex", "0");
+          p.setAttribute("aria-expanded", document.documentElement.classList.contains("offx" + n) ? "true" : "false");
+        } else {
+          p.removeAttribute("role");
+          p.removeAttribute("tabindex");
+          p.removeAttribute("aria-expanded");
+        }
+      });
+    };
+    this._offEnsure = ensure;
+    const toggle = (p) => {
+      const col = p.parentElement, n = num(col);
+      if (!n) return;
+      const on = document.documentElement.classList.toggle("offx" + n);
+      p.setAttribute("aria-expanded", on ? "true" : "false");
+    };
+    const hit = (e) => {
+      if (!mq() || !e.target || !e.target.closest) return null;
+      const p = e.target.closest(".offerg > div > p:first-child");
+      if (p && num(p.parentElement)) return p;
+      // the +/- marks are drawn on the column, so a tap on one reports the column as the target
+      if (e.target.matches && e.target.matches(".offerg > div") && num(e.target)) return e.target.querySelector("p");
+      return null;
+    };
+    document.addEventListener("click", (e) => { const p = hit(e); if (!p) return; e.preventDefault(); toggle(p); }, true);
+    document.addEventListener("keydown", (e) => {
+      if (e.key !== "Enter" && e.key !== " ") return;
+      const p = hit(e);
+      if (!p) return;
+      e.preventDefault();
+      toggle(p);
+    }, true);
+    window.addEventListener("resize", () => { if (this._offRaf) return; this._offRaf = requestAnimationFrame(() => { this._offRaf = 0; ensure(); }); });
+    ensure();
+    [60, 250, 800, 2000].forEach((ms) => setTimeout(ensure, ms));
+  }
   _wirePillarCar() {
     if (this._pcarWired) return;
     this._pcarWired = true;
@@ -3872,6 +3928,7 @@ class Component extends DCLogic {
       }
       this._tagReveal();
       this._wirePillarCar();
+      this._wireOfferCollapse();
       // dev probe: ?probe=1 lists elements wider than the viewport in <html data-probe>
       if (/(?:\?|&)probe=1\b/.test(location.search)) setTimeout(() => {
         const vw = document.documentElement.clientWidth, out = [];
@@ -3898,6 +3955,7 @@ class Component extends DCLogic {
   componentWillUnmount() { if (this._revIo) this._revIo.disconnect(); if (this._threadIo) this._threadIo.disconnect(); if (this._cntIo) this._cntIo.disconnect(); this._dead = true; if (this._linkHandler) document.removeEventListener("click", this._linkHandler); if (this._statT) { clearInterval(this._statT); if (window.__mmStatT === this._statT) window.__mmStatT = null; } window.removeEventListener("keydown", this._esc); if (this._orbitRaf) cancelAnimationFrame(this._orbitRaf); if (this._mapRo) this._mapRo.disconnect(); if (this._domPoll) clearInterval(this._domPoll); if (this._onScroll) { window.removeEventListener("scroll", this._onScroll); window.removeEventListener("resize", this._onScroll); } if (this._io) this._io.disconnect(); if (this._secIo) this._secIo.disconnect(); if (this._mapPoll) clearInterval(this._mapPoll); if (this._map) { this._map.remove(); this._map = null; } }
   componentDidUpdate(prevProps) { if (this._domWired) this._scheduleTag();
     try { if (this._pcarEnsure) this._pcarEnsure(); } catch (e) {}
+    try { if (this._offEnsure) this._offEnsure(); } catch (e) {}
     try { const k = "p" + (this.state.sysP || 1); document.documentElement.setAttribute("data-step", String(this.state[k] || 0)); } catch (e) {}
     ["lifecycleState:lifecycle", "lens:lens", "adVariant:variant", "annotations:anno"].forEach(pair => {
       const [p, s] = pair.split(":");
