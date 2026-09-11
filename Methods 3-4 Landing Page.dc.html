@@ -3830,9 +3830,8 @@ class Component extends DCLogic {
       const g = document.querySelector(".fgrid");
       if (!g) return;
       const top = g.getBoundingClientRect().top, vh = window.innerHeight || 1;
-      // first the grid fills as it arrives, then the fall starts once it is properly on screen
-      if (top < vh * 0.84) root.classList.add("fn-fill");
-      if (root.classList.contains("fn-fill") && top < vh * 0.44) root.classList.add("fn-drop");
+      // the grid is already full, so arriving at the card is the cue to start emptying it
+      if (top < vh * 0.86) root.classList.add("fn-drop");
     };
     const onScroll = () => { if (!this._fnRaf) this._fnRaf = requestAnimationFrame(tick); };
     window.addEventListener("scroll", onScroll, { passive: true });
