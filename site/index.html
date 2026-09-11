@@ -1462,6 +1462,25 @@ section[id],div[id]{scroll-margin-top:calc(var(--hdr,120px) - 1px)}
       40%{opacity:.5}
       100%{transform:translateY(var(--f,34px));opacity:0}
     }
+    /* the grid spells a name if the top row is played in the right order. every LED flashes up
+       together, then everything that isn't part of the word blinks out in a left-to-right wipe and
+       the word is left glowing. one dip per flash keeps it under three flashes a second */
+    html.fn-egg .fgrid .fdot::after{background:var(--highlighter);animation:eggFlash 700ms var(--ease) both}
+html.fn-egg .fgrid .fdot:nth-child(1)::after,html.fn-egg .fgrid .fdot:nth-child(2)::after,html.fn-egg .fgrid .fdot:nth-child(4)::after,html.fn-egg .fgrid .fdot:nth-child(5)::after,html.fn-egg .fgrid .fdot:nth-child(7)::after,html.fn-egg .fgrid .fdot:nth-child(9)::after,html.fn-egg .fgrid .fdot:nth-child(12)::after,html.fn-egg .fgrid .fdot:nth-child(13)::after,html.fn-egg .fgrid .fdot:nth-child(17)::after,html.fn-egg .fgrid .fdot:nth-child(21)::after,html.fn-egg .fgrid .fdot:nth-child(23)::after,html.fn-egg .fgrid .fdot:nth-child(25)::after,html.fn-egg .fgrid .fdot:nth-child(29)::after,html.fn-egg .fgrid .fdot:nth-child(31)::after,html.fn-egg .fgrid .fdot:nth-child(33)::after,html.fn-egg .fgrid .fdot:nth-child(34)::after,html.fn-egg .fgrid .fdot:nth-child(36)::after,html.fn-egg .fgrid .fdot:nth-child(37)::after,html.fn-egg .fgrid .fdot:nth-child(38)::after,html.fn-egg .fgrid .fdot:nth-child(40)::after,html.fn-egg .fgrid .fdot:nth-child(41)::after,html.fn-egg .fgrid .fdot:nth-child(45)::after,html.fn-egg .fgrid .fdot:nth-child(49)::after,html.fn-egg .fgrid .fdot:nth-child(52)::after,html.fn-egg .fgrid .fdot:nth-child(53)::after,html.fn-egg .fgrid .fdot:nth-child(54)::after,html.fn-egg .fgrid .fdot:nth-child(56)::after,html.fn-egg .fgrid .fdot:nth-child(57)::after,html.fn-egg .fgrid .fdot:nth-child(58)::after,html.fn-egg .fgrid .fdot:nth-child(60)::after,html.fn-egg .fgrid .fdot:nth-child(61)::after,html.fn-egg .fgrid .fdot:nth-child(63)::after,html.fn-egg .fgrid .fdot:nth-child(65)::after,html.fn-egg .fgrid .fdot:nth-child(67)::after,html.fn-egg .fgrid .fdot:nth-child(69)::after,html.fn-egg .fgrid .fdot:nth-child(71)::after,html.fn-egg .fgrid .fdot:nth-child(73)::after,html.fn-egg .fgrid .fdot:nth-child(74)::after,html.fn-egg .fgrid .fdot:nth-child(76)::after,html.fn-egg .fgrid .fdot:nth-child(77)::after,html.fn-egg .fgrid .fdot:nth-child(78)::after,html.fn-egg .fgrid .fdot:nth-child(80)::after,html.fn-egg .fgrid .fdot:nth-child(81)::after,html.fn-egg .fgrid .fdot:nth-child(83)::after,html.fn-egg .fgrid .fdot:nth-child(85)::after,html.fn-egg .fgrid .fdot:nth-child(87)::after,html.fn-egg .fgrid .fdot:nth-child(89)::after,html.fn-egg .fgrid .fdot:nth-child(91)::after,html.fn-egg .fgrid .fdot:nth-child(93)::after,html.fn-egg .fgrid .fdot:nth-child(97)::after,html.fn-egg .fgrid .fdot:nth-child(98)::after,html.fn-egg .fgrid .fdot:nth-child(100)::after{animation:eggFlash 700ms var(--ease) both,eggOut 300ms var(--ease) both;animation-delay:0ms,calc(760ms + var(--c,0) * 24ms)}
+html.fn-egg .fgrid .fdot:nth-child(3)::after,html.fn-egg .fgrid .fdot:nth-child(6)::after,html.fn-egg .fgrid .fdot:nth-child(8)::after,html.fn-egg .fgrid .fdot:nth-child(10)::after,html.fn-egg .fgrid .fdot:nth-child(11)::after,html.fn-egg .fgrid .fdot:nth-child(14)::after,html.fn-egg .fgrid .fdot:nth-child(15)::after,html.fn-egg .fgrid .fdot:nth-child(16)::after,html.fn-egg .fgrid .fdot:nth-child(18)::after,html.fn-egg .fgrid .fdot:nth-child(19)::after,html.fn-egg .fgrid .fdot:nth-child(20)::after,html.fn-egg .fgrid .fdot:nth-child(22)::after,html.fn-egg .fgrid .fdot:nth-child(24)::after,html.fn-egg .fgrid .fdot:nth-child(26)::after,html.fn-egg .fgrid .fdot:nth-child(27)::after,html.fn-egg .fgrid .fdot:nth-child(28)::after,html.fn-egg .fgrid .fdot:nth-child(30)::after,html.fn-egg .fgrid .fdot:nth-child(32)::after,html.fn-egg .fgrid .fdot:nth-child(35)::after,html.fn-egg .fgrid .fdot:nth-child(39)::after,html.fn-egg .fgrid .fdot:nth-child(42)::after,html.fn-egg .fgrid .fdot:nth-child(43)::after,html.fn-egg .fgrid .fdot:nth-child(44)::after,html.fn-egg .fgrid .fdot:nth-child(46)::after,html.fn-egg .fgrid .fdot:nth-child(47)::after,html.fn-egg .fgrid .fdot:nth-child(48)::after,html.fn-egg .fgrid .fdot:nth-child(50)::after,html.fn-egg .fgrid .fdot:nth-child(51)::after,html.fn-egg .fgrid .fdot:nth-child(55)::after,html.fn-egg .fgrid .fdot:nth-child(59)::after,html.fn-egg .fgrid .fdot:nth-child(62)::after,html.fn-egg .fgrid .fdot:nth-child(64)::after,html.fn-egg .fgrid .fdot:nth-child(66)::after,html.fn-egg .fgrid .fdot:nth-child(68)::after,html.fn-egg .fgrid .fdot:nth-child(70)::after,html.fn-egg .fgrid .fdot:nth-child(72)::after,html.fn-egg .fgrid .fdot:nth-child(75)::after,html.fn-egg .fgrid .fdot:nth-child(79)::after,html.fn-egg .fgrid .fdot:nth-child(82)::after,html.fn-egg .fgrid .fdot:nth-child(84)::after,html.fn-egg .fgrid .fdot:nth-child(86)::after,html.fn-egg .fgrid .fdot:nth-child(88)::after,html.fn-egg .fgrid .fdot:nth-child(90)::after,html.fn-egg .fgrid .fdot:nth-child(92)::after,html.fn-egg .fgrid .fdot:nth-child(94)::after,html.fn-egg .fgrid .fdot:nth-child(95)::after,html.fn-egg .fgrid .fdot:nth-child(96)::after,html.fn-egg .fgrid .fdot:nth-child(99)::after{animation:eggFlash 700ms var(--ease) both,eggGlow 1.9s var(--ease) 760ms infinite alternate}
+    @keyframes eggFlash{
+      0%{opacity:0;transform:scale(.35)}
+      18%{opacity:1;transform:scale(1.14)}
+      46%{opacity:.22;transform:scale(1)}
+      100%{opacity:1;transform:none}
+    }
+    @keyframes eggOut{from{opacity:1;transform:none}to{opacity:0;transform:translateY(9px) scale(.5)}}
+    @keyframes eggGlow{from{box-shadow:0 0 7px rgba(215,252,61,.35)}to{box-shadow:0 0 17px rgba(215,252,61,.8)}}
+    @media (prefers-reduced-motion:reduce){
+      /* no flashing at all: the word simply appears */
+      html.fn-egg .fgrid .fdot::after{animation:none;opacity:0}
+html.fn-egg .fgrid .fdot:nth-child(3)::after,html.fn-egg .fgrid .fdot:nth-child(6)::after,html.fn-egg .fgrid .fdot:nth-child(8)::after,html.fn-egg .fgrid .fdot:nth-child(10)::after,html.fn-egg .fgrid .fdot:nth-child(11)::after,html.fn-egg .fgrid .fdot:nth-child(14)::after,html.fn-egg .fgrid .fdot:nth-child(15)::after,html.fn-egg .fgrid .fdot:nth-child(16)::after,html.fn-egg .fgrid .fdot:nth-child(18)::after,html.fn-egg .fgrid .fdot:nth-child(19)::after,html.fn-egg .fgrid .fdot:nth-child(20)::after,html.fn-egg .fgrid .fdot:nth-child(22)::after,html.fn-egg .fgrid .fdot:nth-child(24)::after,html.fn-egg .fgrid .fdot:nth-child(26)::after,html.fn-egg .fgrid .fdot:nth-child(27)::after,html.fn-egg .fgrid .fdot:nth-child(28)::after,html.fn-egg .fgrid .fdot:nth-child(30)::after,html.fn-egg .fgrid .fdot:nth-child(32)::after,html.fn-egg .fgrid .fdot:nth-child(35)::after,html.fn-egg .fgrid .fdot:nth-child(39)::after,html.fn-egg .fgrid .fdot:nth-child(42)::after,html.fn-egg .fgrid .fdot:nth-child(43)::after,html.fn-egg .fgrid .fdot:nth-child(44)::after,html.fn-egg .fgrid .fdot:nth-child(46)::after,html.fn-egg .fgrid .fdot:nth-child(47)::after,html.fn-egg .fgrid .fdot:nth-child(48)::after,html.fn-egg .fgrid .fdot:nth-child(50)::after,html.fn-egg .fgrid .fdot:nth-child(51)::after,html.fn-egg .fgrid .fdot:nth-child(55)::after,html.fn-egg .fgrid .fdot:nth-child(59)::after,html.fn-egg .fgrid .fdot:nth-child(62)::after,html.fn-egg .fgrid .fdot:nth-child(64)::after,html.fn-egg .fgrid .fdot:nth-child(66)::after,html.fn-egg .fgrid .fdot:nth-child(68)::after,html.fn-egg .fgrid .fdot:nth-child(70)::after,html.fn-egg .fgrid .fdot:nth-child(72)::after,html.fn-egg .fgrid .fdot:nth-child(75)::after,html.fn-egg .fgrid .fdot:nth-child(79)::after,html.fn-egg .fgrid .fdot:nth-child(82)::after,html.fn-egg .fgrid .fdot:nth-child(84)::after,html.fn-egg .fgrid .fdot:nth-child(86)::after,html.fn-egg .fgrid .fdot:nth-child(88)::after,html.fn-egg .fgrid .fdot:nth-child(90)::after,html.fn-egg .fgrid .fdot:nth-child(92)::after,html.fn-egg .fgrid .fdot:nth-child(94)::after,html.fn-egg .fgrid .fdot:nth-child(95)::after,html.fn-egg .fgrid .fdot:nth-child(96)::after,html.fn-egg .fgrid .fdot:nth-child(99)::after{animation:none;opacity:1;box-shadow:none}
+    }
     /* a rule parts the grid from the labels that read it */
     .fsep{width:100%;max-width:440px;height:2px;border-radius:2px;background:rgba(255,249,241,.24);margin:0 0 16px}
     @media (prefers-reduced-motion:reduce){
@@ -2368,7 +2387,7 @@ section[id],div[id]{scroll-margin-top:calc(var(--hdr,120px) - 1px)}
           <p style="font-size:15.5px;line-height:1.6;color:var(--text-on-navy-muted);margin:0 0 36px;max-width:44ch">Your tutor shouldn't be a lottery ticket. Ours all clear the same gates, every term.</p>
           <div class="fgrid" aria-hidden="true" style="display:grid;grid-template-columns:repeat(20,minmax(0,1fr));gap:6px;max-width:440px;margin:0 0 16px">
             <sc-for list="{{ funnelDots }}" as="d" hint-placeholder-count="100">
-              <span class="fdot {{ d.k }}" style="--d: {{ d.d }}ms;--f: {{ d.f }}px"></span>
+              <span class="fdot {{ d.k }}" style="--d: {{ d.d }}ms;--f: {{ d.f }}px;--ix: {{ d.i }};--c: {{ d.c }}"></span>
             </sc-for>
           </div>
           <div class="fsep" aria-hidden="true"></div>
@@ -3829,15 +3848,45 @@ class Component extends DCLogic {
       if (top < vh * 0.86) root.classList.add("fn-drop");
     };
     const onScroll = () => { if (!this._fnRaf) this._fnRaf = requestAnimationFrame(tick); };
-    // tap the grid to refill it - the grid is decorative, so nothing is taken from the tap. a new
-    // seed reshuffles the order, and tick decides whether the card is far enough up to fall again
-    document.addEventListener("click", (e) => {
-      if (!e.target || !e.target.closest || !e.target.closest(".fgrid")) return;
+    // refill the grid on a fresh draw and let tick decide whether it is high enough to fall again
+    const replay = () => {
       this._fnSeed = ((Date.now() ^ (Math.random() * 0x7fffffff)) & 0x7fffffff) || 1;
       root.classList.remove("fn-drop");
       this.setState({ fnNonce: (this.state.fnNonce || 0) + 1 }, () => {
         requestAnimationFrame(() => requestAnimationFrame(tick));
       });
+    };
+    // tap the grid to refill it - the grid is decorative, so nothing is taken from the tap. a new
+    // seed reshuffles the order, and tick decides whether the card is far enough up to fall again
+    // the top row is a keyboard: press the dot above each letter in the order that spells the word.
+    // no clock on it - the presses can be any distance apart, and every press still refills the grid
+    // and drops it as usual, so nothing about the section hints that the row is listening
+    const EGG = [1, 5, 9, 13, 17];
+    document.addEventListener("click", (e) => {
+      if (!e.target || !e.target.closest) return;
+      const grid = e.target.closest(".fgrid");
+      if (!grid) return;
+      if (root.classList.contains("fn-egg")) return;   // once it is spelled it holds until a reload
+      const dot = e.target.closest(".fdot");
+      if (dot) {
+        const idx = Array.prototype.indexOf.call(grid.children, dot);
+        if (idx > -1 && idx < 20) {
+          const n = this._eggN || 0;
+          this._eggN = idx === EGG[n] ? n + 1 : (idx === EGG[0] ? 1 : 0);
+          if (this._eggN === EGG.length) { this._eggN = 0; root.classList.add("fn-egg"); return; }
+        }
+      }
+      replay();
+    }, true);
+    // double-press the hundredth ball to clear the word and start the sequence over
+    document.addEventListener("dblclick", (e) => {
+      if (!e.target || !e.target.closest) return;
+      const grid = e.target.closest(".fgrid"), dot = e.target.closest(".fdot");
+      if (!grid || !dot) return;
+      if (Array.prototype.indexOf.call(grid.children, dot) !== grid.children.length - 1) return;
+      root.classList.remove("fn-egg");
+      this._eggN = 0;
+      replay();
     }, true);
     window.addEventListener("scroll", onScroll, { passive: true });
     window.addEventListener("resize", onScroll);
@@ -4662,7 +4711,7 @@ class Component extends DCLogic {
         idx.slice(keepCount).forEach((id) => { delay[id] = Math.round(t); t += 4 + rnd() * 11; });
         // a ball in the top row has the whole grid to clear, one in the bottom row barely any
         return Array.from({ length: 100 }, (_, i) => ({
-          i: i, k: keep.has(i) ? "fkeep" : "", d: delay[i], f: 56 - Math.floor(i / 20) * 7
+          i: i, k: keep.has(i) ? "fkeep" : "", d: delay[i], f: 56 - Math.floor(i / 20) * 7, c: i % 20
         }));
       })(),
       srCas: (S.srTab || "cas") === "cas", srBound: S.srTab === "bound",
