@@ -1348,6 +1348,10 @@ section[id],div[id]{scroll-margin-top:calc(var(--hdr,120px) - 1px)}
 
     /* ── Polish pass 2026-09 · motion + rhythm tokens ─────────────────── */
     :root{--ease:cubic-bezier(.22,1,.36,1);--dur-s:.35s;--dur-m:.65s;--dur-l:.95s;--sec-pad:clamp(52px,5.6vw,72px)}
+    /* the page scrollbar is hidden the same way the carousels hide theirs - the section rail and the
+       progress bar under the header carry position instead */
+    html{scrollbar-width:none;-ms-overflow-style:none}
+    html::-webkit-scrollbar,body::-webkit-scrollbar{width:0;height:0;display:none}
     .sec{padding:var(--sec-pad) 0!important}
     @media (max-width:880px){.sec{padding:60px 0!important}}
     /* reveal system: elements start hidden, .in shows them; --i staggers siblings */
