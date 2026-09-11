@@ -1522,14 +1522,19 @@ html.fn-mq2 .fwrap .fgrid .fdot:nth-child(n+61):nth-child(-n+80)::after{animatio
     }
     /* the pointer is the same size as every other dot - it blinks rather than swells, on uneven
        beats, and each round draws its own period so no two rounds read alike */
-    .fdot.fmq-dot::after{animation:fnBlink var(--pd,3.4s) var(--ease) 700ms infinite}
+    .fdot.fmq-dot::after{animation:fnBlink var(--pd,3.4s) var(--ease) 120ms infinite}
+    /* the first blink sits at the top of the cycle, not a third of the way in - the pointer has to
+       be blinking while the board is still falling, not once it has settled */
     @keyframes fnBlink{
-      0%,36%{opacity:1}
-      43%{opacity:.12}
-      51%{opacity:1}
-      70%{opacity:1}
-      76%{opacity:.18}
-      83%{opacity:1}
+      0%{opacity:1}
+      5%{opacity:.12}
+      12%{opacity:1}
+      40%{opacity:1}
+      46%{opacity:.15}
+      53%{opacity:1}
+      74%{opacity:1}
+      80%{opacity:.12}
+      87%{opacity:1}
       100%{opacity:1}
     }
     @media (prefers-reduced-motion:reduce){
