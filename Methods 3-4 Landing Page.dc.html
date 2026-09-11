@@ -4740,9 +4740,12 @@ class Component extends DCLogic {
           const j = Math.floor(rnd() * (i + 1)), t = idx[i]; idx[i] = idx[j]; idx[j] = t;
         }
         // the survivors are drawn from anywhere in the hundred, not off the end of it
-        const keep = new Set(idx.slice(0, keepCount));
-        // walked mode: the dot for the next letter is held back from the fall as a pointer
+        // walked mode: the dot for the next letter is held back from the fall as a pointer, and the
+        // rest of the survivors are drawn from below the top row - so the top row holds exactly one
+        // dot and it is the one worth pressing. unaided, the draw is the whole grid again
         const hint = this._eggHint;
+        const pool = hint == null ? idx : idx.filter((id) => id >= 20);
+        const keep = new Set(pool.slice(0, keepCount));
         if (hint != null) keep.add(hint);
         const delay = new Array(100).fill(0);
         let t = 0;
