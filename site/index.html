@@ -1458,6 +1458,21 @@ section[id],div[id]{scroll-margin-top:calc(var(--hdr,120px) - 1px)}
        is a separate layer. on arrival the 95 balls fall out of their cells in scattered order and the
        empty rings remain, so the hundred is still readable behind the five that made it ── */
     .fdot{position:relative;aspect-ratio:1;border-radius:50%;background:rgba(255,249,241,.16)}
+    /* second reveal: the phrase scrolls through the grid like an LED sign. the strip is an SVG so
+       the dot pitch scales with the grid on its own, and it holds two copies of the phrase, so
+       translating it half its width loops seamlessly. one transform, no per-frame work */
+    .fmq{display:none;position:absolute;inset:0;overflow:hidden}
+    html.fn-mq .fmq{display:block}
+    html.fn-mq .fdot::after{opacity:0}
+    .fmq-svg{position:absolute;left:0;top:0;height:100%;width:auto;animation:mqScroll 26s linear infinite}
+    @keyframes mqScroll{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+    /* the pointer for the second sequence: one of the survivors, breathing */
+    .fdot.fmq-dot::after{animation:fnHint 1.5s var(--ease) infinite alternate}
+    @keyframes fnHint{from{opacity:.78;transform:scale(1)}to{opacity:1;transform:scale(1.2)}}
+    @media (prefers-reduced-motion:reduce){
+      .fmq-svg{animation:none}
+      .fdot.fmq-dot::after{animation:none}
+    }
     .fdot::after{content:"";position:absolute;inset:0;border-radius:50%;background:var(--highlighter)}
     html.fn-drop .fdot:not(.fkeep)::after{animation:fnDrop 560ms cubic-bezier(.5,0,.78,.32) both;animation-delay:var(--d,0ms)}
     /* one smooth accelerating fall. --f grades the distance by row, so the grid empties downward */
@@ -1466,23 +1481,34 @@ section[id],div[id]{scroll-margin-top:calc(var(--hdr,120px) - 1px)}
       40%{opacity:.5}
       100%{transform:translateY(var(--f,34px));opacity:0}
     }
-    /* the grid spells a name if the top row is played in the right order. every LED flashes up
-       together, then the ghosts fade back and everything that is not part of the word blinks out in a
-       left-to-right wipe, each letter dot locking in a size larger as the wipe passes its column */
+    /* the reveal runs three frames - MADE, then BY, then AMRIT, which stays. every LED flashes up
+       first, then each dot blinks through whichever of the three it belongs to. a dot can appear in
+       more than one frame, so the dots are grouped by which combination they are in */
     html.fn-egg .fgrid .fdot{background:rgba(255,249,241,.05)}
-    html.fn-egg .fgrid .fdot::after{background:var(--highlighter);animation:eggFlash 700ms var(--ease) both}
-html.fn-egg .fgrid .fdot:nth-child(1)::after,html.fn-egg .fgrid .fdot:nth-child(2)::after,html.fn-egg .fgrid .fdot:nth-child(4)::after,html.fn-egg .fgrid .fdot:nth-child(5)::after,html.fn-egg .fgrid .fdot:nth-child(7)::after,html.fn-egg .fgrid .fdot:nth-child(9)::after,html.fn-egg .fgrid .fdot:nth-child(12)::after,html.fn-egg .fgrid .fdot:nth-child(13)::after,html.fn-egg .fgrid .fdot:nth-child(17)::after,html.fn-egg .fgrid .fdot:nth-child(21)::after,html.fn-egg .fgrid .fdot:nth-child(23)::after,html.fn-egg .fgrid .fdot:nth-child(25)::after,html.fn-egg .fgrid .fdot:nth-child(29)::after,html.fn-egg .fgrid .fdot:nth-child(31)::after,html.fn-egg .fgrid .fdot:nth-child(33)::after,html.fn-egg .fgrid .fdot:nth-child(34)::after,html.fn-egg .fgrid .fdot:nth-child(36)::after,html.fn-egg .fgrid .fdot:nth-child(37)::after,html.fn-egg .fgrid .fdot:nth-child(38)::after,html.fn-egg .fgrid .fdot:nth-child(40)::after,html.fn-egg .fgrid .fdot:nth-child(41)::after,html.fn-egg .fgrid .fdot:nth-child(45)::after,html.fn-egg .fgrid .fdot:nth-child(49)::after,html.fn-egg .fgrid .fdot:nth-child(52)::after,html.fn-egg .fgrid .fdot:nth-child(53)::after,html.fn-egg .fgrid .fdot:nth-child(54)::after,html.fn-egg .fgrid .fdot:nth-child(56)::after,html.fn-egg .fgrid .fdot:nth-child(57)::after,html.fn-egg .fgrid .fdot:nth-child(58)::after,html.fn-egg .fgrid .fdot:nth-child(60)::after,html.fn-egg .fgrid .fdot:nth-child(61)::after,html.fn-egg .fgrid .fdot:nth-child(63)::after,html.fn-egg .fgrid .fdot:nth-child(65)::after,html.fn-egg .fgrid .fdot:nth-child(67)::after,html.fn-egg .fgrid .fdot:nth-child(69)::after,html.fn-egg .fgrid .fdot:nth-child(71)::after,html.fn-egg .fgrid .fdot:nth-child(73)::after,html.fn-egg .fgrid .fdot:nth-child(74)::after,html.fn-egg .fgrid .fdot:nth-child(76)::after,html.fn-egg .fgrid .fdot:nth-child(77)::after,html.fn-egg .fgrid .fdot:nth-child(78)::after,html.fn-egg .fgrid .fdot:nth-child(80)::after,html.fn-egg .fgrid .fdot:nth-child(81)::after,html.fn-egg .fgrid .fdot:nth-child(83)::after,html.fn-egg .fgrid .fdot:nth-child(85)::after,html.fn-egg .fgrid .fdot:nth-child(87)::after,html.fn-egg .fgrid .fdot:nth-child(89)::after,html.fn-egg .fgrid .fdot:nth-child(91)::after,html.fn-egg .fgrid .fdot:nth-child(93)::after,html.fn-egg .fgrid .fdot:nth-child(97)::after,html.fn-egg .fgrid .fdot:nth-child(98)::after,html.fn-egg .fgrid .fdot:nth-child(100)::after{animation:eggFlash 700ms var(--ease) both,eggOut 280ms var(--ease) calc(760ms + var(--c,0) * 26ms) forwards}
-html.fn-egg .fgrid .fdot:nth-child(3)::after,html.fn-egg .fgrid .fdot:nth-child(6)::after,html.fn-egg .fgrid .fdot:nth-child(8)::after,html.fn-egg .fgrid .fdot:nth-child(10)::after,html.fn-egg .fgrid .fdot:nth-child(11)::after,html.fn-egg .fgrid .fdot:nth-child(14)::after,html.fn-egg .fgrid .fdot:nth-child(15)::after,html.fn-egg .fgrid .fdot:nth-child(16)::after,html.fn-egg .fgrid .fdot:nth-child(18)::after,html.fn-egg .fgrid .fdot:nth-child(19)::after,html.fn-egg .fgrid .fdot:nth-child(20)::after,html.fn-egg .fgrid .fdot:nth-child(22)::after,html.fn-egg .fgrid .fdot:nth-child(24)::after,html.fn-egg .fgrid .fdot:nth-child(26)::after,html.fn-egg .fgrid .fdot:nth-child(27)::after,html.fn-egg .fgrid .fdot:nth-child(28)::after,html.fn-egg .fgrid .fdot:nth-child(30)::after,html.fn-egg .fgrid .fdot:nth-child(32)::after,html.fn-egg .fgrid .fdot:nth-child(35)::after,html.fn-egg .fgrid .fdot:nth-child(39)::after,html.fn-egg .fgrid .fdot:nth-child(42)::after,html.fn-egg .fgrid .fdot:nth-child(43)::after,html.fn-egg .fgrid .fdot:nth-child(44)::after,html.fn-egg .fgrid .fdot:nth-child(46)::after,html.fn-egg .fgrid .fdot:nth-child(47)::after,html.fn-egg .fgrid .fdot:nth-child(48)::after,html.fn-egg .fgrid .fdot:nth-child(50)::after,html.fn-egg .fgrid .fdot:nth-child(51)::after,html.fn-egg .fgrid .fdot:nth-child(55)::after,html.fn-egg .fgrid .fdot:nth-child(59)::after,html.fn-egg .fgrid .fdot:nth-child(62)::after,html.fn-egg .fgrid .fdot:nth-child(64)::after,html.fn-egg .fgrid .fdot:nth-child(66)::after,html.fn-egg .fgrid .fdot:nth-child(68)::after,html.fn-egg .fgrid .fdot:nth-child(70)::after,html.fn-egg .fgrid .fdot:nth-child(72)::after,html.fn-egg .fgrid .fdot:nth-child(75)::after,html.fn-egg .fgrid .fdot:nth-child(79)::after,html.fn-egg .fgrid .fdot:nth-child(82)::after,html.fn-egg .fgrid .fdot:nth-child(84)::after,html.fn-egg .fgrid .fdot:nth-child(86)::after,html.fn-egg .fgrid .fdot:nth-child(88)::after,html.fn-egg .fgrid .fdot:nth-child(90)::after,html.fn-egg .fgrid .fdot:nth-child(92)::after,html.fn-egg .fgrid .fdot:nth-child(94)::after,html.fn-egg .fgrid .fdot:nth-child(95)::after,html.fn-egg .fgrid .fdot:nth-child(96)::after,html.fn-egg .fgrid .fdot:nth-child(99)::after{animation:eggFlash 700ms var(--ease) both,eggLock 360ms var(--ease) calc(760ms + var(--c,0) * 26ms) forwards}
+    html.fn-egg .fgrid .fdot::after{background:var(--highlighter);animation:eggFlash 880ms var(--ease) both}
+html.fn-egg .fgrid .fdot:nth-child(3)::after,html.fn-egg .fgrid .fdot:nth-child(10)::after,html.fn-egg .fgrid .fdot:nth-child(11)::after,html.fn-egg .fgrid .fdot:nth-child(15)::after,html.fn-egg .fgrid .fdot:nth-child(19)::after,html.fn-egg .fgrid .fdot:nth-child(20)::after,html.fn-egg .fgrid .fdot:nth-child(22)::after,html.fn-egg .fgrid .fdot:nth-child(27)::after,html.fn-egg .fgrid .fdot:nth-child(35)::after,html.fn-egg .fgrid .fdot:nth-child(39)::after,html.fn-egg .fgrid .fdot:nth-child(42)::after,html.fn-egg .fgrid .fdot:nth-child(43)::after,html.fn-egg .fgrid .fdot:nth-child(47)::after,html.fn-egg .fgrid .fdot:nth-child(51)::after,html.fn-egg .fgrid .fdot:nth-child(55)::after,html.fn-egg .fgrid .fdot:nth-child(59)::after,html.fn-egg .fgrid .fdot:nth-child(62)::after,html.fn-egg .fgrid .fdot:nth-child(75)::after,html.fn-egg .fgrid .fdot:nth-child(79)::after,html.fn-egg .fgrid .fdot:nth-child(82)::after,html.fn-egg .fgrid .fdot:nth-child(94)::after,html.fn-egg .fgrid .fdot:nth-child(95)::after,html.fn-egg .fgrid .fdot:nth-child(99)::after{animation:eggFlash 880ms var(--ease) both,eggSeq_a 3200ms steps(1,end) 880ms forwards}
+    @keyframes eggSeq_a{0%{opacity:0}31%{opacity:0}32%{opacity:0}37%{opacity:0}38%{opacity:0}68%{opacity:0}69%{opacity:0}74%{opacity:0}75%{opacity:1}100%{opacity:1}}
+html.fn-egg .fgrid .fdot:nth-child(53)::after,html.fn-egg .fgrid .fdot:nth-child(73)::after,html.fn-egg .fgrid .fdot:nth-child(89)::after{animation:eggFlash 880ms var(--ease) both,eggSeq_b 3200ms steps(1,end) 880ms forwards}
+    @keyframes eggSeq_b{0%{opacity:0}31%{opacity:0}32%{opacity:0}37%{opacity:0}38%{opacity:1}68%{opacity:1}69%{opacity:0}74%{opacity:0}75%{opacity:0}100%{opacity:0}}
+html.fn-egg .fgrid .fdot:nth-child(8)::after,html.fn-egg .fgrid .fdot:nth-child(14)::after{animation:eggFlash 880ms var(--ease) both,eggSeq_ba 3200ms steps(1,end) 880ms forwards}
+    @keyframes eggSeq_ba{0%{opacity:0}31%{opacity:0}32%{opacity:0}37%{opacity:0}38%{opacity:1}68%{opacity:1}69%{opacity:0}74%{opacity:0}75%{opacity:1}100%{opacity:1}}
+html.fn-egg .fgrid .fdot:nth-child(4)::after,html.fn-egg .fgrid .fdot:nth-child(13)::after,html.fn-egg .fgrid .fdot:nth-child(17)::after,html.fn-egg .fgrid .fdot:nth-child(25)::after,html.fn-egg .fgrid .fdot:nth-child(36)::after,html.fn-egg .fgrid .fdot:nth-child(45)::after,html.fn-egg .fgrid .fdot:nth-child(52)::after,html.fn-egg .fgrid .fdot:nth-child(54)::after,html.fn-egg .fgrid .fdot:nth-child(56)::after,html.fn-egg .fgrid .fdot:nth-child(57)::after,html.fn-egg .fgrid .fdot:nth-child(74)::after,html.fn-egg .fgrid .fdot:nth-child(76)::after,html.fn-egg .fgrid .fdot:nth-child(97)::after,html.fn-egg .fgrid .fdot:nth-child(98)::after{animation:eggFlash 880ms var(--ease) both,eggSeq_m 3200ms steps(1,end) 880ms forwards}
+    @keyframes eggSeq_m{0%{opacity:1}31%{opacity:1}32%{opacity:0}37%{opacity:0}38%{opacity:0}68%{opacity:0}69%{opacity:0}74%{opacity:0}75%{opacity:0}100%{opacity:0}}
+html.fn-egg .fgrid .fdot:nth-child(6)::after,html.fn-egg .fgrid .fdot:nth-child(16)::after,html.fn-egg .fgrid .fdot:nth-child(18)::after,html.fn-egg .fgrid .fdot:nth-child(24)::after,html.fn-egg .fgrid .fdot:nth-child(26)::after,html.fn-egg .fgrid .fdot:nth-child(44)::after,html.fn-egg .fgrid .fdot:nth-child(46)::after,html.fn-egg .fgrid .fdot:nth-child(50)::after,html.fn-egg .fgrid .fdot:nth-child(64)::after,html.fn-egg .fgrid .fdot:nth-child(66)::after,html.fn-egg .fgrid .fdot:nth-child(72)::after,html.fn-egg .fgrid .fdot:nth-child(84)::after,html.fn-egg .fgrid .fdot:nth-child(86)::after,html.fn-egg .fgrid .fdot:nth-child(90)::after,html.fn-egg .fgrid .fdot:nth-child(92)::after,html.fn-egg .fgrid .fdot:nth-child(96)::after{animation:eggFlash 880ms var(--ease) both,eggSeq_ma 3200ms steps(1,end) 880ms forwards}
+    @keyframes eggSeq_ma{0%{opacity:1}31%{opacity:1}32%{opacity:0}37%{opacity:0}38%{opacity:0}68%{opacity:0}69%{opacity:0}74%{opacity:0}75%{opacity:1}100%{opacity:1}}
+html.fn-egg .fgrid .fdot:nth-child(9)::after,html.fn-egg .fgrid .fdot:nth-child(12)::after,html.fn-egg .fgrid .fdot:nth-child(34)::after,html.fn-egg .fgrid .fdot:nth-child(49)::after,html.fn-egg .fgrid .fdot:nth-child(93)::after{animation:eggFlash 880ms var(--ease) both,eggSeq_mb 3200ms steps(1,end) 880ms forwards}
+    @keyframes eggSeq_mb{0%{opacity:1}31%{opacity:1}32%{opacity:0}37%{opacity:0}38%{opacity:1}68%{opacity:1}69%{opacity:0}74%{opacity:0}75%{opacity:0}100%{opacity:0}}
+html.fn-egg .fgrid .fdot:nth-child(28)::after,html.fn-egg .fgrid .fdot:nth-child(30)::after,html.fn-egg .fgrid .fdot:nth-child(32)::after,html.fn-egg .fgrid .fdot:nth-child(48)::after,html.fn-egg .fgrid .fdot:nth-child(68)::after,html.fn-egg .fgrid .fdot:nth-child(70)::after,html.fn-egg .fgrid .fdot:nth-child(88)::after{animation:eggFlash 880ms var(--ease) both,eggSeq_mba 3200ms steps(1,end) 880ms forwards}
+    @keyframes eggSeq_mba{0%{opacity:1}31%{opacity:1}32%{opacity:0}37%{opacity:0}38%{opacity:1}68%{opacity:1}69%{opacity:0}74%{opacity:0}75%{opacity:1}100%{opacity:1}}
     @keyframes eggFlash{
       0%{opacity:0;transform:scale(.35)}
-      18%{opacity:1;transform:scale(1.14)}
-      46%{opacity:.22;transform:scale(1)}
-      100%{opacity:1;transform:none}
+      20%{opacity:1;transform:scale(1.14)}
+      52%{opacity:.22;transform:scale(1)}
+      80%{opacity:1;transform:none}
+      100%{opacity:0;transform:none}
     }
-    @keyframes eggOut{0%{opacity:1}30%{opacity:.45;transform:scale(1.1)}100%{opacity:0;transform:scale(.35)}}
-    @keyframes eggLock{0%{transform:none}45%{transform:scale(1.45)}100%{transform:scale(1.22)}}
     @media (prefers-reduced-motion:reduce){
-      /* no flashing at all: the word simply appears */
+      /* no flashing and no frames: the last one simply stands */
       html.fn-egg .fgrid .fdot::after{animation:none;opacity:0}
 html.fn-egg .fgrid .fdot:nth-child(3)::after,html.fn-egg .fgrid .fdot:nth-child(6)::after,html.fn-egg .fgrid .fdot:nth-child(8)::after,html.fn-egg .fgrid .fdot:nth-child(10)::after,html.fn-egg .fgrid .fdot:nth-child(11)::after,html.fn-egg .fgrid .fdot:nth-child(14)::after,html.fn-egg .fgrid .fdot:nth-child(15)::after,html.fn-egg .fgrid .fdot:nth-child(16)::after,html.fn-egg .fgrid .fdot:nth-child(18)::after,html.fn-egg .fgrid .fdot:nth-child(19)::after,html.fn-egg .fgrid .fdot:nth-child(20)::after,html.fn-egg .fgrid .fdot:nth-child(22)::after,html.fn-egg .fgrid .fdot:nth-child(24)::after,html.fn-egg .fgrid .fdot:nth-child(26)::after,html.fn-egg .fgrid .fdot:nth-child(27)::after,html.fn-egg .fgrid .fdot:nth-child(28)::after,html.fn-egg .fgrid .fdot:nth-child(30)::after,html.fn-egg .fgrid .fdot:nth-child(32)::after,html.fn-egg .fgrid .fdot:nth-child(35)::after,html.fn-egg .fgrid .fdot:nth-child(39)::after,html.fn-egg .fgrid .fdot:nth-child(42)::after,html.fn-egg .fgrid .fdot:nth-child(43)::after,html.fn-egg .fgrid .fdot:nth-child(44)::after,html.fn-egg .fgrid .fdot:nth-child(46)::after,html.fn-egg .fgrid .fdot:nth-child(47)::after,html.fn-egg .fgrid .fdot:nth-child(48)::after,html.fn-egg .fgrid .fdot:nth-child(50)::after,html.fn-egg .fgrid .fdot:nth-child(51)::after,html.fn-egg .fgrid .fdot:nth-child(55)::after,html.fn-egg .fgrid .fdot:nth-child(59)::after,html.fn-egg .fgrid .fdot:nth-child(62)::after,html.fn-egg .fgrid .fdot:nth-child(64)::after,html.fn-egg .fgrid .fdot:nth-child(66)::after,html.fn-egg .fgrid .fdot:nth-child(68)::after,html.fn-egg .fgrid .fdot:nth-child(70)::after,html.fn-egg .fgrid .fdot:nth-child(72)::after,html.fn-egg .fgrid .fdot:nth-child(75)::after,html.fn-egg .fgrid .fdot:nth-child(79)::after,html.fn-egg .fgrid .fdot:nth-child(82)::after,html.fn-egg .fgrid .fdot:nth-child(84)::after,html.fn-egg .fgrid .fdot:nth-child(86)::after,html.fn-egg .fgrid .fdot:nth-child(88)::after,html.fn-egg .fgrid .fdot:nth-child(90)::after,html.fn-egg .fgrid .fdot:nth-child(92)::after,html.fn-egg .fgrid .fdot:nth-child(94)::after,html.fn-egg .fgrid .fdot:nth-child(95)::after,html.fn-egg .fgrid .fdot:nth-child(96)::after,html.fn-egg .fgrid .fdot:nth-child(99)::after{animation:none;opacity:1}
     }
@@ -2390,10 +2416,13 @@ html.fn-egg .fgrid .fdot:nth-child(3)::after,html.fn-egg .fgrid .fdot:nth-child(
         <div style="background:var(--navy);border-radius:var(--radius-2xl);padding:clamp(28px,3.6vw,44px);box-shadow:var(--shadow-lg)">
           <h2 style="font-family:var(--font-display);font-weight:700;font-size:clamp(32px,3.4vw,40px);letter-spacing:-0.02em;line-height:1.14;color:var(--cream);margin:0 0 12px;max-width:16ch">We turn away 95 of every 100 tutors who apply.</h2>
           <p style="font-size:15.5px;line-height:1.6;color:var(--text-on-navy-muted);margin:0 0 36px;max-width:44ch">Your tutor shouldn't be a lottery ticket. Ours all clear the same gates, every term.</p>
-          <div class="fgrid" aria-hidden="true" style="display:grid;grid-template-columns:repeat(20,minmax(0,1fr));gap:6px;max-width:440px;margin:0 0 16px">
+          <div class="fwrap" style="position:relative;max-width:440px;margin:0 0 16px">
+          <div class="fgrid" aria-hidden="true" style="display:grid;grid-template-columns:repeat(20,minmax(0,1fr));gap:6px">
             <sc-for list="{{ funnelDots }}" as="d" hint-placeholder-count="100">
               <span class="fdot {{ d.k }}" style="--d: {{ d.d }}ms;--f: {{ d.f }}px;--ix: {{ d.i }};--c: {{ d.c }}"></span>
             </sc-for>
+          </div>
+          <div class="fmq" aria-hidden="true"><svg class="fmq-svg" sc-camel-view-box="0 0 212 5" preserveAspectRatio="xMinYMid meet" fill="#FFF9F1" aria-hidden="true"><circle cx="1.5" cy="0.5" r=".34"/><circle cx="107.5" cy="0.5" r=".34"/><circle cx="2.5" cy="0.5" r=".34"/><circle cx="108.5" cy="0.5" r=".34"/><circle cx="3.5" cy="0.5" r=".34"/><circle cx="109.5" cy="0.5" r=".34"/><circle cx="7.5" cy="0.5" r=".34"/><circle cx="113.5" cy="0.5" r=".34"/><circle cx="8.5" cy="0.5" r=".34"/><circle cx="114.5" cy="0.5" r=".34"/><circle cx="9.5" cy="0.5" r=".34"/><circle cx="115.5" cy="0.5" r=".34"/><circle cx="12.5" cy="0.5" r=".34"/><circle cx="118.5" cy="0.5" r=".34"/><circle cx="16.5" cy="0.5" r=".34"/><circle cx="122.5" cy="0.5" r=".34"/><circle cx="18.5" cy="0.5" r=".34"/><circle cx="124.5" cy="0.5" r=".34"/><circle cx="19.5" cy="0.5" r=".34"/><circle cx="125.5" cy="0.5" r=".34"/><circle cx="20.5" cy="0.5" r=".34"/><circle cx="126.5" cy="0.5" r=".34"/><circle cx="21.5" cy="0.5" r=".34"/><circle cx="127.5" cy="0.5" r=".34"/><circle cx="22.5" cy="0.5" r=".34"/><circle cx="128.5" cy="0.5" r=".34"/><circle cx="25.5" cy="0.5" r=".34"/><circle cx="131.5" cy="0.5" r=".34"/><circle cx="26.5" cy="0.5" r=".34"/><circle cx="132.5" cy="0.5" r=".34"/><circle cx="27.5" cy="0.5" r=".34"/><circle cx="133.5" cy="0.5" r=".34"/><circle cx="30.5" cy="0.5" r=".34"/><circle cx="136.5" cy="0.5" r=".34"/><circle cx="34.5" cy="0.5" r=".34"/><circle cx="140.5" cy="0.5" r=".34"/><circle cx="36.5" cy="0.5" r=".34"/><circle cx="142.5" cy="0.5" r=".34"/><circle cx="37.5" cy="0.5" r=".34"/><circle cx="143.5" cy="0.5" r=".34"/><circle cx="38.5" cy="0.5" r=".34"/><circle cx="144.5" cy="0.5" r=".34"/><circle cx="39.5" cy="0.5" r=".34"/><circle cx="145.5" cy="0.5" r=".34"/><circle cx="46.5" cy="0.5" r=".34"/><circle cx="152.5" cy="0.5" r=".34"/><circle cx="47.5" cy="0.5" r=".34"/><circle cx="153.5" cy="0.5" r=".34"/><circle cx="48.5" cy="0.5" r=".34"/><circle cx="154.5" cy="0.5" r=".34"/><circle cx="49.5" cy="0.5" r=".34"/><circle cx="155.5" cy="0.5" r=".34"/><circle cx="50.5" cy="0.5" r=".34"/><circle cx="156.5" cy="0.5" r=".34"/><circle cx="52.5" cy="0.5" r=".34"/><circle cx="158.5" cy="0.5" r=".34"/><circle cx="53.5" cy="0.5" r=".34"/><circle cx="159.5" cy="0.5" r=".34"/><circle cx="54.5" cy="0.5" r=".34"/><circle cx="160.5" cy="0.5" r=".34"/><circle cx="55.5" cy="0.5" r=".34"/><circle cx="161.5" cy="0.5" r=".34"/><circle cx="58.5" cy="0.5" r=".34"/><circle cx="164.5" cy="0.5" r=".34"/><circle cx="62.5" cy="0.5" r=".34"/><circle cx="168.5" cy="0.5" r=".34"/><circle cx="65.5" cy="0.5" r=".34"/><circle cx="171.5" cy="0.5" r=".34"/><circle cx="66.5" cy="0.5" r=".34"/><circle cx="172.5" cy="0.5" r=".34"/><circle cx="67.5" cy="0.5" r=".34"/><circle cx="173.5" cy="0.5" r=".34"/><circle cx="71.5" cy="0.5" r=".34"/><circle cx="177.5" cy="0.5" r=".34"/><circle cx="72.5" cy="0.5" r=".34"/><circle cx="178.5" cy="0.5" r=".34"/><circle cx="73.5" cy="0.5" r=".34"/><circle cx="179.5" cy="0.5" r=".34"/><circle cx="76.5" cy="0.5" r=".34"/><circle cx="182.5" cy="0.5" r=".34"/><circle cx="77.5" cy="0.5" r=".34"/><circle cx="183.5" cy="0.5" r=".34"/><circle cx="78.5" cy="0.5" r=".34"/><circle cx="184.5" cy="0.5" r=".34"/><circle cx="79.5" cy="0.5" r=".34"/><circle cx="185.5" cy="0.5" r=".34"/><circle cx="80.5" cy="0.5" r=".34"/><circle cx="186.5" cy="0.5" r=".34"/><circle cx="82.5" cy="0.5" r=".34"/><circle cx="188.5" cy="0.5" r=".34"/><circle cx="83.5" cy="0.5" r=".34"/><circle cx="189.5" cy="0.5" r=".34"/><circle cx="84.5" cy="0.5" r=".34"/><circle cx="190.5" cy="0.5" r=".34"/><circle cx="85.5" cy="0.5" r=".34"/><circle cx="191.5" cy="0.5" r=".34"/><circle cx="86.5" cy="0.5" r=".34"/><circle cx="192.5" cy="0.5" r=".34"/><circle cx="89.5" cy="0.5" r=".34"/><circle cx="195.5" cy="0.5" r=".34"/><circle cx="90.5" cy="0.5" r=".34"/><circle cx="196.5" cy="0.5" r=".34"/><circle cx="91.5" cy="0.5" r=".34"/><circle cx="197.5" cy="0.5" r=".34"/><circle cx="94.5" cy="0.5" r=".34"/><circle cx="200.5" cy="0.5" r=".34"/><circle cx="98.5" cy="0.5" r=".34"/><circle cx="204.5" cy="0.5" r=".34"/><circle cx="0.5" cy="1.5" r=".34"/><circle cx="106.5" cy="1.5" r=".34"/><circle cx="6.5" cy="1.5" r=".34"/><circle cx="112.5" cy="1.5" r=".34"/><circle cx="10.5" cy="1.5" r=".34"/><circle cx="116.5" cy="1.5" r=".34"/><circle cx="12.5" cy="1.5" r=".34"/><circle cx="118.5" cy="1.5" r=".34"/><circle cx="13.5" cy="1.5" r=".34"/><circle cx="119.5" cy="1.5" r=".34"/><circle cx="16.5" cy="1.5" r=".34"/><circle cx="122.5" cy="1.5" r=".34"/><circle cx="20.5" cy="1.5" r=".34"/><circle cx="126.5" cy="1.5" r=".34"/><circle cx="24.5" cy="1.5" r=".34"/><circle cx="130.5" cy="1.5" r=".34"/><circle cx="28.5" cy="1.5" r=".34"/><circle cx="134.5" cy="1.5" r=".34"/><circle cx="30.5" cy="1.5" r=".34"/><circle cx="136.5" cy="1.5" r=".34"/><circle cx="34.5" cy="1.5" r=".34"/><circle cx="140.5" cy="1.5" r=".34"/><circle cx="36.5" cy="1.5" r=".34"/><circle cx="142.5" cy="1.5" r=".34"/><circle cx="40.5" cy="1.5" r=".34"/><circle cx="146.5" cy="1.5" r=".34"/><circle cx="46.5" cy="1.5" r=".34"/><circle cx="152.5" cy="1.5" r=".34"/><circle cx="52.5" cy="1.5" r=".34"/><circle cx="158.5" cy="1.5" r=".34"/><circle cx="56.5" cy="1.5" r=".34"/><circle cx="162.5" cy="1.5" r=".34"/><circle cx="58.5" cy="1.5" r=".34"/><circle cx="164.5" cy="1.5" r=".34"/><circle cx="62.5" cy="1.5" r=".34"/><circle cx="168.5" cy="1.5" r=".34"/><circle cx="64.5" cy="1.5" r=".34"/><circle cx="170.5" cy="1.5" r=".34"/><circle cx="70.5" cy="1.5" r=".34"/><circle cx="176.5" cy="1.5" r=".34"/><circle cx="74.5" cy="1.5" r=".34"/><circle cx="180.5" cy="1.5" r=".34"/><circle cx="78.5" cy="1.5" r=".34"/><circle cx="184.5" cy="1.5" r=".34"/><circle cx="84.5" cy="1.5" r=".34"/><circle cx="190.5" cy="1.5" r=".34"/><circle cx="88.5" cy="1.5" r=".34"/><circle cx="194.5" cy="1.5" r=".34"/><circle cx="92.5" cy="1.5" r=".34"/><circle cx="198.5" cy="1.5" r=".34"/><circle cx="94.5" cy="1.5" r=".34"/><circle cx="200.5" cy="1.5" r=".34"/><circle cx="95.5" cy="1.5" r=".34"/><circle cx="201.5" cy="1.5" r=".34"/><circle cx="98.5" cy="1.5" r=".34"/><circle cx="204.5" cy="1.5" r=".34"/><circle cx="0.5" cy="2.5" r=".34"/><circle cx="106.5" cy="2.5" r=".34"/><circle cx="6.5" cy="2.5" r=".34"/><circle cx="112.5" cy="2.5" r=".34"/><circle cx="10.5" cy="2.5" r=".34"/><circle cx="116.5" cy="2.5" r=".34"/><circle cx="12.5" cy="2.5" r=".34"/><circle cx="118.5" cy="2.5" r=".34"/><circle cx="14.5" cy="2.5" r=".34"/><circle cx="120.5" cy="2.5" r=".34"/><circle cx="16.5" cy="2.5" r=".34"/><circle cx="122.5" cy="2.5" r=".34"/><circle cx="20.5" cy="2.5" r=".34"/><circle cx="126.5" cy="2.5" r=".34"/><circle cx="24.5" cy="2.5" r=".34"/><circle cx="130.5" cy="2.5" r=".34"/><circle cx="28.5" cy="2.5" r=".34"/><circle cx="134.5" cy="2.5" r=".34"/><circle cx="30.5" cy="2.5" r=".34"/><circle cx="136.5" cy="2.5" r=".34"/><circle cx="34.5" cy="2.5" r=".34"/><circle cx="140.5" cy="2.5" r=".34"/><circle cx="36.5" cy="2.5" r=".34"/><circle cx="142.5" cy="2.5" r=".34"/><circle cx="37.5" cy="2.5" r=".34"/><circle cx="143.5" cy="2.5" r=".34"/><circle cx="38.5" cy="2.5" r=".34"/><circle cx="144.5" cy="2.5" r=".34"/><circle cx="39.5" cy="2.5" r=".34"/><circle cx="145.5" cy="2.5" r=".34"/><circle cx="46.5" cy="2.5" r=".34"/><circle cx="152.5" cy="2.5" r=".34"/><circle cx="47.5" cy="2.5" r=".34"/><circle cx="153.5" cy="2.5" r=".34"/><circle cx="48.5" cy="2.5" r=".34"/><circle cx="154.5" cy="2.5" r=".34"/><circle cx="49.5" cy="2.5" r=".34"/><circle cx="155.5" cy="2.5" r=".34"/><circle cx="52.5" cy="2.5" r=".34"/><circle cx="158.5" cy="2.5" r=".34"/><circle cx="56.5" cy="2.5" r=".34"/><circle cx="162.5" cy="2.5" r=".34"/><circle cx="58.5" cy="2.5" r=".34"/><circle cx="164.5" cy="2.5" r=".34"/><circle cx="62.5" cy="2.5" r=".34"/><circle cx="168.5" cy="2.5" r=".34"/><circle cx="64.5" cy="2.5" r=".34"/><circle cx="170.5" cy="2.5" r=".34"/><circle cx="70.5" cy="2.5" r=".34"/><circle cx="176.5" cy="2.5" r=".34"/><circle cx="71.5" cy="2.5" r=".34"/><circle cx="177.5" cy="2.5" r=".34"/><circle cx="72.5" cy="2.5" r=".34"/><circle cx="178.5" cy="2.5" r=".34"/><circle cx="73.5" cy="2.5" r=".34"/><circle cx="179.5" cy="2.5" r=".34"/><circle cx="74.5" cy="2.5" r=".34"/><circle cx="180.5" cy="2.5" r=".34"/><circle cx="78.5" cy="2.5" r=".34"/><circle cx="184.5" cy="2.5" r=".34"/><circle cx="84.5" cy="2.5" r=".34"/><circle cx="190.5" cy="2.5" r=".34"/><circle cx="88.5" cy="2.5" r=".34"/><circle cx="194.5" cy="2.5" r=".34"/><circle cx="92.5" cy="2.5" r=".34"/><circle cx="198.5" cy="2.5" r=".34"/><circle cx="94.5" cy="2.5" r=".34"/><circle cx="200.5" cy="2.5" r=".34"/><circle cx="96.5" cy="2.5" r=".34"/><circle cx="202.5" cy="2.5" r=".34"/><circle cx="98.5" cy="2.5" r=".34"/><circle cx="204.5" cy="2.5" r=".34"/><circle cx="0.5" cy="3.5" r=".34"/><circle cx="106.5" cy="3.5" r=".34"/><circle cx="6.5" cy="3.5" r=".34"/><circle cx="112.5" cy="3.5" r=".34"/><circle cx="10.5" cy="3.5" r=".34"/><circle cx="116.5" cy="3.5" r=".34"/><circle cx="12.5" cy="3.5" r=".34"/><circle cx="118.5" cy="3.5" r=".34"/><circle cx="15.5" cy="3.5" r=".34"/><circle cx="121.5" cy="3.5" r=".34"/><circle cx="16.5" cy="3.5" r=".34"/><circle cx="122.5" cy="3.5" r=".34"/><circle cx="20.5" cy="3.5" r=".34"/><circle cx="126.5" cy="3.5" r=".34"/><circle cx="24.5" cy="3.5" r=".34"/><circle cx="130.5" cy="3.5" r=".34"/><circle cx="28.5" cy="3.5" r=".34"/><circle cx="134.5" cy="3.5" r=".34"/><circle cx="30.5" cy="3.5" r=".34"/><circle cx="136.5" cy="3.5" r=".34"/><circle cx="34.5" cy="3.5" r=".34"/><circle cx="140.5" cy="3.5" r=".34"/><circle cx="36.5" cy="3.5" r=".34"/><circle cx="142.5" cy="3.5" r=".34"/><circle cx="39.5" cy="3.5" r=".34"/><circle cx="145.5" cy="3.5" r=".34"/><circle cx="46.5" cy="3.5" r=".34"/><circle cx="152.5" cy="3.5" r=".34"/><circle cx="52.5" cy="3.5" r=".34"/><circle cx="158.5" cy="3.5" r=".34"/><circle cx="56.5" cy="3.5" r=".34"/><circle cx="162.5" cy="3.5" r=".34"/><circle cx="58.5" cy="3.5" r=".34"/><circle cx="164.5" cy="3.5" r=".34"/><circle cx="62.5" cy="3.5" r=".34"/><circle cx="168.5" cy="3.5" r=".34"/><circle cx="64.5" cy="3.5" r=".34"/><circle cx="170.5" cy="3.5" r=".34"/><circle cx="70.5" cy="3.5" r=".34"/><circle cx="176.5" cy="3.5" r=".34"/><circle cx="74.5" cy="3.5" r=".34"/><circle cx="180.5" cy="3.5" r=".34"/><circle cx="78.5" cy="3.5" r=".34"/><circle cx="184.5" cy="3.5" r=".34"/><circle cx="84.5" cy="3.5" r=".34"/><circle cx="190.5" cy="3.5" r=".34"/><circle cx="88.5" cy="3.5" r=".34"/><circle cx="194.5" cy="3.5" r=".34"/><circle cx="92.5" cy="3.5" r=".34"/><circle cx="198.5" cy="3.5" r=".34"/><circle cx="94.5" cy="3.5" r=".34"/><circle cx="200.5" cy="3.5" r=".34"/><circle cx="97.5" cy="3.5" r=".34"/><circle cx="203.5" cy="3.5" r=".34"/><circle cx="98.5" cy="3.5" r=".34"/><circle cx="204.5" cy="3.5" r=".34"/><circle cx="1.5" cy="4.5" r=".34"/><circle cx="107.5" cy="4.5" r=".34"/><circle cx="2.5" cy="4.5" r=".34"/><circle cx="108.5" cy="4.5" r=".34"/><circle cx="3.5" cy="4.5" r=".34"/><circle cx="109.5" cy="4.5" r=".34"/><circle cx="7.5" cy="4.5" r=".34"/><circle cx="113.5" cy="4.5" r=".34"/><circle cx="8.5" cy="4.5" r=".34"/><circle cx="114.5" cy="4.5" r=".34"/><circle cx="9.5" cy="4.5" r=".34"/><circle cx="115.5" cy="4.5" r=".34"/><circle cx="12.5" cy="4.5" r=".34"/><circle cx="118.5" cy="4.5" r=".34"/><circle cx="16.5" cy="4.5" r=".34"/><circle cx="122.5" cy="4.5" r=".34"/><circle cx="20.5" cy="4.5" r=".34"/><circle cx="126.5" cy="4.5" r=".34"/><circle cx="25.5" cy="4.5" r=".34"/><circle cx="131.5" cy="4.5" r=".34"/><circle cx="26.5" cy="4.5" r=".34"/><circle cx="132.5" cy="4.5" r=".34"/><circle cx="27.5" cy="4.5" r=".34"/><circle cx="133.5" cy="4.5" r=".34"/><circle cx="31.5" cy="4.5" r=".34"/><circle cx="137.5" cy="4.5" r=".34"/><circle cx="32.5" cy="4.5" r=".34"/><circle cx="138.5" cy="4.5" r=".34"/><circle cx="33.5" cy="4.5" r=".34"/><circle cx="139.5" cy="4.5" r=".34"/><circle cx="36.5" cy="4.5" r=".34"/><circle cx="142.5" cy="4.5" r=".34"/><circle cx="40.5" cy="4.5" r=".34"/><circle cx="146.5" cy="4.5" r=".34"/><circle cx="46.5" cy="4.5" r=".34"/><circle cx="152.5" cy="4.5" r=".34"/><circle cx="47.5" cy="4.5" r=".34"/><circle cx="153.5" cy="4.5" r=".34"/><circle cx="48.5" cy="4.5" r=".34"/><circle cx="154.5" cy="4.5" r=".34"/><circle cx="49.5" cy="4.5" r=".34"/><circle cx="155.5" cy="4.5" r=".34"/><circle cx="50.5" cy="4.5" r=".34"/><circle cx="156.5" cy="4.5" r=".34"/><circle cx="52.5" cy="4.5" r=".34"/><circle cx="158.5" cy="4.5" r=".34"/><circle cx="53.5" cy="4.5" r=".34"/><circle cx="159.5" cy="4.5" r=".34"/><circle cx="54.5" cy="4.5" r=".34"/><circle cx="160.5" cy="4.5" r=".34"/><circle cx="55.5" cy="4.5" r=".34"/><circle cx="161.5" cy="4.5" r=".34"/><circle cx="59.5" cy="4.5" r=".34"/><circle cx="165.5" cy="4.5" r=".34"/><circle cx="60.5" cy="4.5" r=".34"/><circle cx="166.5" cy="4.5" r=".34"/><circle cx="61.5" cy="4.5" r=".34"/><circle cx="167.5" cy="4.5" r=".34"/><circle cx="65.5" cy="4.5" r=".34"/><circle cx="171.5" cy="4.5" r=".34"/><circle cx="66.5" cy="4.5" r=".34"/><circle cx="172.5" cy="4.5" r=".34"/><circle cx="67.5" cy="4.5" r=".34"/><circle cx="173.5" cy="4.5" r=".34"/><circle cx="70.5" cy="4.5" r=".34"/><circle cx="176.5" cy="4.5" r=".34"/><circle cx="74.5" cy="4.5" r=".34"/><circle cx="180.5" cy="4.5" r=".34"/><circle cx="78.5" cy="4.5" r=".34"/><circle cx="184.5" cy="4.5" r=".34"/><circle cx="82.5" cy="4.5" r=".34"/><circle cx="188.5" cy="4.5" r=".34"/><circle cx="83.5" cy="4.5" r=".34"/><circle cx="189.5" cy="4.5" r=".34"/><circle cx="84.5" cy="4.5" r=".34"/><circle cx="190.5" cy="4.5" r=".34"/><circle cx="85.5" cy="4.5" r=".34"/><circle cx="191.5" cy="4.5" r=".34"/><circle cx="86.5" cy="4.5" r=".34"/><circle cx="192.5" cy="4.5" r=".34"/><circle cx="89.5" cy="4.5" r=".34"/><circle cx="195.5" cy="4.5" r=".34"/><circle cx="90.5" cy="4.5" r=".34"/><circle cx="196.5" cy="4.5" r=".34"/><circle cx="91.5" cy="4.5" r=".34"/><circle cx="197.5" cy="4.5" r=".34"/><circle cx="94.5" cy="4.5" r=".34"/><circle cx="200.5" cy="4.5" r=".34"/><circle cx="98.5" cy="4.5" r=".34"/><circle cx="204.5" cy="4.5" r=".34"/></svg></div>
           </div>
           <div class="fsep" aria-hidden="true"></div>
           <div style="display:flex;gap:20px;flex-wrap:wrap;margin:0 0 28px">
@@ -3868,9 +3897,15 @@ class Component extends DCLogic {
     // no clock on it - the presses can be any distance apart, and every press still refills the grid
     // and drops it as usual, so nothing about the section hints that the row is listening
     const EGG = [0, 12, 17, 8, 19];
+    // the second sequence: top-right dot, then bottom-left dot, both double-pressed. after that one
+    // survivor is the one to press, seven times over - one for each letter of the name - and the
+    // phrase scrolls through on the seventh
+    const MQ_A = 19, MQ_B = 80, MQ_STEPS = 7;
     const resetEgg = () => {
       root.classList.remove("fn-egg");
+      root.classList.remove("fn-mq");
       this._eggN = 0; this._eggHint = null; this._eggDead = false;
+      this._mqArmed = false; this._mqStage = 0; this._mqDead = false;
     };
     const at = (e) => {
       const grid = e.target && e.target.closest ? e.target.closest(".fgrid") : null;
@@ -3886,7 +3921,21 @@ class Component extends DCLogic {
       if (hit.idx > -1 && hit.idx === this._lastDot && now - (this._lastT || 0) < 320) { this._lastT = now; return; }
       this._lastDot = hit.idx; this._lastT = now;
 
-      if (root.classList.contains("fn-egg")) { resetEgg(); replay(); return; }
+      if (root.classList.contains("fn-egg") || root.classList.contains("fn-mq")) { resetEgg(); replay(); return; }
+
+      // second sequence: only the breathing survivor counts, anything else ends it
+      if (this._mqStage > 0) {
+        const target = hit.grid.querySelector(".fmq-dot");
+        if (target && hit.idx === Array.prototype.indexOf.call(hit.grid.children, target)) {
+          this._mqStage += 1;
+          if (this._mqStage > MQ_STEPS) { this._mqStage = 0; root.classList.add("fn-mq"); return; }
+          replay();
+          return;
+        }
+        this._mqStage = 0; this._mqDead = true;
+        replay();
+        return;
+      }
       if (this._eggDead) { replay(); return; }
 
       // walked mode: the lit pointer is the only press that counts
@@ -3903,9 +3952,10 @@ class Component extends DCLogic {
         return;
       }
 
-      // unaided: play the row yourself
+      // unaided: play the row yourself. once the second sequence has been seen this route is shut and
+      // only the walk is left
       const n = this._eggN || 0;
-      if (hit.idx > -1 && hit.idx < 20 && hit.idx === EGG[n]) {
+      if (!this._mqSeen && hit.idx > -1 && hit.idx < 20 && hit.idx === EGG[n]) {
         this._eggN = n + 1;
         if (this._eggN === EGG.length) { this._eggN = 0; root.classList.add("fn-egg"); return; }
       } else if (n > 0) {
@@ -3918,10 +3968,21 @@ class Component extends DCLogic {
       const hit = at(e);
       if (!hit || hit.idx < 0) return;
       // the last ball clears everything and hands back a fresh count
-      if (hit.idx === hit.grid.children.length - 1) { resetEgg(); replay(); return; }
+      if (hit.idx === hit.grid.children.length - 1) {
+        // the hard reset: everything, including the memory that the second sequence was found
+        resetEgg(); this._mqSeen = false; replay(); return;
+      }
       // double-press the A to be walked through it: every drop leaves the next letter lit
       if (hit.idx === EGG[0] && !this._eggDead && !root.classList.contains("fn-egg")) {
         this._eggN = 1; this._eggHint = EGG[1];
+        replay();
+        return;
+      }
+      // second sequence: arm on the top-right dot, start on the bottom-left one
+      if (this._mqDead) return;
+      if (hit.idx === MQ_A) { this._mqArmed = true; return; }
+      if (hit.idx === MQ_B && this._mqArmed) {
+        this._mqArmed = false; this._mqStage = 1; this._mqSeen = true;
         replay();
       }
     }, true);
@@ -4747,15 +4808,21 @@ class Component extends DCLogic {
         // dot and it is the one worth pressing. unaided, the draw is the whole grid again
         const hint = this._eggHint;
         const pool = hint == null ? idx : idx.filter((id) => id >= 20);
-        const keep = new Set(pool.slice(0, keepCount));
+        const kept = pool.slice(0, keepCount);
+        const keep = new Set(kept);
         if (hint != null) keep.add(hint);
+        // second sequence: one of the survivors is the one to press, and which one changes every draw
+        const mqDot = this._mqStage > 0 ? kept[0] : null;
         const delay = new Array(100).fill(0);
         let t = 0;
         idx.filter((id) => !keep.has(id)).forEach((id) => { delay[id] = Math.round(t); t += 4 + rnd() * 11; });
         // a ball in the top row has the whole grid to clear, one in the bottom row barely any
-        return Array.from({ length: 100 }, (_, i) => ({
-          i: i, k: keep.has(i) ? (i === hint ? "fkeep fhint" : "fkeep") : "", d: delay[i], f: 56 - Math.floor(i / 20) * 7, c: i % 20
-        }));
+        return Array.from({ length: 100 }, (_, i) => {
+          let cls = keep.has(i) ? "fkeep" : "";
+          if (i === hint) cls += " fhint";
+          if (i === mqDot) cls += " fmq-dot";
+          return { i: i, k: cls, d: delay[i], f: 56 - Math.floor(i / 20) * 7, c: i % 20 };
+        });
       })(),
       srCas: (S.srTab || "cas") === "cas", srBound: S.srTab === "bound",
       srPickCas: () => this.setState({ srTab: "cas" }), srPickBound: () => this.setState({ srTab: "bound" }),
