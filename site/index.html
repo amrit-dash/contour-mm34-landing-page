@@ -3826,10 +3826,7 @@ class Component extends DCLogic {
       if (!g) return;
       const top = g.getBoundingClientRect().top, vh = window.innerHeight || 1;
       // the grid is already full, so arriving at the card is the cue to start emptying it
-      if (top < vh * 0.86 && !root.classList.contains("fn-drop")) {
-        this._fnStart = Date.now();
-        root.classList.add("fn-drop");
-      }
+      if (top < vh * 0.86) root.classList.add("fn-drop");
     };
     const onScroll = () => { if (!this._fnRaf) this._fnRaf = requestAnimationFrame(tick); };
     // tap the grid to refill it - the grid is decorative, so nothing is taken from the tap. a new
@@ -3837,7 +3834,6 @@ class Component extends DCLogic {
     document.addEventListener("click", (e) => {
       if (!e.target || !e.target.closest || !e.target.closest(".fgrid")) return;
       this._fnSeed = ((Date.now() ^ (Math.random() * 0x7fffffff)) & 0x7fffffff) || 1;
-      this._fnStart = 0;
       root.classList.remove("fn-drop");
       this.setState({ fnNonce: (this.state.fnNonce || 0) + 1 }, () => {
         requestAnimationFrame(() => requestAnimationFrame(tick));
@@ -4664,13 +4660,9 @@ class Component extends DCLogic {
         const delay = new Array(100).fill(0);
         let t = 0;
         idx.slice(keepCount).forEach((id) => { delay[id] = Math.round(t); t += 4 + rnd() * 11; });
-        // the component re-renders on its own every few seconds, which rewrites these styles and
-        // restarts the animation. offsetting every delay by how long the fall has been running makes
-        // the restart resume where it was: balls mid-flight carry on, finished ones stay finished
-        const elapsed = this._fnStart ? Math.min(Date.now() - this._fnStart, 60000) : 0;
         // a ball in the top row has the whole grid to clear, one in the bottom row barely any
         return Array.from({ length: 100 }, (_, i) => ({
-          i: i, k: keep.has(i) ? "fkeep" : "", d: delay[i] - elapsed, f: 56 - Math.floor(i / 20) * 7
+          i: i, k: keep.has(i) ? "fkeep" : "", d: delay[i], f: 56 - Math.floor(i / 20) * 7
         }));
       })(),
       srCas: (S.srTab || "cas") === "cas", srBound: S.srTab === "bound",
