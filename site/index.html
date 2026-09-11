@@ -1455,6 +1455,26 @@ section[id],div[id]{scroll-margin-top:calc(var(--hdr,120px) - 1px)}
     .syspanel .pvis{padding:26px!important}
     .syspanel .tabpanel>div:last-child{padding:28px 30px 28px!important}
     .sysrail{padding:0 8px 0 4px}
+
+    /* ── the 95-in-100 funnel: the grid fills lime as the card arrives, then the 95 fall away one by
+       one under gravity and leave the five behind. state lives on <html>, which the runtime leaves
+       alone, and the per-dot --i staggers both the fill and the fall ── */
+    .fdot{transition:background var(--dur-s) var(--ease);transition-delay:calc(var(--i,0)*4ms)}
+    html.fn-fill .fdot{background:var(--highlighter)!important}  /* the dot carries its colour inline */
+    html.fn-drop .fdot:not(.fkeep){animation:fnDrop 900ms cubic-bezier(.4,0,.9,.4) both;animation-delay:calc(var(--i,0)*13ms)}
+    @keyframes fnDrop{
+      0%{transform:translateY(0);opacity:1}
+      12%{transform:translateY(-3px);opacity:1}
+      60%{opacity:.42}
+      100%{transform:translateY(58px);opacity:0}
+    }
+    /* a short rule parts the grid from the labels that read it */
+    .fsep{width:40px;height:2px;border-radius:2px;background:rgba(255,249,241,.24);margin:0 0 16px}
+    @media (prefers-reduced-motion:reduce){
+      /* no fill, no fall: the grid keeps the state it was authored in */
+      html.fn-fill .fdot{background:var(--tv-background)!important;transition:none}
+      html.fn-drop .fdot:not(.fkeep){animation:none}
+    }
     /* ── pillar cards as a swipe carousel on phones: native scroll-snap track, chevrons + dots below ── */
     .pcar{position:relative}
     .pcar-nav,.pcar-head{display:none}
@@ -2353,11 +2373,12 @@ section[id],div[id]{scroll-margin-top:calc(var(--hdr,120px) - 1px)}
         <div style="background:var(--navy);border-radius:var(--radius-2xl);padding:clamp(28px,3.6vw,44px);box-shadow:var(--shadow-lg)">
           <h2 style="font-family:var(--font-display);font-weight:700;font-size:clamp(32px,3.4vw,40px);letter-spacing:-0.02em;line-height:1.14;color:var(--cream);margin:0 0 12px;max-width:16ch">We turn away 95 of every 100 tutors who apply.</h2>
           <p style="font-size:15.5px;line-height:1.6;color:var(--text-on-navy-muted);margin:0 0 36px;max-width:44ch">Your tutor shouldn't be a lottery ticket. Ours all clear the same gates, every term.</p>
-          <div aria-hidden="true" style="display:grid;grid-template-columns:repeat(20,minmax(0,1fr));gap:6px;max-width:440px;margin:0 0 16px">
+          <div class="fgrid" aria-hidden="true" style="display:grid;grid-template-columns:repeat(20,minmax(0,1fr));gap:6px;max-width:440px;margin:0 0 16px">
             <sc-for list="{{ funnelDots }}" as="d" hint-placeholder-count="100">
-              <span style="--tv-background: {{ d.bg }};aspect-ratio:1;border-radius:50%;background:var(--tv-background)"></span>
+              <span class="fdot {{ d.k }}" style="--i: {{ d.i }};--tv-background: {{ d.bg }};aspect-ratio:1;border-radius:50%;background:var(--tv-background)"></span>
             </sc-for>
           </div>
+          <div class="fsep" aria-hidden="true"></div>
           <div style="display:flex;gap:20px;flex-wrap:wrap;margin:0 0 28px">
             <span style="display:inline-flex;align-items:center;gap:9px;font:500 13.5px/1.3 var(--font-body);color:var(--text-on-navy-muted)"><span style="flex:none;width:10px;height:10px;border-radius:50%;background:rgba(255,249,241,.22)"></span><strong style="color:var(--cream);font-weight:700">100</strong>&nbsp;apply to tutor Methods</span>
             <span style="display:inline-flex;align-items:center;gap:9px;font:500 13.5px/1.3 var(--font-body);color:var(--text-on-navy-muted)"><span style="flex:none;width:10px;height:10px;border-radius:50%;background:var(--highlighter)"></span><strong style="color:var(--cream);font-weight:700">~5</strong>&nbsp;make it through</span>
@@ -3803,6 +3824,25 @@ class Component extends DCLogic {
     if (this._tagRaf) return;
     this._tagRaf = requestAnimationFrame(() => { this._tagRaf = 0; this._tagReveal(); });
   }
+  _wireFunnel() {
+    if (this._fnWired) return;
+    this._fnWired = true;
+    const root = document.documentElement;
+    const tick = () => {
+      this._fnRaf = 0;
+      const g = document.querySelector(".fgrid");
+      if (!g) return;
+      const top = g.getBoundingClientRect().top, vh = window.innerHeight || 1;
+      // first the grid fills as it arrives, then the fall starts once it is properly on screen
+      if (top < vh * 0.84) root.classList.add("fn-fill");
+      if (root.classList.contains("fn-fill") && top < vh * 0.44) root.classList.add("fn-drop");
+    };
+    const onScroll = () => { if (!this._fnRaf) this._fnRaf = requestAnimationFrame(tick); };
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onScroll);
+    tick();
+    [60, 250, 800].forEach((ms) => setTimeout(tick, ms));
+  }
   _wireOfferCollapse() {
     if (this._offWired) return;
     this._offWired = true;
@@ -3937,6 +3977,7 @@ class Component extends DCLogic {
       this._tagReveal();
       this._wirePillarCar();
       this._wireOfferCollapse();
+      this._wireFunnel();
       // dev probe: ?probe=1 lists elements wider than the viewport in <html data-probe>
       if (/(?:\?|&)probe=1\b/.test(location.search)) setTimeout(() => {
         const vw = document.documentElement.clientWidth, out = [];
@@ -4605,7 +4646,7 @@ class Component extends DCLogic {
         });
         return pv;
       })(),
-      funnelDots: Array.from({ length: 100 }, (_, i) => ({ bg: i >= 95 ? "var(--highlighter)" : "rgba(255,249,241,.18)" })),
+      funnelDots: Array.from({ length: 100 }, (_, i) => ({ bg: i >= 95 ? "var(--highlighter)" : "rgba(255,249,241,.18)", i: i, k: i >= 95 ? "fkeep" : "" })),
       srCas: (S.srTab || "cas") === "cas", srBound: S.srTab === "bound",
       srPickCas: () => this.setState({ srTab: "cas" }), srPickBound: () => this.setState({ srTab: "bound" }),
       srCasBd: (S.srTab || "cas") === "cas" ? "var(--navy)" : "var(--border-default)", srCasBg: (S.srTab || "cas") === "cas" ? "var(--navy)" : "transparent", srCasCo: (S.srTab || "cas") === "cas" ? "#FFF9F1" : "var(--navy)",
