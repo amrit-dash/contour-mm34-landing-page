@@ -1454,24 +1454,23 @@ section[id],div[id]{scroll-margin-top:calc(var(--hdr,120px) - 1px)}
     .syspanel .tabpanel>div:last-child{padding:28px 30px 28px!important}
     .sysrail{padding:0 8px 0 4px}
 
-    /* ── the 95-in-100 funnel: the grid fills lime as the card arrives, then the 95 fall away one by
-       one under gravity and leave the five behind. state lives on <html>, which the runtime leaves
-       alone, and the per-dot --i staggers both the fill and the fall ── */
-    .fdot{transition:background var(--dur-s) var(--ease);transition-delay:calc(var(--i,0)*4ms)}
-    html.fn-fill .fdot{background:var(--highlighter)!important}  /* the dot carries its colour inline */
-    html.fn-drop .fdot:not(.fkeep){animation:fnDrop 900ms cubic-bezier(.4,0,.9,.4) both;animation-delay:calc(var(--i,0)*13ms)}
+    /* ── the 95-in-100 funnel: every cell is a ghost that stays put, and the lime ball sitting in it
+       is a separate layer. on arrival the 95 balls fall out of their cells in scattered order and the
+       empty rings remain, so the hundred is still readable behind the five that made it ── */
+    .fdot{position:relative;aspect-ratio:1;border-radius:50%;background:rgba(255,249,241,.16)}
+    .fdot::after{content:"";position:absolute;inset:0;border-radius:50%;background:var(--highlighter)}
+    html.fn-drop .fdot:not(.fkeep)::after{animation:fnDrop 700ms cubic-bezier(.36,0,.9,.42) both;animation-delay:var(--d,0ms)}
     @keyframes fnDrop{
       0%{transform:translateY(0);opacity:1}
-      12%{transform:translateY(-3px);opacity:1}
-      60%{opacity:.42}
-      100%{transform:translateY(58px);opacity:0}
+      10%{transform:translateY(-3px);opacity:1}
+      62%{opacity:.45}
+      100%{transform:translateY(54px);opacity:0}
     }
-    /* a short rule parts the grid from the labels that read it */
+    /* a rule parts the grid from the labels that read it */
     .fsep{width:40px;height:2px;border-radius:2px;background:rgba(255,249,241,.24);margin:0 0 16px}
     @media (prefers-reduced-motion:reduce){
-      /* no fill, no fall: the grid keeps the state it was authored in */
-      html.fn-fill .fdot{background:var(--tv-background)!important;transition:none}
-      html.fn-drop .fdot:not(.fkeep){animation:none}
+      /* no fall: the grid goes straight to where the animation would have left it */
+      html.fn-drop .fdot:not(.fkeep)::after{animation:none;opacity:0}
     }
     /* ── pillar cards as a swipe carousel on phones: native scroll-snap track, chevrons + dots below ── */
     .pcar{position:relative}
@@ -2373,7 +2372,7 @@ section[id],div[id]{scroll-margin-top:calc(var(--hdr,120px) - 1px)}
           <p style="font-size:15.5px;line-height:1.6;color:var(--text-on-navy-muted);margin:0 0 36px;max-width:44ch">Your tutor shouldn't be a lottery ticket. Ours all clear the same gates, every term.</p>
           <div class="fgrid" aria-hidden="true" style="display:grid;grid-template-columns:repeat(20,minmax(0,1fr));gap:6px;max-width:440px;margin:0 0 16px">
             <sc-for list="{{ funnelDots }}" as="d" hint-placeholder-count="100">
-              <span class="fdot {{ d.k }}" style="--i: {{ d.i }};--tv-background: {{ d.bg }};aspect-ratio:1;border-radius:50%;background:var(--tv-background)"></span>
+              <span class="fdot {{ d.k }}" style="--d: {{ d.d }}ms"></span>
             </sc-for>
           </div>
           <div class="fsep" aria-hidden="true"></div>
@@ -4644,7 +4643,19 @@ class Component extends DCLogic {
         });
         return pv;
       })(),
-      funnelDots: Array.from({ length: 100 }, (_, i) => ({ bg: i >= 95 ? "var(--highlighter)" : "rgba(255,249,241,.18)", i: i, k: i >= 95 ? "fkeep" : "" })),
+      funnelDots: (() => {
+        // the 95 that fall go in a shuffled order, so the grid empties in scatter rather than in rows.
+        // seeded rather than Math.random: the delay has to survive a re-render unchanged
+        const order = Array.from({ length: 95 }, (_, i) => i);
+        let seed = 20260911;
+        for (let i = order.length - 1; i > 0; i--) {
+          seed = (seed * 1103515245 + 12345) & 0x7fffffff;
+          const j = seed % (i + 1), t = order[i]; order[i] = order[j]; order[j] = t;
+        }
+        const delay = new Array(100).fill(0);
+        order.forEach((idx, pos) => { delay[idx] = Math.round(pos * 7); });
+        return Array.from({ length: 100 }, (_, i) => ({ i: i, k: i >= 95 ? "fkeep" : "", d: delay[i] }));
+      })(),
       srCas: (S.srTab || "cas") === "cas", srBound: S.srTab === "bound",
       srPickCas: () => this.setState({ srTab: "cas" }), srPickBound: () => this.setState({ srTab: "bound" }),
       srCasBd: (S.srTab || "cas") === "cas" ? "var(--navy)" : "var(--border-default)", srCasBg: (S.srTab || "cas") === "cas" ? "var(--navy)" : "transparent", srCasCo: (S.srTab || "cas") === "cas" ? "#FFF9F1" : "var(--navy)",
