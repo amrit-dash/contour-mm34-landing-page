@@ -3834,6 +3834,13 @@ class Component extends DCLogic {
       if (top < vh * 0.86) root.classList.add("fn-drop");
     };
     const onScroll = () => { if (!this._fnRaf) this._fnRaf = requestAnimationFrame(tick); };
+    // tap the grid to refill and run it again - the grid is decorative, so nothing is taken from it
+    document.addEventListener("click", (e) => {
+      if (!e.target || !e.target.closest || !e.target.closest(".fgrid")) return;
+      root.classList.remove("fn-drop");
+      void document.documentElement.offsetWidth;
+      requestAnimationFrame(() => requestAnimationFrame(() => root.classList.add("fn-drop")));
+    }, true);
     window.addEventListener("scroll", onScroll, { passive: true });
     window.addEventListener("resize", onScroll);
     tick();
