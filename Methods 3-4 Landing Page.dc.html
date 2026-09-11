@@ -1453,7 +1453,7 @@ section[id],div[id]{scroll-margin-top:calc(var(--hdr,120px) - 1px)}
        empty rings remain, so the hundred is still readable behind the five that made it ── */
     .fdot{position:relative;aspect-ratio:1;border-radius:50%;background:rgba(255,249,241,.16)}
     .fdot::after{content:"";position:absolute;inset:0;border-radius:50%;background:var(--highlighter)}
-    html.fn-drop .fdot:not(.fkeep)::after{animation:fnDrop 620ms cubic-bezier(.5,0,.78,.32) both;animation-delay:var(--d,0ms)}
+    html.fn-drop .fdot:not(.fkeep)::after{animation:fnDrop 560ms cubic-bezier(.5,0,.78,.32) both;animation-delay:var(--d,0ms)}
     /* one smooth accelerating fall. --f grades the distance by row, so the grid empties downward */
     @keyframes fnDrop{
       0%{transform:translateY(0);opacity:1}
@@ -4657,7 +4657,7 @@ class Component extends DCLogic {
         const keep = new Set(idx.slice(0, keepCount));
         const delay = new Array(100).fill(0);
         let t = 0;
-        idx.slice(keepCount).forEach((id) => { delay[id] = Math.round(t); t += 5 + rnd() * 15; });
+        idx.slice(keepCount).forEach((id) => { delay[id] = Math.round(t); t += 4 + rnd() * 11; });
         // a ball in the top row has the whole grid to clear, one in the bottom row barely any
         return Array.from({ length: 100 }, (_, i) => ({
           i: i, k: keep.has(i) ? "fkeep" : "", d: delay[i], f: 56 - Math.floor(i / 20) * 7
