@@ -1655,7 +1655,7 @@ section[id],div[id]{scroll-margin-top:calc(var(--hdr,120px) - 1px)}
     @keyframes mlensIn{from{opacity:0;transform:translateY(-6px) scale(.97)}to{opacity:1;transform:none}}
     /* wayfinder: quiet rounded box, label left, navy icon tile right; the progress ring lives on the tile only */
     #mwf{--p:0;display:none;position:relative;appearance:none;border:1px solid var(--border-subtle);background:var(--surface-raised);color:var(--navy);height:40px;padding:0 3px 0 14px;border-radius:12px;align-items:center;gap:10px;cursor:pointer;font:600 13px/1 var(--font-body);box-shadow:var(--shadow-xs);-webkit-tap-highlight-color:transparent;transition:background var(--dur-s) var(--ease),border-color var(--dur-s) var(--ease),box-shadow var(--dur-s) var(--ease),padding var(--dur-s) var(--ease),gap var(--dur-s) var(--ease)}
-    #mwf .mwf-lbl{order:1;max-width:11ch;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;transition:opacity var(--dur-s) var(--ease),max-width var(--dur-s) var(--ease)}
+    #mwf .mwf-lbl{order:1;line-height:1.5;max-width:11ch;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;transition:opacity var(--dur-s) var(--ease),max-width var(--dur-s) var(--ease)}
     #mwf .mwf-ring{order:2;position:relative;width:32px;height:32px;border-radius:9px;background:var(--navy);color:var(--cream);display:inline-flex;align-items:center;justify-content:center;isolation:isolate;transition:background var(--dur-s) var(--ease),color var(--dur-s) var(--ease)}
     #mwf .mwf-ico{position:absolute;inset:0;overflow:hidden;border-radius:inherit}
     #mwf .mwf-i>svg{width:18px;height:18px;stroke-width:1.5}
