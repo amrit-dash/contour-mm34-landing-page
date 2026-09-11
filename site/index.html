@@ -1347,7 +1347,7 @@ section[id],div[id]{scroll-margin-top:calc(var(--hdr,120px) - 1px)}
     @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*::before,*::after{transition:none!important;animation:none!important}}
 
     /* ── Polish pass 2026-09 · motion + rhythm tokens ─────────────────── */
-    :root{--ease:cubic-bezier(.22,1,.36,1);--dur-s:.35s;--dur-m:.65s;--dur-l:.95s;--sec-pad:clamp(72px,8.5vw,108px)}
+    :root{--ease:cubic-bezier(.22,1,.36,1);--dur-s:.35s;--dur-m:.65s;--dur-l:.95s;--sec-pad:clamp(60px,7vw,88px)}
     .sec{padding:var(--sec-pad) 0!important}
     @media (max-width:880px){.sec{padding:60px 0!important}}
     /* reveal system: elements start hidden, .in shows them; --i staggers siblings */
@@ -1373,12 +1373,6 @@ section[id],div[id]{scroll-margin-top:calc(var(--hdr,120px) - 1px)}
     .sec.dark .sechead .lead{color:var(--text-on-navy-muted)}
     .sec.dark .sechead .eyebrow{color:var(--cream);background:rgba(255,249,241,.08);border-color:var(--border-on-navy);box-shadow:none}
     .sec.dark .sechead .eyebrow::before{background:var(--highlighter)}
-    /* story thread: a short vertical line drawn from the previous section into this heading */
-    .sec.thread>.ctrp{position:relative}
-    .sec.thread>.ctrp::before{content:"";position:absolute;left:clamp(32px,11vw,210px);top:calc(-1*var(--sec-pad));height:calc(var(--sec-pad) - 26px);width:2px;border-radius:2px;background:linear-gradient(to bottom,transparent,var(--border-default) 40%,var(--navy));opacity:.7;transform-origin:top;transform:scaleY(0);transition:transform var(--dur-l) var(--ease)}
-    .sec.thread.in>.ctrp::before{transform:scaleY(1)}
-    .sec.dark.thread>.ctrp::before{background:linear-gradient(to bottom,transparent,var(--border-on-navy) 40%,var(--highlighter))}
-    @media (max-width:880px){.sec.thread>.ctrp::before{display:none}}
     /* side rail: scroll progress line */
     #secrail{padding:14px 8px}
     #secrail::before{content:"";position:absolute;left:50%;top:14px;bottom:14px;width:2px;background:var(--border-subtle);transform:translateX(-50%);border-radius:2px;z-index:0}
@@ -1390,7 +1384,7 @@ section[id],div[id]{scroll-margin-top:calc(var(--hdr,120px) - 1px)}
     .ctarow{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
     /* image tiles */
     .imgtile{overflow:hidden}.imgtile img{transition:transform var(--dur-l) var(--ease)}.imgtile:hover img{transform:scale(1.035)}
-    @media (prefers-reduced-motion:reduce){[data-reveal]{opacity:1!important;transform:none!important;transition:none!important}.sec.thread>.ctrp::before{transform:none;transition:none}}
+    @media (prefers-reduced-motion:reduce){[data-reveal]{opacity:1!important;transform:none!important;transition:none!important}}
 
     /* ── eyebrow chips (former sticky strips) ── */
     .eyebrow{display:inline-flex;align-items:center;gap:9px;font:600 12.5px/1 var(--font-body);color:var(--navy);background:var(--surface-raised);border:1px solid var(--border-subtle);border-radius:999px;padding:8px 13px 8px 11px;margin:0 0 18px;box-shadow:var(--shadow-xs)}
@@ -3816,7 +3810,6 @@ class Component extends DCLogic {
         const st = getComputedStyle(c);
         if (st.borderRadius !== "0px" && (st.boxShadow !== "none" || st.borderTopWidth !== "0px")) c.classList.add("card-h");
       });
-      root.querySelectorAll(".sec.thread").forEach((sec) => { if (this._threadIo && !sec.__thr) { sec.__thr = 1; this._threadIo.observe(sec); } });
     } catch (e) {}
   }
   _scheduleTag() {
@@ -3955,9 +3948,6 @@ class Component extends DCLogic {
         this._revIo = new IntersectionObserver((es) => {
           es.forEach((en) => { if (en.isIntersecting) { en.target.classList.add("in"); this._revIo.unobserve(en.target); } });
         }, { threshold: .12, rootMargin: "0px 0px -6% 0px" });
-        this._threadIo = new IntersectionObserver((es) => {
-          es.forEach((en) => { if (en.isIntersecting) { en.target.classList.add("in"); this._threadIo.unobserve(en.target); } });
-        }, { threshold: 0, rootMargin: "0px 0px -20% 0px" });
         const cntIO = new IntersectionObserver((es) => {
           es.forEach((en) => {
             if (!en.isIntersecting) return;
@@ -4006,7 +3996,7 @@ class Component extends DCLogic {
       }
     } catch (e) {}
   }
-  componentWillUnmount() { if (this._revIo) this._revIo.disconnect(); if (this._threadIo) this._threadIo.disconnect(); if (this._cntIo) this._cntIo.disconnect(); this._dead = true; if (this._linkHandler) document.removeEventListener("click", this._linkHandler); if (this._statT) { clearInterval(this._statT); if (window.__mmStatT === this._statT) window.__mmStatT = null; } window.removeEventListener("keydown", this._esc); if (this._orbitRaf) cancelAnimationFrame(this._orbitRaf); if (this._mapRo) this._mapRo.disconnect(); if (this._domPoll) clearInterval(this._domPoll); if (this._onScroll) { window.removeEventListener("scroll", this._onScroll); window.removeEventListener("resize", this._onScroll); } if (this._io) this._io.disconnect(); if (this._secIo) this._secIo.disconnect(); if (this._mapPoll) clearInterval(this._mapPoll); if (this._map) { this._map.remove(); this._map = null; } }
+  componentWillUnmount() { if (this._revIo) this._revIo.disconnect(); if (this._cntIo) this._cntIo.disconnect(); this._dead = true; if (this._linkHandler) document.removeEventListener("click", this._linkHandler); if (this._statT) { clearInterval(this._statT); if (window.__mmStatT === this._statT) window.__mmStatT = null; } window.removeEventListener("keydown", this._esc); if (this._orbitRaf) cancelAnimationFrame(this._orbitRaf); if (this._mapRo) this._mapRo.disconnect(); if (this._domPoll) clearInterval(this._domPoll); if (this._onScroll) { window.removeEventListener("scroll", this._onScroll); window.removeEventListener("resize", this._onScroll); } if (this._io) this._io.disconnect(); if (this._secIo) this._secIo.disconnect(); if (this._mapPoll) clearInterval(this._mapPoll); if (this._map) { this._map.remove(); this._map = null; } }
   componentDidUpdate(prevProps) { if (this._domWired) this._scheduleTag();
     try { if (this._pcarEnsure) this._pcarEnsure(); } catch (e) {}
     try { if (this._offEnsure) this._offEnsure(); } catch (e) {}
