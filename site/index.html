@@ -1461,33 +1461,55 @@ section[id],div[id]{scroll-margin-top:calc(var(--hdr,120px) - 1px)}
     /* second reveal: the phrase scrolls through the grid like an LED sign. the strip is an SVG so
        the dot pitch scales with the grid on its own, and it holds two copies of the phrase, so
        translating it half its width loops seamlessly. one transform, no per-frame work */
-    .fmq{display:none;position:absolute;inset:0;overflow:hidden}
-    html.fn-mq .fmq{display:block}
-    /* the board flashes over before the phrase runs in */
+    .fmq{display:none;position:absolute;inset:0;overflow:hidden;pointer-events:none}
+    html.fn-mq .fmq,html.fn-mq2 .fmq{display:block}
+    /* the board flashes over before the phrase runs in, then holds dark behind it */
     html.fn-mq .fwrap .fgrid .fdot::after{animation:eggFlash 900ms var(--ease) both}
-    .fmq-svg{position:absolute;left:0;top:0;height:100%;width:auto;opacity:0;
+    /* the negative: the board flashes over and stays lit, and the phrase is cut out of it */
+    html.fn-mq2 .fwrap .fgrid .fdot::after{animation:eggLit 900ms var(--ease) both}
+    /* the negative has to land on the dots, so it steps a whole column at a time rather than
+       sliding - a continuous offset would cut crescents out of them instead of holes */
+    html.fn-mq2 .fmq-svg{fill:var(--navy);filter:none;
+      animation:mqScroll 9.4s steps(47,end) 1000ms infinite,mqIn 500ms var(--ease) 900ms forwards}
+    /* the grid's pitch is cell + 6px gap, so one svg unit has to be that pitch, not height/5.
+       5 * pitch = height + 6, so the strip is drawn 6px taller and pulled back 3px on both axes,
+       which lands every circle exactly on a dot - it has to, for the negative to cut cleanly */
+    .fmq-svg{position:absolute;left:-3px;top:-3px;height:calc(100% + 6px);width:auto;opacity:0;
       filter:drop-shadow(0 0 7px rgba(215,252,61,.55));
-      animation:mqScroll 14s linear 1000ms infinite,mqIn 500ms var(--ease) 900ms forwards}
+      animation:mqScroll 14s linear 1000ms infinite,mqIn 500ms var(--ease) 900ms forwards,mqFlicker 13s linear 1600ms infinite}
     @keyframes mqScroll{from{transform:translateX(0)}to{transform:translateX(-50%)}}
     @keyframes mqIn{from{opacity:0}to{opacity:1}}
-    /* the pointer arrives a size up and holds before it starts breathing, and the beats are uneven
-       so it never reads as a metronome. each round draws its own period */
-    .fdot.fmq-dot::after{transform:scale(1.28);animation:fnHint var(--pd,3.4s) var(--ease) 800ms infinite}
-    @keyframes fnHint{
-      0%,6%{transform:scale(1.28);opacity:1}
-      11%{transform:scale(1);opacity:.72}
-      16%{transform:scale(1.28);opacity:1}
-      44%{transform:scale(1.28);opacity:1}
-      49%{transform:scale(1);opacity:.72}
-      53%{transform:scale(1.28);opacity:1}
-      71%{transform:scale(1.26);opacity:1}
-      75%{transform:scale(1);opacity:.7}
-      80%{transform:scale(1.28);opacity:1}
-      100%{transform:scale(1.28);opacity:1}
+    @keyframes eggLit{0%{opacity:0;transform:scale(.35)}20%{opacity:1;transform:scale(1.14)}52%{opacity:.22;transform:scale(1)}100%{opacity:1;transform:none}}
+    /* the sign catches at odd moments, the glow going with it */
+    @keyframes mqFlicker{
+      0%,29%{filter:drop-shadow(0 0 7px rgba(215,252,61,.55))}
+      29.6%{filter:none;opacity:.45}
+      30.4%{filter:drop-shadow(0 0 7px rgba(215,252,61,.55));opacity:1}
+      57%{filter:drop-shadow(0 0 7px rgba(215,252,61,.55))}
+      57.5%{filter:none;opacity:.35}
+      58%{opacity:1}
+      58.6%{filter:none;opacity:.55}
+      59.3%{filter:drop-shadow(0 0 11px rgba(215,252,61,.75));opacity:1}
+      60%,88%{filter:drop-shadow(0 0 7px rgba(215,252,61,.55))}
+      88.7%{filter:none;opacity:.4}
+      89.5%,100%{filter:drop-shadow(0 0 7px rgba(215,252,61,.55));opacity:1}
+    }
+    /* the pointer is the same size as every other dot - it blinks rather than swells, on uneven
+       beats, and each round draws its own period so no two rounds read alike */
+    .fdot.fmq-dot::after{animation:fnBlink var(--pd,3.4s) var(--ease) 700ms infinite}
+    @keyframes fnBlink{
+      0%,36%{opacity:1}
+      43%{opacity:.12}
+      51%{opacity:1}
+      70%{opacity:1}
+      76%{opacity:.18}
+      83%{opacity:1}
+      100%{opacity:1}
     }
     @media (prefers-reduced-motion:reduce){
-      .fmq-svg{animation:none;opacity:1}
+      .fmq-svg{animation:none;opacity:1;filter:none}
       html.fn-mq .fwrap .fgrid .fdot::after{animation:none;opacity:0}
+      html.fn-mq2 .fwrap .fgrid .fdot::after{animation:none;opacity:1}
       .fdot.fmq-dot::after{animation:none}
     }
     .fdot::after{content:"";position:absolute;inset:0;border-radius:50%;background:var(--highlighter)}
@@ -3924,12 +3946,14 @@ class Component extends DCLogic {
     // no clock on it - the presses can be any distance apart, and every press still refills the grid
     // and drops it as usual, so nothing about the section hints that the row is listening
     const EGG = [0, 12, 17, 8, 19];
-    // the second sequence: double-press the top-right dot, then follow the breathing survivor for
-    // five rounds. the sixth press runs the phrase through the grid
-    const MQ_A = 19, MQ_STEPS = 6;
+    // two corner sequences, both played the same way: double-press the corner, then follow the
+    // blinking survivor. the top-right one runs the phrase; the bottom-left one runs it in negative,
+    // the whole board lit and the letters cut out of it
+    const MQ = { 19: { cls: "fn-mq", steps: 6 }, 80: { cls: "fn-mq2", steps: 5 } };
     const resetEgg = () => {
       root.classList.remove("fn-egg");
       root.classList.remove("fn-mq");
+      root.classList.remove("fn-mq2");
       this._eggN = 0; this._eggHint = null; this._eggDead = false;
       this._mqStage = 0; this._mqDead = false;
     };
@@ -3940,6 +3964,11 @@ class Component extends DCLogic {
       return { grid: grid, idx: dot ? Array.prototype.indexOf.call(grid.children, dot) : -1 };
     };
     document.addEventListener("click", (e) => {
+      // a running reveal is dismissed by a press anywhere: the sign sits over the dots, so a press
+      // on it never reaches the grid at all
+      if (root.classList.contains("fn-egg") || root.classList.contains("fn-mq") || root.classList.contains("fn-mq2")) {
+        resetEgg(); replay(); return;
+      }
       const hit = at(e);
       if (!hit) return;
       // the second press of a double press lands here first; leave those to the dblclick handler
@@ -3947,14 +3976,16 @@ class Component extends DCLogic {
       if (hit.idx > -1 && hit.idx === this._lastDot && now - (this._lastT || 0) < 320) { this._lastT = now; return; }
       this._lastDot = hit.idx; this._lastT = now;
 
-      if (root.classList.contains("fn-egg") || root.classList.contains("fn-mq")) { resetEgg(); replay(); return; }
+      if (root.classList.contains("fn-egg") || root.classList.contains("fn-mq") || root.classList.contains("fn-mq2")) {
+        resetEgg(); replay(); return;
+      }
 
       // second sequence: only the breathing survivor counts, anything else ends it
       if (this._mqStage > 0) {
         const target = hit.grid.querySelector(".fmq-dot");
         if (target && hit.idx === Array.prototype.indexOf.call(hit.grid.children, target)) {
           this._mqStage += 1;
-          if (this._mqStage > MQ_STEPS) { this._mqStage = 0; root.classList.add("fn-mq"); return; }
+          if (this._mqStage > this._mqSteps) { this._mqStage = 0; root.classList.add(this._mqCls); return; }
           replay();
           return;
         }
@@ -4004,10 +4035,12 @@ class Component extends DCLogic {
         replay();
         return;
       }
-      // second sequence: starts on the top-right dot
+      // the corner sequences
       if (this._mqDead) return;
-      if (hit.idx === MQ_A && !this._mqStage && !root.classList.contains("fn-mq")) {
+      const corner = MQ[hit.idx];
+      if (corner && !this._mqStage) {
         this._mqStage = 1; this._mqSeen = true;
+        this._mqCls = corner.cls; this._mqSteps = corner.steps;
         replay();
       }
     }, true);
