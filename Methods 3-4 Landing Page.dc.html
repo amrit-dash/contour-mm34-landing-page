@@ -3856,10 +3856,11 @@ class Component extends DCLogic {
     };
     // tap the grid to refill it - the grid is decorative, so nothing is taken from the tap. a new
     // seed reshuffles the order, and tick decides whether the card is far enough up to fall again
-    // the top row is a keyboard: press the dot above each letter in the order that spells the word.
+    // the row is exactly 20 wide, so it is an A-to-T keyboard: each letter is pressed at its own
+    // place in the alphabet. A=1, M=13, R=18, I=9, T=20, zero-based below, in spelling order.
     // no clock on it - the presses can be any distance apart, and every press still refills the grid
     // and drops it as usual, so nothing about the section hints that the row is listening
-    const EGG = [1, 5, 9, 13, 17];
+    const EGG = [0, 12, 17, 8, 19];
     document.addEventListener("click", (e) => {
       if (!e.target || !e.target.closest) return;
       const grid = e.target.closest(".fgrid");
