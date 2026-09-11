@@ -3776,6 +3776,46 @@ class Component extends DCLogic {
     if (this._tagRaf) return;
     this._tagRaf = requestAnimationFrame(() => { this._tagRaf = 0; this._tagReveal(); });
   }
+  _wirePillarCar() {
+    if (this._pcarWired) return;
+    this._pcarWired = true;
+    const track = () => document.querySelector(".pcar .pillarcards");
+    const step = (t) => {
+      const card = t.querySelector("a");
+      if (!card) return t.clientWidth;
+      const gap = parseFloat(getComputedStyle(t).columnGap) || 0;
+      return card.getBoundingClientRect().width + gap;
+    };
+    // the runtime resets className on re-render, so the active index lives on <html>, which it never touches
+    const sync = () => {
+      const t = track();
+      if (!t) return;
+      const s = step(t), n = t.querySelectorAll("a").length || 1;
+      const i = s ? Math.max(0, Math.min(n - 1, Math.round(t.scrollLeft / s))) : 0;
+      const cl = document.documentElement.classList;
+      ["pc1", "pc2", "pc3"].forEach((c, k) => cl.toggle(c, k === i));
+    };
+    this._pcarEnsure = sync;
+    document.addEventListener("click", (e) => {
+      const b = e.target && e.target.closest ? e.target.closest(".pcar-b") : null;
+      if (!b) return;
+      e.preventDefault();
+      const t = track();
+      if (!t) return;
+      const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      t.scrollBy({ left: Number(b.getAttribute("data-pcar")) * step(t), behavior: reduced ? "auto" : "smooth" });
+    }, true);
+    // scroll doesn't bubble, so the track is reached in the capture phase instead of being bound directly
+    document.addEventListener("scroll", (e) => {
+      const t = e.target;
+      if (!t || !t.classList || !t.classList.contains("pillarcards")) return;
+      if (this._pcarRaf) return;
+      this._pcarRaf = requestAnimationFrame(() => { this._pcarRaf = 0; sync(); });
+    }, true);
+    window.addEventListener("resize", () => { if (!this._pcarRaf) this._pcarRaf = requestAnimationFrame(() => { this._pcarRaf = 0; sync(); }); });
+    sync();
+    [60, 250, 800].forEach((ms) => setTimeout(sync, ms));
+  }
   _wireDom() {
     if (this._domWired) return;
     this._domWired = true;
@@ -3812,6 +3852,7 @@ class Component extends DCLogic {
         this._cntIo = cntIO;
       }
       this._tagReveal();
+      this._wirePillarCar();
       // dev probe: ?probe=1 lists elements wider than the viewport in <html data-probe>
       if (/(?:\?|&)probe=1\b/.test(location.search)) setTimeout(() => {
         const vw = document.documentElement.clientWidth, out = [];
@@ -3837,6 +3878,7 @@ class Component extends DCLogic {
   }
   componentWillUnmount() { if (this._revIo) this._revIo.disconnect(); if (this._threadIo) this._threadIo.disconnect(); if (this._cntIo) this._cntIo.disconnect(); this._dead = true; if (this._linkHandler) document.removeEventListener("click", this._linkHandler); if (this._statT) { clearInterval(this._statT); if (window.__mmStatT === this._statT) window.__mmStatT = null; } window.removeEventListener("keydown", this._esc); if (this._orbitRaf) cancelAnimationFrame(this._orbitRaf); if (this._mapRo) this._mapRo.disconnect(); if (this._domPoll) clearInterval(this._domPoll); if (this._onScroll) { window.removeEventListener("scroll", this._onScroll); window.removeEventListener("resize", this._onScroll); } if (this._io) this._io.disconnect(); if (this._secIo) this._secIo.disconnect(); if (this._mapPoll) clearInterval(this._mapPoll); if (this._map) { this._map.remove(); this._map = null; } }
   componentDidUpdate(prevProps) { if (this._domWired) this._scheduleTag();
+    try { if (this._pcarEnsure) this._pcarEnsure(); } catch (e) {}
     try { const k = "p" + (this.state.sysP || 1); document.documentElement.setAttribute("data-step", String(this.state[k] || 0)); } catch (e) {}
     ["lifecycleState:lifecycle", "lens:lens", "adVariant:variant", "annotations:anno"].forEach(pair => {
       const [p, s] = pair.split(":");
