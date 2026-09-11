@@ -1466,12 +1466,13 @@ section[id],div[id]{scroll-margin-top:calc(var(--hdr,120px) - 1px)}
     }
     /* the grid spells a name if the top row is played in the right order. every LED flashes up
        together, then the ghosts fade back and everything that is not part of the word blinks out in a
-       left-to-right wipe, each letter dot locking in a size larger as the wipe passes its column.
-       one dip per flash keeps it under three flashes a second */
+       left-to-right wipe, each letter dot locking in a size larger as the wipe passes its column */
     html.fn-egg .fgrid .fdot{background:rgba(255,249,241,.05)}
     html.fn-egg .fgrid .fdot::after{background:var(--highlighter);animation:eggFlash 700ms var(--ease) both}
 html.fn-egg .fgrid .fdot:nth-child(1)::after,html.fn-egg .fgrid .fdot:nth-child(2)::after,html.fn-egg .fgrid .fdot:nth-child(4)::after,html.fn-egg .fgrid .fdot:nth-child(5)::after,html.fn-egg .fgrid .fdot:nth-child(7)::after,html.fn-egg .fgrid .fdot:nth-child(9)::after,html.fn-egg .fgrid .fdot:nth-child(12)::after,html.fn-egg .fgrid .fdot:nth-child(13)::after,html.fn-egg .fgrid .fdot:nth-child(17)::after,html.fn-egg .fgrid .fdot:nth-child(21)::after,html.fn-egg .fgrid .fdot:nth-child(23)::after,html.fn-egg .fgrid .fdot:nth-child(25)::after,html.fn-egg .fgrid .fdot:nth-child(29)::after,html.fn-egg .fgrid .fdot:nth-child(31)::after,html.fn-egg .fgrid .fdot:nth-child(33)::after,html.fn-egg .fgrid .fdot:nth-child(34)::after,html.fn-egg .fgrid .fdot:nth-child(36)::after,html.fn-egg .fgrid .fdot:nth-child(37)::after,html.fn-egg .fgrid .fdot:nth-child(38)::after,html.fn-egg .fgrid .fdot:nth-child(40)::after,html.fn-egg .fgrid .fdot:nth-child(41)::after,html.fn-egg .fgrid .fdot:nth-child(45)::after,html.fn-egg .fgrid .fdot:nth-child(49)::after,html.fn-egg .fgrid .fdot:nth-child(52)::after,html.fn-egg .fgrid .fdot:nth-child(53)::after,html.fn-egg .fgrid .fdot:nth-child(54)::after,html.fn-egg .fgrid .fdot:nth-child(56)::after,html.fn-egg .fgrid .fdot:nth-child(57)::after,html.fn-egg .fgrid .fdot:nth-child(58)::after,html.fn-egg .fgrid .fdot:nth-child(60)::after,html.fn-egg .fgrid .fdot:nth-child(61)::after,html.fn-egg .fgrid .fdot:nth-child(63)::after,html.fn-egg .fgrid .fdot:nth-child(65)::after,html.fn-egg .fgrid .fdot:nth-child(67)::after,html.fn-egg .fgrid .fdot:nth-child(69)::after,html.fn-egg .fgrid .fdot:nth-child(71)::after,html.fn-egg .fgrid .fdot:nth-child(73)::after,html.fn-egg .fgrid .fdot:nth-child(74)::after,html.fn-egg .fgrid .fdot:nth-child(76)::after,html.fn-egg .fgrid .fdot:nth-child(77)::after,html.fn-egg .fgrid .fdot:nth-child(78)::after,html.fn-egg .fgrid .fdot:nth-child(80)::after,html.fn-egg .fgrid .fdot:nth-child(81)::after,html.fn-egg .fgrid .fdot:nth-child(83)::after,html.fn-egg .fgrid .fdot:nth-child(85)::after,html.fn-egg .fgrid .fdot:nth-child(87)::after,html.fn-egg .fgrid .fdot:nth-child(89)::after,html.fn-egg .fgrid .fdot:nth-child(91)::after,html.fn-egg .fgrid .fdot:nth-child(93)::after,html.fn-egg .fgrid .fdot:nth-child(97)::after,html.fn-egg .fgrid .fdot:nth-child(98)::after,html.fn-egg .fgrid .fdot:nth-child(100)::after{animation:eggFlash 700ms var(--ease) both,eggOut 280ms var(--ease) calc(760ms + var(--c,0) * 26ms) forwards}
 html.fn-egg .fgrid .fdot:nth-child(3)::after,html.fn-egg .fgrid .fdot:nth-child(6)::after,html.fn-egg .fgrid .fdot:nth-child(8)::after,html.fn-egg .fgrid .fdot:nth-child(10)::after,html.fn-egg .fgrid .fdot:nth-child(11)::after,html.fn-egg .fgrid .fdot:nth-child(14)::after,html.fn-egg .fgrid .fdot:nth-child(15)::after,html.fn-egg .fgrid .fdot:nth-child(16)::after,html.fn-egg .fgrid .fdot:nth-child(18)::after,html.fn-egg .fgrid .fdot:nth-child(19)::after,html.fn-egg .fgrid .fdot:nth-child(20)::after,html.fn-egg .fgrid .fdot:nth-child(22)::after,html.fn-egg .fgrid .fdot:nth-child(24)::after,html.fn-egg .fgrid .fdot:nth-child(26)::after,html.fn-egg .fgrid .fdot:nth-child(27)::after,html.fn-egg .fgrid .fdot:nth-child(28)::after,html.fn-egg .fgrid .fdot:nth-child(30)::after,html.fn-egg .fgrid .fdot:nth-child(32)::after,html.fn-egg .fgrid .fdot:nth-child(35)::after,html.fn-egg .fgrid .fdot:nth-child(39)::after,html.fn-egg .fgrid .fdot:nth-child(42)::after,html.fn-egg .fgrid .fdot:nth-child(43)::after,html.fn-egg .fgrid .fdot:nth-child(44)::after,html.fn-egg .fgrid .fdot:nth-child(46)::after,html.fn-egg .fgrid .fdot:nth-child(47)::after,html.fn-egg .fgrid .fdot:nth-child(48)::after,html.fn-egg .fgrid .fdot:nth-child(50)::after,html.fn-egg .fgrid .fdot:nth-child(51)::after,html.fn-egg .fgrid .fdot:nth-child(55)::after,html.fn-egg .fgrid .fdot:nth-child(59)::after,html.fn-egg .fgrid .fdot:nth-child(62)::after,html.fn-egg .fgrid .fdot:nth-child(64)::after,html.fn-egg .fgrid .fdot:nth-child(66)::after,html.fn-egg .fgrid .fdot:nth-child(68)::after,html.fn-egg .fgrid .fdot:nth-child(70)::after,html.fn-egg .fgrid .fdot:nth-child(72)::after,html.fn-egg .fgrid .fdot:nth-child(75)::after,html.fn-egg .fgrid .fdot:nth-child(79)::after,html.fn-egg .fgrid .fdot:nth-child(82)::after,html.fn-egg .fgrid .fdot:nth-child(84)::after,html.fn-egg .fgrid .fdot:nth-child(86)::after,html.fn-egg .fgrid .fdot:nth-child(88)::after,html.fn-egg .fgrid .fdot:nth-child(90)::after,html.fn-egg .fgrid .fdot:nth-child(92)::after,html.fn-egg .fgrid .fdot:nth-child(94)::after,html.fn-egg .fgrid .fdot:nth-child(95)::after,html.fn-egg .fgrid .fdot:nth-child(96)::after,html.fn-egg .fgrid .fdot:nth-child(99)::after{animation:eggFlash 700ms var(--ease) both,eggLock 360ms var(--ease) calc(760ms + var(--c,0) * 26ms) forwards}
+    .fdot.fhint::after{animation:fnHint 1.1s var(--ease) infinite alternate}
+    @keyframes fnHint{from{opacity:.5;transform:scale(.85)}to{opacity:1;transform:scale(1.3)}}
     @keyframes eggFlash{
       0%{opacity:0;transform:scale(.35)}
       18%{opacity:1;transform:scale(1.14)}
@@ -3867,31 +3868,62 @@ class Component extends DCLogic {
     // no clock on it - the presses can be any distance apart, and every press still refills the grid
     // and drops it as usual, so nothing about the section hints that the row is listening
     const EGG = [0, 12, 17, 8, 19];
-    document.addEventListener("click", (e) => {
-      if (!e.target || !e.target.closest) return;
-      const grid = e.target.closest(".fgrid");
-      if (!grid) return;
-      if (root.classList.contains("fn-egg")) return;   // once it is spelled it holds until a reload
+    const resetEgg = () => {
+      root.classList.remove("fn-egg");
+      this._eggN = 0; this._eggHint = null; this._eggDead = false;
+    };
+    const at = (e) => {
+      const grid = e.target && e.target.closest ? e.target.closest(".fgrid") : null;
+      if (!grid) return null;
       const dot = e.target.closest(".fdot");
-      if (dot) {
-        const idx = Array.prototype.indexOf.call(grid.children, dot);
-        if (idx > -1 && idx < 20) {
-          const n = this._eggN || 0;
-          this._eggN = idx === EGG[n] ? n + 1 : (idx === EGG[0] ? 1 : 0);
-          if (this._eggN === EGG.length) { this._eggN = 0; root.classList.add("fn-egg"); return; }
+      return { grid: grid, idx: dot ? Array.prototype.indexOf.call(grid.children, dot) : -1 };
+    };
+    document.addEventListener("click", (e) => {
+      const hit = at(e);
+      if (!hit) return;
+      // the second press of a double press lands here first; leave those to the dblclick handler
+      const now = Date.now();
+      if (hit.idx > -1 && hit.idx === this._lastDot && now - (this._lastT || 0) < 320) { this._lastT = now; return; }
+      this._lastDot = hit.idx; this._lastT = now;
+
+      if (root.classList.contains("fn-egg")) { resetEgg(); replay(); return; }
+      if (this._eggDead) { replay(); return; }
+
+      // walked mode: the lit pointer is the only press that counts
+      if (this._eggHint != null) {
+        if (hit.idx === this._eggHint) {
+          this._eggN = (this._eggN || 0) + 1;
+          if (this._eggN === EGG.length) { this._eggN = 0; this._eggHint = null; root.classList.add("fn-egg"); return; }
+          this._eggHint = EGG[this._eggN];
+          replay();
+          return;
         }
+        this._eggDead = true; this._eggHint = null; this._eggN = 0;
+        replay();
+        return;
+      }
+
+      // unaided: play the row yourself
+      const n = this._eggN || 0;
+      if (hit.idx > -1 && hit.idx < 20 && hit.idx === EGG[n]) {
+        this._eggN = n + 1;
+        if (this._eggN === EGG.length) { this._eggN = 0; root.classList.add("fn-egg"); return; }
+      } else if (n > 0) {
+        // a stray press once the word is under way kills it until a reset
+        this._eggDead = true; this._eggN = 0;
       }
       replay();
     }, true);
-    // double-press the hundredth ball to clear the word and start the sequence over
     document.addEventListener("dblclick", (e) => {
-      if (!e.target || !e.target.closest) return;
-      const grid = e.target.closest(".fgrid"), dot = e.target.closest(".fdot");
-      if (!grid || !dot) return;
-      if (Array.prototype.indexOf.call(grid.children, dot) !== grid.children.length - 1) return;
-      root.classList.remove("fn-egg");
-      this._eggN = 0;
-      replay();
+      const hit = at(e);
+      if (!hit || hit.idx < 0) return;
+      // the last ball clears everything and hands back a fresh count
+      if (hit.idx === hit.grid.children.length - 1) { resetEgg(); replay(); return; }
+      // double-press the A to be walked through it: every drop leaves the next letter lit
+      if (hit.idx === EGG[0] && !this._eggDead && !root.classList.contains("fn-egg")) {
+        this._eggN = 1; this._eggHint = EGG[1];
+        replay();
+      }
     }, true);
     window.addEventListener("scroll", onScroll, { passive: true });
     window.addEventListener("resize", onScroll);
@@ -4711,12 +4743,15 @@ class Component extends DCLogic {
         }
         // the survivors are drawn from anywhere in the hundred, not off the end of it
         const keep = new Set(idx.slice(0, keepCount));
+        // walked mode: the dot for the next letter is held back from the fall as a pointer
+        const hint = this._eggHint;
+        if (hint != null) keep.add(hint);
         const delay = new Array(100).fill(0);
         let t = 0;
-        idx.slice(keepCount).forEach((id) => { delay[id] = Math.round(t); t += 4 + rnd() * 11; });
+        idx.filter((id) => !keep.has(id)).forEach((id) => { delay[id] = Math.round(t); t += 4 + rnd() * 11; });
         // a ball in the top row has the whole grid to clear, one in the bottom row barely any
         return Array.from({ length: 100 }, (_, i) => ({
-          i: i, k: keep.has(i) ? "fkeep" : "", d: delay[i], f: 56 - Math.floor(i / 20) * 7, c: i % 20
+          i: i, k: keep.has(i) ? (i === hint ? "fkeep fhint" : "fkeep") : "", d: delay[i], f: 56 - Math.floor(i / 20) * 7, c: i % 20
         }));
       })(),
       srCas: (S.srTab || "cas") === "cas", srBound: S.srTab === "bound",
