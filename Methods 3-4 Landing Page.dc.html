@@ -1263,6 +1263,25 @@ section[id],div[id]{scroll-margin-top:calc(var(--hdr,120px) - 1px)}
     @media (max-width:900px){.wk5{grid-template-columns:1fr 1fr!important}}
     @media (max-width:1020px){.offerg{grid-template-columns:1fr 1fr!important}.offerg .offcol{border-left:none!important;border-top:1px solid var(--border-subtle)}}
     @media (max-width:620px){.offerg{grid-template-columns:1fr!important}}
+    /* stacked pricing table: each pillar group collapses behind its own pill, the partners group stays
+       open. the .pg1-3 hooks are set from the pill text in JS, so this never depends on child order */
+    @media (max-width:620px){
+      .offerg>div:nth-child(1)>p:first-child,.offerg>div:nth-child(2)>p:first-child,.offerg>div:nth-child(3)>p:first-child{cursor:pointer;user-select:none;-webkit-tap-highlight-color:transparent}
+      /* the +/- sits at the far right of the row, not inside the pill, so every row lines up on one
+         axis. two bars drawn on the column itself: the upright one retracts to leave a minus */
+      .offerg>div:nth-child(1),.offerg>div:nth-child(2),.offerg>div:nth-child(3){position:relative}
+      .offerg>div:nth-child(1)::before,.offerg>div:nth-child(2)::before,.offerg>div:nth-child(3)::before,
+      .offerg>div:nth-child(1)::after,.offerg>div:nth-child(2)::after,.offerg>div:nth-child(3)::after{content:"";position:absolute;top:38px;right:26px;width:14px;height:2px;margin-top:-1px;border-radius:2px;background:var(--navy);pointer-events:none}
+      .offerg>div:nth-child(1)::after,.offerg>div:nth-child(2)::after,.offerg>div:nth-child(3)::after{transform:rotate(90deg);transition:transform var(--dur-m) var(--ease),opacity var(--dur-s) var(--ease)}
+      html.offx1 .offerg>div:nth-child(1)::after,html.offx2 .offerg>div:nth-child(2)::after,html.offx3 .offerg>div:nth-child(3)::after{transform:rotate(0deg);opacity:0}
+      .offerg>div:nth-child(1)>p:first-child:focus-visible,.offerg>div:nth-child(2)>p:first-child:focus-visible,.offerg>div:nth-child(3)>p:first-child:focus-visible{outline:3px solid rgba(0,122,255,.45);outline-offset:3px}
+      .offerg>div:nth-child(1)>div,.offerg>div:nth-child(2)>div,.offerg>div:nth-child(3)>div{overflow:hidden;max-height:0;opacity:0;transition:max-height var(--dur-m) var(--ease),opacity var(--dur-s) var(--ease)}
+      html.offx1 .offerg>div:nth-child(1)>div,html.offx2 .offerg>div:nth-child(2)>div,html.offx3 .offerg>div:nth-child(3)>div{max-height:640px;opacity:1}
+    }
+    @media (max-width:620px) and (prefers-reduced-motion:reduce){
+      .offerg>div:nth-child(1)>div,.offerg>div:nth-child(2)>div,.offerg>div:nth-child(3)>div{transition:none}
+      .offerg>div:nth-child(1)::after,.offerg>div:nth-child(2)::after,.offerg>div:nth-child(3)::after{transition:none}
+    }
         .h1r{font-size:min(56px,3.9vw)!important}
     @media (max-width:880px){.h1r{font-size:min(52px,7.2vw)!important}}
     @media (max-width:560px){.herocta{flex-direction:column;align-items:stretch!important}.herocta button{width:100%;justify-content:center}}
