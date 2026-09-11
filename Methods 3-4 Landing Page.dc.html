@@ -3846,6 +3846,14 @@ class Component extends DCLogic {
       if (top < vh * 0.86) root.classList.add("fn-drop");
     };
     const onScroll = () => { if (!this._fnRaf) this._fnRaf = requestAnimationFrame(tick); };
+    // refill the grid on a fresh draw and let tick decide whether it is high enough to fall again
+    const replay = () => {
+      this._fnSeed = ((Date.now() ^ (Math.random() * 0x7fffffff)) & 0x7fffffff) || 1;
+      root.classList.remove("fn-drop");
+      this.setState({ fnNonce: (this.state.fnNonce || 0) + 1 }, () => {
+        requestAnimationFrame(() => requestAnimationFrame(tick));
+      });
+    };
     // tap the grid to refill it - the grid is decorative, so nothing is taken from the tap. a new
     // seed reshuffles the order, and tick decides whether the card is far enough up to fall again
     // the top row is a keyboard: press the dot above each letter in the order that spells the word.
@@ -3866,11 +3874,17 @@ class Component extends DCLogic {
           if (this._eggN === EGG.length) { this._eggN = 0; root.classList.add("fn-egg"); return; }
         }
       }
-      this._fnSeed = ((Date.now() ^ (Math.random() * 0x7fffffff)) & 0x7fffffff) || 1;
-      root.classList.remove("fn-drop");
-      this.setState({ fnNonce: (this.state.fnNonce || 0) + 1 }, () => {
-        requestAnimationFrame(() => requestAnimationFrame(tick));
-      });
+      replay();
+    }, true);
+    // double-press the hundredth ball to clear the word and start the sequence over
+    document.addEventListener("dblclick", (e) => {
+      if (!e.target || !e.target.closest) return;
+      const grid = e.target.closest(".fgrid"), dot = e.target.closest(".fdot");
+      if (!grid || !dot) return;
+      if (Array.prototype.indexOf.call(grid.children, dot) !== grid.children.length - 1) return;
+      root.classList.remove("fn-egg");
+      this._eggN = 0;
+      replay();
     }, true);
     window.addEventListener("scroll", onScroll, { passive: true });
     window.addEventListener("resize", onScroll);
