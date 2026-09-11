@@ -1453,6 +1453,9 @@ section[id],div[id]{scroll-margin-top:calc(var(--hdr,120px) - 1px)}
     .syspanel .pvis{padding:26px!important}
     .syspanel .tabpanel>div:last-child{padding:28px 30px 28px!important}
     .sysrail{padding:0 8px 0 4px}
+
+    /* a short rule parts the grid from the labels that read it */
+    .fsep{width:40px;height:2px;border-radius:2px;background:rgba(255,249,241,.24);margin:0 0 16px}
     /* ── pillar cards as a swipe carousel on phones: native scroll-snap track, chevrons + dots below ── */
     .pcar{position:relative}
     .pcar-nav,.pcar-head{display:none}
@@ -2356,6 +2359,7 @@ section[id],div[id]{scroll-margin-top:calc(var(--hdr,120px) - 1px)}
               <span style="--tv-background: {{ d.bg }};aspect-ratio:1;border-radius:50%;background:var(--tv-background)"></span>
             </sc-for>
           </div>
+          <div class="fsep" aria-hidden="true"></div>
           <div style="display:flex;gap:20px;flex-wrap:wrap;margin:0 0 28px">
             <span style="display:inline-flex;align-items:center;gap:9px;font:500 13.5px/1.3 var(--font-body);color:var(--text-on-navy-muted)"><span style="flex:none;width:10px;height:10px;border-radius:50%;background:rgba(255,249,241,.22)"></span><strong style="color:var(--cream);font-weight:700">100</strong>&nbsp;apply to tutor Methods</span>
             <span style="display:inline-flex;align-items:center;gap:9px;font:500 13.5px/1.3 var(--font-body);color:var(--text-on-navy-muted)"><span style="flex:none;width:10px;height:10px;border-radius:50%;background:var(--highlighter)"></span><strong style="color:var(--cream);font-weight:700">~5</strong>&nbsp;make it through</span>
