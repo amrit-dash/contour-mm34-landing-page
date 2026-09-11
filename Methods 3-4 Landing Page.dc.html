@@ -2463,7 +2463,7 @@ html.fn-egg .fgrid .fdot:nth-child(3)::after,html.fn-egg .fgrid .fdot:nth-child(
           <div class="fwrap" style="position:relative;max-width:440px;margin:0 0 16px">
           <div class="fgrid" aria-hidden="true" style="display:grid;grid-template-columns:repeat(20,minmax(0,1fr));gap:6px">
             <sc-for list="{{ funnelDots }}" as="d" hint-placeholder-count="100">
-              <span class="fdot {{ d.k }}" style="--d: {{ d.d }}ms;--f: {{ d.f }}px;--ix: {{ d.i }};--c: {{ d.c }};--pd: {{ d.p }}"></span>
+              <span class="fdot {{ d.k }}" style="--d: {{ d.d }}ms;--f: {{ d.f }}px;--ix: {{ d.i }};--c: {{ d.c }};--pd: {{ d.p }};--fx: {{ d.x }};--fw: {{ d.w }}"></span>
             </sc-for>
           </div>
           </div>
@@ -4866,6 +4866,19 @@ class Component extends DCLogic {
         // second sequence: one of the survivors is the one to press, and which one changes every draw
         const mqDot = this._mqStage > 0 ? kept[0] : null;
         const mqPeriod = (2.6 + rnd() * 2.2).toFixed(2) + "s";
+        // the two intros: fx scatters each dot's blips, fw is when the burst front reaches it
+        const bursts = [[2, 4, 0], [1, 12, 620], [3, 17, 1140]];
+        const fx = [], fw = [];
+        for (let i = 0; i < 100; i++) {
+          fx.push(Math.round(rnd() * 320) + "ms");
+          const r = Math.floor(i / 20), c = i % 20;
+          let best = 1e9;
+          bursts.forEach(([br, bc, t]) => {
+            const d = Math.sqrt((r - br) * (r - br) + (c - bc) * (c - bc));
+            best = Math.min(best, t + d * 68);
+          });
+          fw.push(Math.round(best) + "ms");
+        }
         const delay = new Array(100).fill(0);
         let t = 0;
         idx.filter((id) => !keep.has(id)).forEach((id) => { delay[id] = Math.round(t); t += 4 + rnd() * 11; });
@@ -4874,7 +4887,7 @@ class Component extends DCLogic {
           let cls = keep.has(i) ? "fkeep" : "";
           if (i === hint) cls += " fhint";
           if (i === mqDot) cls += " fmq-dot";
-          return { i: i, k: cls, d: delay[i], f: 56 - Math.floor(i / 20) * 7, c: i % 20, p: i === mqDot ? mqPeriod : "" };
+          return { i: i, k: cls, d: delay[i], f: 56 - Math.floor(i / 20) * 7, c: i % 20, p: i === mqDot ? mqPeriod : "", x: fx[i], w: fw[i] };
         });
       })(),
       srCas: (S.srTab || "cas") === "cas", srBound: S.srTab === "bound",
