@@ -1428,6 +1428,71 @@ section[id],div[id]{scroll-margin-top:calc(var(--hdr,120px) - 1px)}
     .syspanel .pvis{padding:26px!important}
     .syspanel .tabpanel>div:last-child{padding:28px 30px 28px!important}
     .sysrail{padding:0 8px 0 4px}
+    /* ── pillar cards as a swipe carousel on phones: native scroll-snap track, chevrons + dots below ── */
+    .pcar{position:relative}
+    .pcar-nav,.pcar-head{display:none}
+    @keyframes pcarPill{from{opacity:0;transform:translateY(-7px)}to{opacity:1;transform:none}}
+    @media (max-width:880px){
+      /* the inline grid and the .g3 breakpoint rule both carry weight, so the track overrides both */
+      /* full bleed: the track runs to the screen edge so a peeking card slides off the edge
+         instead of being sliced at the gutter, and its own padding keeps the shadows unclipped */
+      .pcar{margin-inline:calc(var(--gx) * -1)}
+      /* the active card sits centred, so the one before and after peek equally on both sides.
+         side padding is half the leftover width, which lets the first and last card centre too */
+      .pillarcards{--pcw:min(82vw,420px);grid-template-columns:none!important;grid-auto-flow:column;grid-auto-columns:var(--pcw);gap:12px!important;overflow-x:auto;overscroll-behavior-x:contain;scroll-snap-type:x mandatory;padding:14px calc((100vw - var(--pcw))/2) 22px;margin-block:-14px -22px;scrollbar-width:none;-ms-overflow-style:none}
+      .pillarcards::-webkit-scrollbar{display:none}
+      /* .g3>:last-child:nth-child(2n+1) gives the third card an explicit grid-column for the old
+         two-up layout. an explicitly placed item is laid out before the auto-placed ones, which
+         threw pillar 3 to the front of the track — order can't outrank a placement, this can */
+      .pillarcards>a{grid-column:auto!important;scroll-snap-align:center;scroll-snap-stop:always}
+      /* the active card wears its pillar's colour as a ring. a soft glow can't work here: the
+         track is a scroll container, so it clips on both axes and cuts the blur off mid-fade.
+         3px stroke at 3px offset stays well inside the track padding and never gets sliced */
+      .pillarcards>a{outline:3px solid transparent;outline-offset:3px;transition:outline-color var(--dur-s) var(--ease)}
+      html.pc1 .pillarcards>a:nth-child(1){outline-color:var(--navy)}
+      html.pc2 .pillarcards>a:nth-child(2){outline-color:var(--og-blue)}
+      html.pc3 .pillarcards>a:nth-child(3){outline-color:var(--highlighter)}
+      /* the hover lift translates by a fractional pixel, which antialiases the colour bar thinner.
+         hover is only a sticky artefact of a tap on touch, so the lift goes here */
+      .pillarcards>a.card-h:hover,.pillarcards>a:hover{transform:none!important;box-shadow:var(--shadow-xs)!important}
+      /* the tagging pass adds .card-h, whose will-change promotes each card to its own layer and
+         re-rasterises the shadow a beat after load. hover lift is meaningless on touch anyway */
+      .pillarcards>a.card-h{will-change:auto}
+      /* the pillar label moves out of the card and above the track, so it only ever names the
+         active card. the cards keep one idea each — image and headline — and lose a row of height */
+      .pcar-head{display:flex;justify-content:center;align-items:center;min-height:30px;margin:0 0 14px;position:relative;z-index:1}
+      .pcar-pill{display:none;align-items:center;max-width:calc(100vw - var(--gx)*2);font:700 12px/1.35 var(--font-body);padding:7px 14px;border-radius:999px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;animation:pcarPill var(--dur-m) var(--ease) both}
+      /* all three labels ship in the markup; only the active one shows, so nothing has to be
+         written into the DOM at runtime (the runtime would overwrite it on the next render) */
+      .pcar-pill.p1{display:inline-flex}
+      html.pc2 .pcar-pill.p1,html.pc3 .pcar-pill.p1{display:none}
+      html.pc2 .pcar-pill.p2,html.pc3 .pcar-pill.p3{display:inline-flex}
+      /* a stem from the pill down to the ring, so the two read as one object: the pill is a tab and
+         the ring is the panel edge it joins. it hangs off the head, not the pill — the pill clips
+         its own overflow for the ellipsis, which swallowed the stem entirely */
+      .pcar-head::after{content:"";position:absolute;left:50%;top:100%;width:3px;height:9px;margin-left:-1.5px;background:var(--navy)}
+      html.pc2 .pcar-head::after{background:var(--og-blue)}
+      html.pc3 .pcar-head::after{background:var(--highlighter)}
+      .pcar-dots>span:nth-child(1){width:20px;border-radius:4px;background:var(--navy)}
+      html.pc2 .pcar-dots>span:nth-child(1),html.pc3 .pcar-dots>span:nth-child(1){width:7px;border-radius:50%;background:rgba(12,49,102,.2)}
+      html.pc2 .pcar-dots>span:nth-child(2),html.pc3 .pcar-dots>span:nth-child(3){width:20px;border-radius:4px;background:var(--navy)}
+      .pcar-b[data-pcar="-1"]{opacity:.3;pointer-events:none}
+      html.pc2 .pcar-b,html.pc3 .pcar-b[data-pcar="-1"]{opacity:1;pointer-events:auto}
+      html.pc3 .pcar-b[data-pcar="1"]{opacity:.3;pointer-events:none}
+      .pillarcards>a>div:last-child>span{display:none!important}
+      .pillarcards>a>div:last-child{padding:18px 22px 22px!important;gap:0!important}
+      .pcar-nav{display:flex;align-items:center;justify-content:center;gap:16px;margin-top:14px}
+      .pcar-b{appearance:none;cursor:pointer;flex:none;width:40px;height:40px;border-radius:50%;background:var(--surface-raised);border:1.5px solid var(--border-default);color:var(--navy);display:inline-flex;align-items:center;justify-content:center;box-shadow:var(--shadow-xs);-webkit-tap-highlight-color:transparent;transition:opacity var(--dur-s) var(--ease),background var(--dur-s) var(--ease),transform var(--dur-s) var(--ease)}
+      .pcar-b:active{background:var(--cream-m);transform:scale(.94)}
+      .pcar-b[disabled]{opacity:.3;pointer-events:none}
+      .pcar-b:focus-visible{outline:3px solid rgba(0,122,255,.45);outline-offset:2px}
+      .pcar-b svg{display:block;pointer-events:none}
+      .pcar-dots{display:inline-flex;align-items:center;gap:7px}
+      .pcar-dots>span{width:7px;height:7px;border-radius:50%;background:rgba(12,49,102,.2);transition:background var(--dur-s) var(--ease),width var(--dur-s) var(--ease)}
+    }
+    @media (max-width:880px) and (prefers-reduced-motion:reduce){
+      .pcar-dots>span{transition:none}
+    }
     .sysgrp{padding:18px 20px}
     /* ── story chapters: eyebrow chips count up through the page ── */
     body{counter-reset:chap}
