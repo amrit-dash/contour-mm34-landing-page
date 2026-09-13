@@ -1244,6 +1244,15 @@ section[id],div[id]{scroll-margin-top:calc(var(--hdr,120px) - 1px)}
 .tplan-d{font:700 12px/1 var(--font-body);color:var(--navy);background:var(--cream);border:1px solid var(--border-subtle);border-radius:999px;padding:7px 10px;white-space:nowrap}
 .tplan-f{font:500 13px/1.5 var(--font-body);color:var(--text-muted);margin:6px 24px 0;padding:14px 0 20px;border-top:1px solid var(--border-subtle)}
 @media (max-width:760px){
+  /* phones: the header is a toggle, the plan is folded until tapped */
+  .tplan-h{padding:16px 16px;cursor:pointer;-webkit-tap-highlight-color:transparent}
+  .tplan-h>.tplan-k{font-size:13px;white-space:nowrap}
+  .tplan-cv{display:inline-flex}
+  html.tplan-open .tplan-cv{transform:rotate(180deg)}
+  html.tplan-open .tplan-h{border-bottom:1px solid var(--border-subtle)}
+  .tplan-b{display:grid;grid-template-rows:0fr;transition:grid-template-rows .55s var(--ease)}
+  .tplan-b>div{overflow:hidden;min-height:0}
+  html.tplan-open .tplan-b{grid-template-rows:1fr}
   .tplan-l{padding:0 16px}
   .tplan-f{margin:4px 16px 0;padding:12px 0 16px}
   .tplan-r{grid-template-columns:48px minmax(0,1fr) auto;column-gap:12px;padding:11px 0}
@@ -4588,6 +4597,17 @@ class Component extends DCLogic {
     ensure();
     [60, 250, 800, 2000].forEach((ms) => setTimeout(ensure, ms));
   }
+  _wireTplan() {
+    if (this._tplanWired) return;
+    this._tplanWired = true;
+    document.addEventListener("click", (e) => {
+      const h = e.target && e.target.closest ? e.target.closest(".tplan-h") : null;
+      if (!h || !window.matchMedia("(max-width:760px)").matches) return;
+      e.preventDefault();
+      const open = document.documentElement.classList.toggle("tplan-open");
+      h.setAttribute("aria-expanded", open ? "true" : "false");
+    }, true);
+  }
   _wirePillarCar() {
     if (this._pcarWired) return;
     this._pcarWired = true;
@@ -4663,6 +4683,7 @@ class Component extends DCLogic {
       }
       this._tagReveal();
       this._wirePillarCar();
+      this._wireTplan();
       this._wireOfferCollapse();
       this._wireFunnel();
       // dev probe: ?probe=1 lists elements wider than the viewport in <html data-probe>
