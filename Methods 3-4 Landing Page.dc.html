@@ -1903,6 +1903,7 @@ html.fn-egg .fgrid .fdot:nth-child(3)::after,html.fn-egg .fgrid .fdot:nth-child(
        top, bullets as cream tiles in a two-up grid (odd last tile spans), CTA on the
        floor. curriculum: left half is a two-up picker of areas plus the big CTA,
        right half previews the picked area's topics. workbook viewer fills its half. */
+    .curprev{display:none}
     @media (min-width:1101px){
       .sys.sysfocus .syspanel .tabpanel>div:last-child>.pdtext{flex:1;grid-template-columns:minmax(0,1fr)!important;grid-template-rows:auto minmax(0,1fr);gap:18px 0!important;margin:0 0 20px!important}
       .sys.sysfocus .syspanel .tabpanel>div:last-child>.pdtext>.ptitle>h3{font-size:clamp(24px,2.1vw,30px)!important}
@@ -1911,6 +1912,46 @@ html.fn-egg .fgrid .fdot:nth-child(3)::after,html.fn-egg .fgrid .fdot:nth-child(
       .sys.sysfocus .syspanel .tabpanel>div:last-child>.pdtext>.pbul>p>span:first-child{display:none!important}
       .sys.sysfocus .syspanel .tabpanel>div:last-child>.pdtext>.pbul>p:last-child:nth-child(odd){grid-column:1/-1}
       .sys.sysfocus .syspanel .tabpanel>div:last-child>.pdtext>.pbul>p:only-child{background:none;border:0;padding:0!important;font-size:16px!important;line-height:1.6!important;color:var(--charcoal)}
+      /* curriculum · three bands: head, crumb+title strip, then a wide darker picker
+         beside a preview that takes the picker's height and spreads its rows to fill */
+      .sys.sysfocus .syspanel .tabpanel#curriculum{grid-template-columns:minmax(0,1.5fr) minmax(0,1fr);grid-template-rows:auto auto auto;background:#D3CBC0!important}
+      .sys.sysfocus .syspanel .tabpanel#curriculum>div:first-child{background:var(--surface-raised);border-radius:calc(var(--radius-2xl) - 1px) calc(var(--radius-2xl) - 1px) 0 0}
+      .sys.sysfocus .syspanel .tabpanel#curriculum>div:nth-child(2){grid-column:1;grid-row:3;justify-content:flex-start;background:#D3CBC0!important;border-right:0!important}
+      .sys.sysfocus .syspanel .tabpanel#curriculum>div:last-child{display:contents}
+      .sys.sysfocus .syspanel .tabpanel#curriculum>div:last-child>.pdtext{grid-column:1/-1;grid-row:2;display:grid!important;grid-template-columns:minmax(0,1fr)!important;grid-template-rows:auto auto!important;gap:10px 0!important;margin:0!important;padding:20px 30px 18px;background:var(--surface-raised);border-bottom:1px solid var(--border-subtle)}
+      .sys.sysfocus .syspanel .tabpanel#curriculum .ptitle{grid-template-columns:max-content 120px;column-gap:28px}
+      .sys.sysfocus .syspanel .tabpanel#curriculum .ptitle>h3{font-size:clamp(22px,1.9vw,27px)!important;max-width:none}
+      .sys.sysfocus .syspanel .tabpanel#curriculum>div:last-child>.pdtext>.pbul{display:block!important;margin:0}
+      .sys.sysfocus .syspanel .tabpanel#curriculum>div:last-child>.pdtext>.pbul>p{background:none;border:0;padding:0!important;font-size:14.5px!important;color:var(--text-muted)}
+      .sys.sysfocus .syspanel .tabpanel#curriculum>div:last-child>.pdtext>.pbul>p>strong{color:var(--charcoal)}
+      .sys.sysfocus .syspanel .tabpanel#curriculum>div:last-child>div:last-child{display:none!important}
+      .sys.sysfocus .syspanel .tabpanel#curriculum .termlist{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px!important;margin-bottom:14px!important}
+      .sys.sysfocus .syspanel .tabpanel#curriculum .termlist>div{border-radius:var(--radius-lg);border-color:transparent!important}
+      .sys.sysfocus .syspanel .tabpanel#curriculum .termlist>div:last-child:nth-child(odd){grid-column:1/-1}
+      .sys.sysfocus .syspanel .tabpanel#curriculum .termbtn{grid-template-columns:auto minmax(0,1fr)!important;column-gap:12px!important;padding:12px 14px!important;height:100%;align-content:center;background:var(--surface-raised)!important}
+      .sys.sysfocus .syspanel .tabpanel#curriculum .termbtn:hover{background:var(--cream)!important}
+      .sys.sysfocus .syspanel .tabpanel#curriculum .termbtn>span:first-child{width:40px!important;height:40px!important;border-radius:11px!important}
+      .sys.sysfocus .syspanel .tabpanel#curriculum .termbtn>span:first-child>span:last-child{font-size:16px!important}
+      .sys.sysfocus .syspanel .tabpanel#curriculum .termbtn>span:nth-child(2)>span:first-child{font-size:14px!important;line-height:1.25!important}
+      .sys.sysfocus .syspanel .tabpanel#curriculum .termbtn>span:nth-child(2)>span:last-child{font-size:11.5px!important}
+      .sys.sysfocus .syspanel .tabpanel#curriculum .termbtn>span:last-child{display:none!important}
+      .sys.sysfocus .syspanel .tabpanel#curriculum .termbtn[aria-expanded="true"]{background:var(--navy)!important}
+      .sys.sysfocus .syspanel .tabpanel#curriculum .termbtn[aria-expanded="true"]>span:nth-child(2)>span:first-child{color:var(--cream)!important}
+      .sys.sysfocus .syspanel .tabpanel#curriculum .termbtn[aria-expanded="true"]>span:nth-child(2)>span:last-child{color:rgba(255,249,241,.7)!important}
+      .sys.sysfocus .syspanel .tabpanel#curriculum .termbtn[aria-expanded="true"]>span:first-child{background:var(--surface-raised)!important;color:var(--navy)!important}
+      .sys.sysfocus .syspanel .tabpanel#curriculum .termx{display:none!important}
+      .sys.sysfocus .syspanel .tabpanel#curriculum .termnote{margin-bottom:16px!important;color:var(--charcoal)!important}
+      .sys.sysfocus .syspanel .tabpanel#curriculum .ctarow{display:grid!important;gap:10px!important}
+      .sys.sysfocus .syspanel .tabpanel#curriculum .ctarow>.sc-host-x>button,.sys.sysfocus .syspanel .tabpanel#curriculum .ctarow>button{width:100%;min-height:48px;font-size:15px!important}
+      .sys.sysfocus .syspanel .tabpanel#curriculum .ctarow>span{text-align:center;color:var(--charcoal)!important}
+      .sys.sysfocus .syspanel .tabpanel#curriculum .curprev{grid-column:2;grid-row:3;display:flex;flex-direction:column;min-height:0;margin:26px 26px 26px 0;border-radius:var(--radius-xl)}
+      .sys.sysfocus .syspanel .tabpanel#curriculum .curprev>div:first-child{background:var(--navy)!important;border-bottom-color:var(--navy)!important}
+      .sys.sysfocus .syspanel .tabpanel#curriculum .curprev>div:first-child>span:first-child{background:var(--surface-raised)!important;color:var(--navy)!important}
+      .sys.sysfocus .syspanel .tabpanel#curriculum .curprev>div:first-child>span:last-child>span:first-child{color:var(--cream)!important}
+      .sys.sysfocus .syspanel .tabpanel#curriculum .curprev>div:first-child>span:last-child>span:last-child{color:rgba(255,249,241,.7)!important}
+      .sys.sysfocus .syspanel .tabpanel#curriculum .curprev>div:nth-child(2){flex:1;display:flex;flex-direction:column;padding:0 18px!important}
+      .sys.sysfocus .syspanel .tabpanel#curriculum .curprev>div:nth-child(2)>div{flex:1;display:flex;align-items:center;padding:6px 0!important}
+      .sys.sysfocus .syspanel .tabpanel#curriculum .curprev>div:nth-child(2)>div:last-child{border-bottom:0!important}
     }
     /* title block: crumb above, title with the pillar-colour leader line running to the edge */
     .ptitle{display:grid;grid-template-columns:fit-content(calc(90% - 12px)) minmax(10%,1fr);column-gap:12px;align-items:center}
@@ -3045,10 +3086,10 @@ html.fn-egg .fgrid .fdot:nth-child(3)::after,html.fn-egg .fgrid .fdot:nth-child(
       <span style="font:600 12px/1 var(--font-body);color:var(--navy);background:var(--surface-raised);border:1px solid var(--border-default);border-radius:999px;padding:8px 13px;white-space:nowrap" title="Model field (curriculum.study_design)"><span style="border-bottom:2px dotted rgba(0,122,255,.45);cursor:help">VCAA study design 2024–2027</span></span>
       <span style="font:600 12px/1 var(--font-body);color:var(--navy);background:var(--surface-raised);border:1px solid var(--border-default);border-radius:999px;padding:8px 13px;white-space:nowrap" title="Model field (curriculum.exam_window)"><span style="border-bottom:2px dotted rgba(0,122,255,.45);cursor:help">Sequenced ahead of school</span></span>
     </div>
-    <div style="display:flex;flex-direction:column;gap:12px;margin-bottom:16px">
+    <div class="termlist" style="display:flex;flex-direction:column;gap:12px;margin-bottom:16px">
       <sc-for list="{{ terms }}" as="t" hint-placeholder-count="4">
         <div style="background:var(--surface-raised);border:1px solid var(--border-subtle);border-radius:var(--radius-lg);overflow:hidden;box-shadow:var(--shadow-xs)">
-          <button sc-camel-on-click="{{ t.toggle }}" aria-expanded="{{ t.ariaExp }}" style="--tv-background: {{ t.headBg }};appearance:none;border:none;background:var(--tv-background);cursor:pointer;width:100%;display:grid;grid-template-columns:auto 1fr auto;align-items:center;column-gap:16px;padding:14px 20px 14px 14px;text-align:left;transition:background .15s ease" style-hover="background:rgba(12,49,102,.045)">
+          <button class="termbtn" sc-camel-on-click="{{ t.toggle }}" aria-expanded="{{ t.ariaExp }}" style="--tv-background: {{ t.headBg }};appearance:none;border:none;background:var(--tv-background);cursor:pointer;width:100%;display:grid;grid-template-columns:auto 1fr auto;align-items:center;column-gap:16px;padding:14px 20px 14px 14px;text-align:left;transition:background .15s ease" style-hover="background:rgba(12,49,102,.045)">
             <span style="--tv-background: {{ t.tileBg }};--tv-color: {{ t.tileCo }};width:46px;height:46px;border-radius:13px;background:var(--tv-background);color:var(--tv-color);display:inline-flex;flex-direction:column;align-items:center;justify-content:center;gap:1px"><span style="font:600 8.5px/1 var(--font-body);letter-spacing:.08em">{{ t.kind }}</span><span style="font-family:var(--font-display);font-weight:700;font-size:19px;line-height:1">{{ t.num }}</span></span>
             <span style="min-width:0;display:flex;flex-direction:column;gap:3px">
               <span style="font:700 16px/1.25 var(--font-body);color:var(--navy)">{{ t.title }}</span>
@@ -3057,7 +3098,7 @@ html.fn-egg .fgrid .fdot:nth-child(3)::after,html.fn-egg .fgrid .fdot:nth-child(
             <span style="width:30px;height:30px;border-radius:50%;border:1.5px solid var(--navy);color:var(--navy);display:inline-flex;align-items:center;justify-content:center;font:500 15px/1 var(--font-body)">{{ t.chev }}</span>
           </button>
           <sc-if value="{{ t.open }}" hint-placeholder-val="{{ false }}">
-            <div style="border-top:1px solid var(--border-subtle);padding:6px 22px 14px">
+            <div class="termx" style="border-top:1px solid var(--border-subtle);padding:6px 22px 14px">
               <sc-for list="{{ t.weeks }}" as="w" hint-placeholder-count="4">
                 <div style="display:flex;align-items:center;gap:14px;padding:10px 0;border-bottom:1px dashed var(--border-subtle)">
                   <sc-if value="{{ w.notSac }}" hint-placeholder-val="{{ true }}"><span style="flex:none;min-width:24px;font-family:var(--font-display);font-weight:700;font-size:13px;color:var(--navy)">{{ w.d }}</span></sc-if>
@@ -3071,7 +3112,7 @@ html.fn-egg .fgrid .fdot:nth-child(3)::after,html.fn-egg .fgrid .fdot:nth-child(
         </div>
       </sc-for>
     </div>
-    <p style="font-size:13.5px;line-height:1.6;color:var(--text-muted);margin:0 0 30px">School in a different order? We teach ahead and cater to your school's SAC order. <a href="#faq">See the FAQ</a>.</p>
+    <p class="termnote" style="font-size:13.5px;line-height:1.6;color:var(--text-muted);margin:0 0 30px">School in a different order? We teach ahead and cater to your school's SAC order. <a href="#faq">See the FAQ</a>.</p>
     <div class="ctarow" style="display:flex;align-items:center;gap:14px;flex-wrap:wrap">
       <x-import component-from-global-scope="ContourDesignSystem_0483dc.Button" class="ctab" style="white-space:nowrap" variant="primary" size="md" sc-camel-on-click="{{ openModal }}" hint-size="200px,44px">{{ offer.cta }}<span aria-hidden="true">→</span></x-import>
       <span style="font:500 13px/1.4 var(--font-body);color:var(--text-muted)">{{ offer.risk }}</span>
@@ -3088,6 +3129,25 @@ html.fn-egg .fgrid .fdot:nth-child(3)::after,html.fn-egg .fgrid .fdot:nth-child(
               </sc-for>
             </div>
           </div>
+          <sc-if value="{{ p1t3 }}" hint-placeholder-val="{{ false }}">
+          <div class="curprev" style="background:var(--surface-raised);border:1px solid var(--border-subtle);border-radius:var(--radius-xl);box-shadow:var(--shadow-sm);overflow:hidden">
+            <div style="display:flex;align-items:center;gap:12px;padding:14px 18px;background:var(--cream);border-bottom:1px solid var(--border-subtle)">
+              <span style="flex:none;width:40px;height:40px;border-radius:11px;background:var(--navy);color:var(--cream);display:inline-flex;flex-direction:column;align-items:center;justify-content:center;gap:1px"><span style="font:600 8.5px/1 var(--font-body);letter-spacing:.08em">{{ curPrev.kind }}</span><span style="font-family:var(--font-display);font-weight:700;font-size:16px;line-height:1">{{ curPrev.num }}</span></span>
+              <span style="min-width:0;display:flex;flex-direction:column;gap:3px"><span style="font:700 15px/1.25 var(--font-body);color:var(--navy)">{{ curPrev.title }}</span><span style="font:500 12px/1.35 var(--font-body);color:var(--text-muted)">{{ curPrev.meta }}</span></span>
+            </div>
+            <div style="padding:4px 18px 10px">
+              <sc-for list="{{ curPrev.weeks }}" as="w" hint-placeholder-count="4">
+                <div style="display:flex;align-items:center;gap:14px;padding:10px 0;border-bottom:1px dashed var(--border-subtle)">
+                  <sc-if value="{{ w.notSac }}" hint-placeholder-val="{{ true }}"><span style="flex:none;min-width:24px;font-family:var(--font-display);font-weight:700;font-size:13px;color:var(--navy)">{{ w.d }}</span></sc-if>
+                  <sc-if value="{{ w.sac }}" hint-placeholder-val="{{ false }}"><span style="flex:none;font:600 11px/1 var(--font-body);color:var(--cream);background:var(--navy);border-radius:999px;padding:6px 11px;white-space:nowrap">{{ w.d }}</span></sc-if>
+                  <span style="font:600 14px/1.4 var(--font-body);color:var(--charcoal)">{{ w.t }}</span>
+                  <sc-if value="{{ w.sac }}" hint-placeholder-val="{{ false }}"><span style="margin-left:auto;font:700 10.5px/1 var(--font-body);color:var(--navy);background:var(--highlighter);border-radius:999px;padding:4px 9px;letter-spacing:.04em">SAC</span></sc-if>
+                </div>
+              </sc-for>
+            </div>
+            <div style="margin-top:auto;padding:12px 18px;border-top:1px solid var(--border-subtle);background:var(--cream);font:500 12.5px/1.5 var(--font-body);color:var(--text-muted)"><strong style="color:var(--navy)">{{ curTotal }} topics</strong> across six areas of study, taught in this order and ahead of school.</div>
+          </div>
+          </sc-if>
           <div style="display:flex;align-items:center;justify-content:flex-end;gap:12px;flex-wrap:wrap;border-top:1px solid var(--border-subtle);margin-top:22px;padding-top:16px">
             <x-import component-from-global-scope="ContourDesignSystem_0483dc.Button" class="ctab" style="white-space:nowrap" variant="primary" size="sm" sc-camel-on-click="{{ openModal }}" hint-size="160px,36px">{{ offer.cta }}</x-import>
           </div>
@@ -4759,7 +4819,7 @@ class Component extends DCLogic {
       return {
         ...t, open, weeks,
         ariaExp: open + "", chev: open ? "−" : "+",
-        toggle: () => this.setState({ openTerm: open ? -1 : i }),
+        toggle: () => this.setState({ openTerm: open && !window.matchMedia("(min-width:1101px)").matches ? -1 : i }),
         kind: isExam ? "EXAM" : "AOS",
         num: isExam ? "★" : t.label.replace("AOS", "").trim(),
         tileBg: "var(--navy)",
@@ -4770,6 +4830,8 @@ class Component extends DCLogic {
       };
     });
 
+    // desktop preview: the picked area, or the first when everything is folded
+    const curPrev = terms[S.openTerm >= 0 && S.openTerm < terms.length ? S.openTerm : 0];
     const curTotal = terms.filter((t) => t.label.startsWith("AOS")).reduce((a, t) => a + t.weeks.filter((w) => !w.sac).length, 0);
     // ---- Results / tutors / campuses / week ----
     const lbBase = [
@@ -5096,7 +5158,7 @@ class Component extends DCLogic {
     const ticker = [...tickerBase, ...tickerBase];
 
     return {
-      offer, subline, card, modal, terms, curTotal, faqGroups, quotes, vids, tutors, campuses, week, journey, resultsCards, levels, nextClasses, ticker,
+      offer, subline, card, modal, terms, curPrev, curTotal, faqGroups, quotes, vids, tutors, campuses, week, journey, resultsCards, levels, nextClasses, ticker,
       lcBtns, lensBtns, s5lead, s10items, s10title, s10portalLine, s13title, handoffLabel, nurtureTitle, nurtureBody, nurtureCta,
       anno: S.anno, noAnno: !S.anno, variant: S.variant,
       weapon, weaponChips, weaponReady: true,
