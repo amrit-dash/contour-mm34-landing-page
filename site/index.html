@@ -1787,6 +1787,9 @@ html.fn-egg .fgrid .fdot:nth-child(3)::after,html.fn-egg .fgrid .fdot:nth-child(
     }
     /* the count sits with the heading, so the chevron is labelled and the row is not left empty */
     .sysmsteps{appearance:none;cursor:pointer;flex:none;display:inline-flex;align-items:center;gap:8px;padding:8px 4px 8px 10px;border:none;background:transparent;font:700 13px/1 var(--font-body);color:var(--text-muted);transition:color var(--dur-s) var(--ease)}
+    /* the count and its chevron are the row's right-hand furniture wherever the row has width to
+       spare, and they sit on the title's centre line rather than its baseline */
+    .sysmsteps{margin-left:auto;align-self:center}
     .sysmsteps:hover{color:var(--navy)}
     .stepsn{display:inline}
     /* chevron: both strokes pivot about their own centre from a symmetric offset, so the ink is
@@ -1822,6 +1825,7 @@ html.fn-egg .fgrid .fdot:nth-child(3)::after,html.fn-egg .fgrid .fdot:nth-child(
       /* the rail is the title's own underline, so on phones it sits directly under the title */
       .sys .sysmlead{display:contents}
       .systab-head{width:100%;gap:12px;padding-bottom:12px}
+      .sys .systab-live{flex:1 1 auto;min-width:0}
       .sysmsteps{font-size:12.5px}
       /* one switcher, the same segmented pattern this page already uses on phones, sitting where a
          tab bar belongs: under the label, above the title it controls */
