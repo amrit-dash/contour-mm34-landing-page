@@ -1898,6 +1898,25 @@ html.fn-egg .fgrid .fdot:nth-child(3)::after,html.fn-egg .fgrid .fdot:nth-child(
     @media (min-width:1101px) and (prefers-reduced-motion:reduce){
       .sys.sysfocus .systray,.sys.sysfocus .systray.mopen{transition:none}
     }
+    /* ── Focus panel · per-part desktop layouts (2026-09-13) ──
+       head bar tinted cream so it reads as a bar, not more card. copy half: title on
+       top, bullets as cream tiles in a two-up grid (odd last tile spans), CTA on the
+       floor. curriculum: left half is a two-up picker of areas plus the big CTA,
+       right half previews the picked area's topics. workbook viewer fills its half. */
+    @media (min-width:1101px){
+      .sys.sysfocus .syspanel .tabpanel>div:last-child>.pdtext{flex:1;grid-template-columns:minmax(0,1fr)!important;grid-template-rows:auto minmax(0,1fr);gap:18px 0!important;margin:0 0 20px!important}
+      .sys.sysfocus .syspanel .tabpanel>div:last-child>.pdtext>.ptitle>h3{font-size:clamp(24px,2.1vw,30px)!important}
+      .sys.sysfocus .syspanel .tabpanel>div:last-child>.pdtext>.pbul{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px!important;align-self:center;align-content:center}
+      .sys.sysfocus .syspanel .tabpanel>div:last-child>.pdtext>.pbul>p{display:block!important;background:var(--cream);border:1px solid var(--border-subtle);border-radius:var(--radius-lg);padding:16px 18px!important;font-size:14.5px!important;line-height:1.55!important}
+      .sys.sysfocus .syspanel .tabpanel>div:last-child>.pdtext>.pbul>p>span:first-child{display:none!important}
+      .sys.sysfocus .syspanel .tabpanel>div:last-child>.pdtext>.pbul>p:last-child:nth-child(odd){grid-column:1/-1}
+      .sys.sysfocus .syspanel .tabpanel>div:last-child>.pdtext>.pbul>p:only-child{background:none;border:0;padding:0!important;font-size:16px!important;line-height:1.6!important;color:var(--charcoal)}
+    }
+    /* title block: crumb above, title with the pillar-colour leader line running to the edge */
+    .ptitle{display:grid;grid-template-columns:fit-content(calc(90% - 12px)) minmax(10%,1fr);column-gap:12px;align-items:center}
+    .ptitle>.pcrumb{grid-column:1/-1;grid-row:1}
+    .ptitle>h3{grid-column:1;grid-row:2;min-width:0}
+    .ptitle>.prule{grid-column:2;grid-row:2;width:auto!important;height:3px;margin:0!important;align-self:center}
     /* part counter sits between its arrows; phones keep just the arrows */
     @media (max-width:760px){.pcount{display:none!important}}
     .progdots{display:none}
@@ -3062,8 +3081,8 @@ html.fn-egg .fgrid .fdot:nth-child(3)::after,html.fn-egg .fgrid .fdot:nth-child(
         </div>
         <div style="padding:26px 28px 26px">
           <div class="pdtext" style="display:grid;grid-template-columns:minmax(0,.95fr) minmax(0,1.05fr);gap:12px 36px;align-items:start">
-            <h3 style="font-family:var(--font-display);font-weight:700;font-size:clamp(22px,2vw,26px);letter-spacing:-0.015em;line-height:1.2;color:var(--navy);margin:0;text-wrap:balance">{{ p1cur.title }}</h3>
-            <div style="display:flex;flex-direction:column;gap:11px">
+            <div class="ptitle" style="min-width:0"><p class="pcrumb" style="display:flex;align-items:center;gap:8px;font:600 11.5px/1 var(--font-body);letter-spacing:.08em;text-transform:uppercase;color:var(--text-muted);margin:0 0 10px"><span>{{ sysKick }}</span><span aria-hidden="true" style="opacity:.45">/</span><span>Part {{ p1cur.pn }}</span></p><h3 style="font-family:var(--font-display);font-weight:700;font-size:clamp(22px,2vw,26px);letter-spacing:-0.015em;line-height:1.2;color:var(--navy);margin:0;text-wrap:balance">{{ p1cur.title }}</h3><span class="prule" aria-hidden="true" style="--tv-background: {{ sysColBg }};display:block;width:64px;height:4px;border-radius:2px;background:var(--tv-background);margin:14px 0 0"></span></div>
+            <div class="pbul" style="display:flex;flex-direction:column;gap:11px">
               <sc-for list="{{ p1cur.bullets }}" as="b" hint-placeholder-count="3">
                 <p style="display:flex;gap:11px;font-size:14.5px;line-height:1.55;color:var(--charcoal);margin:0"><span style="flex:none;width:8px;height:8px;border-radius:2px;background:var(--og-blue);margin-top:7px"></span><span style="min-width:0"><strong style="color:var(--navy)">{{ b.lead }}</strong> {{ b.rest }}</span></p>
               </sc-for>
@@ -3187,8 +3206,8 @@ html.fn-egg .fgrid .fdot:nth-child(3)::after,html.fn-egg .fgrid .fdot:nth-child(
         </div>
         <div style="padding:26px 28px 26px">
           <div class="pdtext" style="display:grid;grid-template-columns:minmax(0,.95fr) minmax(0,1.05fr);gap:12px 36px;align-items:start">
-            <h3 style="font-family:var(--font-display);font-weight:700;font-size:clamp(22px,2vw,26px);letter-spacing:-0.015em;line-height:1.2;color:var(--navy);margin:0;text-wrap:balance">{{ p2cur.title }}</h3>
-            <div style="display:flex;flex-direction:column;gap:11px">
+            <div class="ptitle" style="min-width:0"><p class="pcrumb" style="display:flex;align-items:center;gap:8px;font:600 11.5px/1 var(--font-body);letter-spacing:.08em;text-transform:uppercase;color:var(--text-muted);margin:0 0 10px"><span>{{ sysKick }}</span><span aria-hidden="true" style="opacity:.45">/</span><span>Part {{ p2cur.pn }}</span></p><h3 style="font-family:var(--font-display);font-weight:700;font-size:clamp(22px,2vw,26px);letter-spacing:-0.015em;line-height:1.2;color:var(--navy);margin:0;text-wrap:balance">{{ p2cur.title }}</h3><span class="prule" aria-hidden="true" style="--tv-background: {{ sysColBg }};display:block;width:64px;height:4px;border-radius:2px;background:var(--tv-background);margin:14px 0 0"></span></div>
+            <div class="pbul" style="display:flex;flex-direction:column;gap:11px">
               <sc-for list="{{ p2cur.bullets }}" as="b" hint-placeholder-count="3">
                 <p style="display:flex;gap:11px;font-size:14.5px;line-height:1.55;color:var(--charcoal);margin:0"><span style="flex:none;width:8px;height:8px;border-radius:2px;background:var(--og-blue);margin-top:7px"></span><span style="min-width:0"><strong style="color:var(--navy)">{{ b.lead }}</strong> {{ b.rest }}</span></p>
               </sc-for>
@@ -3248,8 +3267,8 @@ html.fn-egg .fgrid .fdot:nth-child(3)::after,html.fn-egg .fgrid .fdot:nth-child(
         </div>
         <div style="padding:26px 28px 26px">
           <div class="pdtext" style="display:grid;grid-template-columns:minmax(0,.95fr) minmax(0,1.05fr);gap:12px 36px;align-items:start">
-            <h3 style="font-family:var(--font-display);font-weight:700;font-size:clamp(22px,2vw,26px);letter-spacing:-0.015em;line-height:1.2;color:var(--navy);margin:0;text-wrap:balance">{{ p3cur.title }}</h3>
-            <div style="display:flex;flex-direction:column;gap:11px">
+            <div class="ptitle" style="min-width:0"><p class="pcrumb" style="display:flex;align-items:center;gap:8px;font:600 11.5px/1 var(--font-body);letter-spacing:.08em;text-transform:uppercase;color:var(--text-muted);margin:0 0 10px"><span>{{ sysKick }}</span><span aria-hidden="true" style="opacity:.45">/</span><span>Part {{ p3cur.pn }}</span></p><h3 style="font-family:var(--font-display);font-weight:700;font-size:clamp(22px,2vw,26px);letter-spacing:-0.015em;line-height:1.2;color:var(--navy);margin:0;text-wrap:balance">{{ p3cur.title }}</h3><span class="prule" aria-hidden="true" style="--tv-background: {{ sysColBg }};display:block;width:64px;height:4px;border-radius:2px;background:var(--tv-background);margin:14px 0 0"></span></div>
+            <div class="pbul" style="display:flex;flex-direction:column;gap:11px">
               <sc-for list="{{ p3cur.bullets }}" as="b" hint-placeholder-count="3">
                 <p style="display:flex;gap:11px;font-size:14.5px;line-height:1.55;color:var(--charcoal);margin:0"><span style="flex:none;width:8px;height:8px;border-radius:2px;background:var(--og-blue);margin-top:7px"></span><span style="min-width:0"><strong style="color:var(--navy)">{{ b.lead }}</strong> {{ b.rest }}</span></p>
               </sc-for>
@@ -5189,7 +5208,7 @@ class Component extends DCLogic {
         defs.forEach(([key, col, steps]) => {
           const n = steps.length, cur = Math.min(S[key] || 0, n - 1);
           const names = { p1: ["Weekly Class", "Weekly Workbook", "Weekly Workshop", "Curriculum", "SAC Preparation", "Exam Preparation"], p2: ["Weekly Homework", "Class Recordings", "Digital Resources", "Contour Checks", "CAS Hub & Bound Reference", "Practice SACs", "Practice Exams"], p3: ["Invigilated Mocks", "Learning Portal", "24/7 Text Support", "1-on-1 Consultations", "Your Tutoring Team", "Progress Tracking"] };
-          pv[key + "cur"] = Object.assign({ n: steps[cur][0], name: names[key][cur] }, parts[key][cur]);
+          pv[key + "cur"] = Object.assign({ n: steps[cur][0], pn: String(cur + 1).padStart(2, "0"), name: names[key][cur] }, parts[key][cur]);
           pv[key + "steps"] = steps.map((st, i) => ({ n: st[0], t: st[1], d: st[2], img: "assets/" + st[3], pick: () => this._pillarGo(key, i, false, true),
             badgeBg: i === cur ? col[0] : "var(--surface-raised)", badgeCo: i === cur ? col[1] : "var(--navy)", badgeBd: i === cur ? "none" : "1.5px solid var(--border-default)",
             ringBd: i === cur ? "2.5px solid " + col[0] : "1px solid var(--border-subtle)", ringSh: i === cur ? "var(--shadow-md)" : "none",
