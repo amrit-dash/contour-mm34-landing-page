@@ -1773,12 +1773,16 @@ html.fn-egg .fgrid .fdot:nth-child(3)::after,html.fn-egg .fgrid .fdot:nth-child(
     .systab:hover{background:var(--tv-hb);box-shadow:var(--shadow-md);transform:translateY(-2px)}
     .systab:active{transform:none;box-shadow:var(--shadow-xs)}
     .systab.on{display:none}
-    /* the segmented variant, on the pillarSwitcher toggle, so both can be judged side by side */
-    .sys.sysseg .systab-group{margin-left:auto;gap:4px;padding:4px;border-radius:14px;background:var(--cream-m);align-self:center;margin-bottom:14px}
-    .sys.sysseg .systab{padding:10px 18px;border-radius:11px;background:transparent;color:var(--text-muted);box-shadow:none;font-size:13px}
-    .sys.sysseg .systab .tarr{display:none}
-    .sys.sysseg .systab:hover{background:transparent;box-shadow:none;transform:none;color:var(--navy)}
-    .sys.sysseg .systab.on{display:inline-flex;background:var(--tv-d);color:var(--tv-fg);box-shadow:var(--shadow-xs)}
+    /* the segmented variant, on the pillarSwitcher toggle, so both can be judged side by side. the
+       toggle is a wide-layout question only: a phone row has width for exactly one answer, and that
+       answer is already the segmented track below, so the variant never reaches a phone */
+    @media (min-width:761px){
+      .sys.sysseg .systab-group{margin-left:auto;gap:4px;padding:4px;border-radius:14px;background:var(--cream-m);align-self:center;margin-bottom:14px}
+      .sys.sysseg .systab{padding:10px 18px;border-radius:11px;background:transparent;color:var(--text-muted);box-shadow:none;font-size:13px}
+      .sys.sysseg .systab .tarr{display:none}
+      .sys.sysseg .systab:hover{background:transparent;box-shadow:none;transform:none;color:var(--navy)}
+      .sys.sysseg .systab.on{display:inline-flex;background:var(--tv-d);color:var(--tv-fg);box-shadow:var(--shadow-xs)}
+    }
     /* the count sits with the heading, so the chevron is labelled and the row is not left empty */
     .sysmsteps{appearance:none;cursor:pointer;flex:none;display:inline-flex;align-items:center;gap:8px;padding:8px 4px 8px 10px;border:none;background:transparent;font:700 13px/1 var(--font-body);color:var(--text-muted);transition:color var(--dur-s) var(--ease)}
     .sysmsteps:hover{color:var(--navy)}
@@ -1820,8 +1824,13 @@ html.fn-egg .fgrid .fdot:nth-child(3)::after,html.fn-egg .fgrid .fdot:nth-child(
       /* one switcher, the same segmented pattern this page already uses on phones, sitting where a
          tab bar belongs: under the label, above the title it controls */
       /* the row has no width for a label and segments side by side, so the switcher takes its own */
-      .systab-group{grid-template-columns:repeat(3,minmax(0,1fr));justify-self:stretch;margin:0 0 22px}
-      .systab{padding:11px 6px}
+      .sys .systab-group{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));flex:1 1 100%;gap:4px;padding:4px;margin:0 0 22px;border-radius:14px;background:var(--cream-m)}
+      .sys .systab{justify-content:center;gap:0;padding:11px 6px;border-radius:11px;background:transparent;color:var(--text-muted);box-shadow:none;font:700 13px/1 var(--font-body)}
+      .sys .systab .tarr{display:none}
+      .sys .systab:hover{background:transparent;box-shadow:none;transform:none;color:var(--navy)}
+      /* all three segments stay on the track — the live one is filled, not hidden, which is the
+         whole point of a segmented control and the only way the row reads as a set of three */
+      .sys .systab.on{display:inline-flex;background:var(--tv-d);color:var(--tv-fg);box-shadow:var(--shadow-xs)}
       /* flattening sysmlead puts every block on one track. the catch-all holds the subtext in place
          whether or not the runtime wraps it in an element of its own */
       .sys .pillarg>*{order:3}
