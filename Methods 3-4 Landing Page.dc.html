@@ -1430,6 +1430,20 @@ section[id],div[id]{scroll-margin-top:calc(var(--hdr,120px) - 1px)}
     .syspanel>*{animation:sysIn var(--dur-m) var(--ease) both}
     .sysprogram .g3,.sysprogram .lvlrow{grid-template-columns:repeat(3,1fr)!important}
     @media (max-width:880px){.sysprogram .g3,.sysprogram .lvlrow{grid-template-columns:1fr!important}}
+    /* program cards: the mark sits beside the title at every width, the blurb runs the full width
+       beneath it. the three names are what people scan for, so they carry the weight */
+    .sysprogram .g3>*{display:grid;grid-template-columns:auto minmax(0,1fr);align-content:start;align-items:center;column-gap:16px;row-gap:14px}
+    .sysprogram .g3>*>img,.sysprogram .g3>:nth-child(2)>span:nth-child(2){grid-column:1;justify-self:start;margin:0!important;height:64px!important;width:auto!important}
+    .sysprogram .g3>* h4{grid-column:2;align-self:center;margin:0!important;font-size:27px!important;line-height:1.08!important}
+    .sysprogram .g3>* p{grid-column:1/-1}
+    /* the mark reads better bare than boxed, and it carries more size once the box is gone */
+    .sysprogram .g3>:nth-child(2)>span:nth-child(2){background:transparent!important;padding:0!important;border-radius:0!important;height:auto!important}
+    .sysprogram .g3>:nth-child(2)>span:nth-child(2)>img{height:78px!important;width:auto!important}
+    /* the pills keep their floating corner on wide layouts, so the mark/title row opens below them */
+    @media (min-width:761px){
+      .sysprogram .g3>:nth-child(2)::before{content:"";grid-column:1/-1;height:0}
+      .sysprogram .g3>:nth-child(3)::before{content:"";grid-column:1/-1;height:6px}
+    }
     #method.sec{padding-bottom:28px!important}
     @media (prefers-reduced-motion:reduce){.syssteps,.syspanel>*{animation:none}}
 
@@ -2197,18 +2211,18 @@ html.fn-egg .fgrid .fdot:nth-child(3)::after,html.fn-egg .fgrid .fdot:nth-child(
       .sysprogram .g3>*{flex:0 0 72%;scroll-snap-align:center;min-width:0;padding:20px 22px 26px!important}
       /* icon and title share a row, the blurb runs full width beneath */
       .sysprogram .g3>*{display:grid!important;grid-template-columns:auto minmax(0,1fr);align-content:start;align-items:center;column-gap:14px;row-gap:11px}
-      .sysprogram .g3>*>img,.sysprogram .g3>:nth-child(2)>span:nth-child(2){grid-column:1;justify-self:start;margin:0!important;height:46px!important;width:auto!important}
+      .sysprogram .g3>*>img,.sysprogram .g3>:nth-child(2)>span:nth-child(2){grid-column:1;justify-self:start;margin:0!important;height:54px!important;width:auto!important}
       .sysprogram .g3>:nth-child(2)>span:nth-child(2){padding:7px!important}
       .sysprogram .g3>:nth-child(2)>span:nth-child(2)>img{height:32px!important;width:auto!important}
-      .sysprogram .g3>* h4{grid-column:2;align-self:center;margin:0!important;font-size:20px!important}
+      .sysprogram .g3>* h4{grid-column:2;align-self:center;margin:0!important;font-size:22px!important}
       .sysprogram .g3>* p{grid-column:1/-1;font-size:14px!important}
       /* every pill sits top-right on its own row, one size for all of them, so the icons beneath all
          start level. Core has no pill, so it holds the same row open instead */
       .sysprogram .g3>*>span:first-child{position:static!important;grid-column:1/-1;justify-self:end;display:inline-block!important;margin:0!important;white-space:nowrap;font:700 11px/1 var(--font-body)!important;padding:6px 11px!important}
       .sysprogram .g3>:nth-child(1)::before{content:"";grid-column:1/-1;height:23px}
       /* the icon reads better as the mark itself than as a mark in a box */
-      .sysprogram .g3>:nth-child(2)>span:nth-child(2){background:transparent!important;padding:0!important;border-radius:0!important}
-      .sysprogram .g3>:nth-child(2)>span:nth-child(2)>img{height:46px!important}
+      .sysprogram .g3>:nth-child(2)>span:nth-child(2){background:transparent!important;padding:0!important;border-radius:0!important;height:auto!important}
+      .sysprogram .g3>:nth-child(2)>span:nth-child(2)>img{height:62px!important}
       .progdots{display:flex;justify-content:center;gap:9px;margin:2px 0 0}
       .progdot{appearance:none;border:0;padding:0;cursor:pointer;width:7px;height:7px;border-radius:50%;background:var(--border-default);transition:background var(--dur-s) var(--ease),width var(--dur-s) var(--ease)}
       html:not(.prog-1):not(.prog-3) .progdot:nth-child(2),html.prog-1 .progdot:nth-child(1),html.prog-3 .progdot:nth-child(3){background:var(--navy);width:20px;border-radius:4px}
