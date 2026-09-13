@@ -2182,15 +2182,36 @@ html.fn-egg .fgrid .fdot:nth-child(3)::after,html.fn-egg .fgrid .fdot:nth-child(
       #tutors div:has(>button[aria-label="Close bio"])>div>div:first-child h4{font-size:16px!important}
       #tutors div:has(>button[aria-label="Close bio"])>div>p{font-size:14px!important;max-width:none!important}
       #tutors div:has(>button[aria-label="Close bio"])>button[aria-label="Close bio"]{position:absolute;top:10px;right:10px;margin:0!important}
-      /* program: segmented picker, one card at a time, Mastery first */
-      .progtabs{display:grid;grid-template-columns:repeat(3,1fr);gap:4px;padding:4px;border-radius:14px;background:var(--cream-m);margin:0 0 14px}
-      .progtab{appearance:none;border:0;background:transparent;border-radius:11px;padding:11px 6px;font:700 13px/1 var(--font-body);color:var(--text-muted);cursor:pointer;-webkit-tap-highlight-color:transparent;transition:background var(--dur-s) var(--ease),color var(--dur-s) var(--ease)}
-      html:not(.prog-1):not(.prog-3) .progtab:nth-child(2),html.prog-1 .progtab:nth-child(1),html.prog-3 .progtab:nth-child(3){background:var(--surface-raised);color:var(--navy);box-shadow:var(--shadow-xs)}
-      .sysprogram .g3,.sysprogram .lvlrow{display:block!important}
-      .sysprogram .g3>*{display:none}
-      html:not(.prog-1):not(.prog-3) .sysprogram .g3>:nth-child(2),html.prog-1 .sysprogram .g3>:nth-child(1),html.prog-3 .sysprogram .g3>:nth-child(3){display:block;animation:sysIn var(--dur-m) var(--ease) both}
-      .sysprogram .g3>:nth-child(2)>span:first-child{position:static;display:inline-block;margin-bottom:6px}
-      .sysprogram .g3>:nth-child(2)>span:nth-child(2){margin-top:8px}
+      /* program: the three are peers to be compared, not destinations to navigate, so phones get a
+         swipe track that echoes the desktop row rather than a second tab bar like the journey's */
+      .sysprogram .g3,.sysprogram .lvlrow{display:flex!important;grid-template-columns:none!important;gap:12px!important;align-items:stretch!important;overflow-x:auto;overflow-y:hidden;scroll-snap-type:x mandatory;scroll-padding-inline:var(--gx);margin:-8px calc(-1*var(--gx)) -40px;padding:12px var(--gx) 52px;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+      .sysprogram .g3::-webkit-scrollbar{display:none}
+      /* shadow-lg throws ~42px below the card, but the scroll box clipped it at 12px and left a hard
+         line across. the box now carries padding deep enough to hold the whole gradient, cancelled by
+         an equal negative margin so the spacing on the page is unchanged */
+      /* a sliver of the next card is the affordance; the dots only confirm where you are. min-width:0
+         stops Mastery's nowrap badge forcing it wider than its siblings */
+      /* the reveal observer never fires for a card parked outside the viewport horizontally, so the
+         neighbours sat at opacity 0 and the peek showed nothing. the track opens fully painted */
+      .sysprogram .g3>*[data-reveal]{opacity:1!important;transform:none!important}
+      .sysprogram .g3>*{flex:0 0 72%;scroll-snap-align:center;min-width:0;padding:20px 22px 26px!important}
+      /* icon and title share a row, the blurb runs full width beneath */
+      .sysprogram .g3>*{display:grid!important;grid-template-columns:auto minmax(0,1fr);align-content:start;align-items:center;column-gap:14px;row-gap:11px}
+      .sysprogram .g3>*>img,.sysprogram .g3>:nth-child(2)>span:nth-child(2){grid-column:1;justify-self:start;margin:0!important;height:46px!important;width:auto!important}
+      .sysprogram .g3>:nth-child(2)>span:nth-child(2){padding:7px!important}
+      .sysprogram .g3>:nth-child(2)>span:nth-child(2)>img{height:32px!important;width:auto!important}
+      .sysprogram .g3>* h4{grid-column:2;align-self:center;margin:0!important;font-size:20px!important}
+      .sysprogram .g3>* p{grid-column:1/-1;font-size:14px!important}
+      /* every pill sits top-right on its own row, one size for all of them, so the icons beneath all
+         start level. Core has no pill, so it holds the same row open instead */
+      .sysprogram .g3>*>span:first-child{position:static!important;grid-column:1/-1;justify-self:end;display:inline-block!important;margin:0!important;white-space:nowrap;font:700 11px/1 var(--font-body)!important;padding:6px 11px!important}
+      .sysprogram .g3>:nth-child(1)::before{content:"";grid-column:1/-1;height:23px}
+      /* the icon reads better as the mark itself than as a mark in a box */
+      .sysprogram .g3>:nth-child(2)>span:nth-child(2){background:transparent!important;padding:0!important;border-radius:0!important}
+      .sysprogram .g3>:nth-child(2)>span:nth-child(2)>img{height:46px!important}
+      .progdots{display:flex;justify-content:center;gap:9px;margin:2px 0 0}
+      .progdot{appearance:none;border:0;padding:0;cursor:pointer;width:7px;height:7px;border-radius:50%;background:var(--border-default);transition:background var(--dur-s) var(--ease),width var(--dur-s) var(--ease)}
+      html:not(.prog-1):not(.prog-3) .progdot:nth-child(2),html.prog-1 .progdot:nth-child(1),html.prog-3 .progdot:nth-child(3){background:var(--navy);width:20px;border-radius:4px}
       /* tutor academy: four cards on one swipe, big photo, tag above the title */
       .acadtrack{display:flex;gap:12px;overflow-x:auto;overflow-y:hidden;scroll-snap-type:x mandatory;scroll-padding-inline:var(--gx);margin:0 calc(-1*var(--gx));padding:4px var(--gx) 16px;scrollbar-width:none;-webkit-overflow-scrolling:touch}
       .acadtrack::-webkit-scrollbar{display:none}
@@ -3212,7 +3233,6 @@ html.fn-egg .fgrid .fdot:nth-child(3)::after,html.fn-egg .fgrid .fdot:nth-child(
       <h3 style="font-family:var(--font-display);font-weight:700;font-size:26px;letter-spacing:-0.01em;color:var(--navy);margin:0">Your choice of program</h3>
       <p style="font:400 14.5px/1.5 var(--font-body);color:var(--text-muted);margin:0">Choose the program that suits you: same workbooks, same resources, same price. Move any time, based on tutor recommendation.</p>
     </div>
-    <div class="progtabs" role="tablist" aria-label="Program"><button type="button" class="progtab" role="tab" data-prog="1">Core</button><button type="button" class="progtab" role="tab" data-prog="2">Mastery</button><button type="button" class="progtab" role="tab" data-prog="3">Extension</button></div>
     <div class="g3 lvlrow" data-stagger="" style="display:grid;grid-template-columns:1fr 1.14fr 1fr;gap:18px;align-items:center">
       <div style="background:var(--surface-raised);border:1px solid var(--border-subtle);border-radius:var(--radius-xl);padding:26px;box-shadow:var(--shadow-sm)">
         <img loading="lazy" decoding="async" src="assets/a1971b06.png" alt="" style="height:52px;display:block;margin-bottom:10px">
@@ -3221,7 +3241,7 @@ html.fn-egg .fgrid .fdot:nth-child(3)::after,html.fn-egg .fgrid .fdot:nth-child(
       </div>
       <div style="position:relative;background:var(--navy);border-radius:var(--radius-2xl);padding:36px 28px;box-shadow:var(--shadow-lg);z-index:1">
         <span style="position:absolute;top:18px;right:18px;font:600 11px/1 var(--font-body);color:var(--navy);background:var(--highlighter);border-radius:999px;padding:5px 10px">Most students choose Mastery</span>
-        <span style="display:inline-flex;background:var(--cream);border-radius:14px;padding:8px;margin:22px 0 10px"><img loading="lazy" decoding="async" src="assets/c4afce64.png" alt="" style="height:44px;display:block"></span>
+        <span style="display:inline-flex;background:var(--cream);border-radius:14px;padding:8px;margin:22px 0 10px"><img loading="lazy" decoding="async" src="assets/ds/mastery-mark.png" alt="" style="height:44px;display:block"></span>
         <h4 style="font-family:var(--font-display);font-weight:700;font-size:22px;color:var(--cream);margin:0 0 8px">Mastery</h4>
         <p style="font-size:14.5px;line-height:1.6;color:var(--text-on-navy-muted);margin:0">Where most students excel. Master every topic in the study design, with SAC and exam preparation front and centre.</p>
       </div>
@@ -3232,6 +3252,7 @@ html.fn-egg .fgrid .fdot:nth-child(3)::after,html.fn-egg .fgrid .fdot:nth-child(
         <p style="font-size:14.5px;line-height:1.6;color:var(--charcoal);margin:0">Mastery at a faster pace, plus the non-routine and separator questions. For students gunning for a 45+ raw study score.</p>
       </div>
     </div>
+    <div class="progdots" role="tablist" aria-label="Program"><button type="button" class="progdot" role="tab" data-prog="1" aria-label="Core"></button><button type="button" class="progdot" role="tab" data-prog="2" aria-label="Mastery"></button><button type="button" class="progdot" role="tab" data-prog="3" aria-label="Extension"></button></div>
     </div>
   </div>
 </section>
@@ -4125,8 +4146,12 @@ class Component extends DCLogic {
             if (e.target.closest(".mlens-t")) { setLens(!html.classList.contains("lens-open")); return; }
             if (html.classList.contains("lens-open")) setLens(false);
             if (e.target.closest("#totop")) { e.preventDefault(); const tt = document.getElementById("totop"); if (tt) { tt.classList.add("tt-go"); setTimeout(() => tt.classList.remove("tt-go"), 1600); } html.style.scrollBehavior = ""; W.scrollTo({ top: 0, behavior: W.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth" }); return; }
-            const pt = e.target.closest(".progtab");
-            if (pt) { ["prog-1", "prog-2", "prog-3"].forEach((c) => html.classList.remove(c)); html.classList.add("prog-" + pt.dataset.prog); return; }
+            const pt = e.target.closest(".progdot");
+            if (pt) {
+              const tr = document.querySelector(".sysprogram .g3"), k = tr && tr.children[Number(pt.dataset.prog) - 1];
+              if (tr && k) tr.scrollTo({ left: k.offsetLeft - (tr.clientWidth - k.offsetWidth) / 2, behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth" });
+              return;
+            }
             // workbook viewer: full-screen toggle (state on <html> so the template re-render cannot drop it)
             if (e.target.closest(".wbfull-b")) { e.preventDefault(); e.stopPropagation(); const on = !html.classList.contains("wb-full"); html.classList.toggle("wb-full", on); document.querySelectorAll(".wbfull-b").forEach((b) => b.setAttribute("aria-pressed", on ? "true" : "false")); return; }
             if (!html.classList.contains("mwf-open")) return;
