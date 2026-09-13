@@ -1221,6 +1221,37 @@ section[id],div[id]{scroll-margin-top:calc(var(--hdr,120px) - 1px)}
       .wksticky>p{margin-top:20px!important}
     }
 @media (max-width:900px){.wksticky{position:static!important}.resrow{grid-template-columns:1fr!important;padding:30px 0!important}.resrow>div{order:0!important}}
+/* final section: the trial as a five-row plan. photo tile with the step badge, a short label,
+   one line of context and a duration chip; the sentences moved out so the card scans in one look */
+.tplan{background:var(--surface-raised);border:1px solid var(--border-subtle);border-radius:var(--radius-lg);box-shadow:var(--shadow-sm);overflow:hidden}
+.tplan-h{appearance:none;background:none;border:0;width:100%;display:flex;align-items:center;gap:12px;padding:20px 24px 10px;margin:0;font:inherit;color:inherit;text-align:left;cursor:default}
+.tplan-c{margin-left:auto;flex:none;display:inline-grid;grid-template-columns:1fr auto;align-items:center;background:var(--highlighter);border:1.5px solid var(--highlighter);border-radius:999px;box-sizing:border-box;height:32px}
+.tplan-cv{display:none;width:29px;height:29px;position:relative;transition:transform .45s var(--ease)}
+.tplan-cv::before{content:"";position:absolute;left:50%;top:50%;width:7px;height:7px;border-right:1.5px solid var(--navy);border-bottom:1.5px solid var(--navy);transform:translate(-50%,-70%) rotate(45deg)}
+.tplan-b{display:block}
+.tplan-k{font:600 14px/1 var(--font-body);color:var(--text-muted)}
+.tplan-chip{font:700 11.5px/1 var(--font-body);color:var(--navy);padding:0 12px;white-space:nowrap;overflow:hidden;min-width:0}
+.tplan-chip0{display:none}
+.tplan-l{list-style:none;margin:0;padding:0 24px}
+.tplan-r{display:grid;grid-template-columns:56px minmax(0,1fr) auto;column-gap:16px;align-items:center;padding:13px 0}
+.tplan-r+.tplan-r{border-top:1px dashed var(--border-subtle)}
+.tplan-ph{position:relative;width:56px;height:56px;border-radius:16px;overflow:hidden;box-shadow:var(--shadow-sm)}
+.tplan-ph>img{width:100%;height:100%;object-fit:cover;display:block}
+.tplan-ph>b{position:absolute;left:0;top:0;width:22px;height:22px;border-radius:0 0 10px 0;background:var(--navy);color:var(--cream);font:700 11px/1 var(--font-body);display:inline-flex;align-items:center;justify-content:center}
+.tplan-t{display:flex;flex-direction:column;gap:3px;min-width:0}
+.tplan-t>strong{font:700 16px/1.25 var(--font-body);color:var(--navy)}
+.tplan-t>small{font:500 13px/1.4 var(--font-body);color:var(--text-muted)}
+.tplan-d{font:700 12px/1 var(--font-body);color:var(--navy);background:var(--cream);border:1px solid var(--border-subtle);border-radius:999px;padding:7px 10px;white-space:nowrap}
+.tplan-f{font:500 13px/1.5 var(--font-body);color:var(--text-muted);margin:6px 24px 0;padding:14px 0 20px;border-top:1px solid var(--border-subtle)}
+@media (max-width:760px){
+  .tplan-l{padding:0 16px}
+  .tplan-f{margin:4px 16px 0;padding:12px 0 16px}
+  .tplan-r{grid-template-columns:48px minmax(0,1fr) auto;column-gap:12px;padding:11px 0}
+  .tplan-ph{width:48px;height:48px;border-radius:14px}
+  .tplan-t>strong{font-size:15px}
+  .tplan-t>small{font-size:12.5px}
+  .tplan-d{font-size:11.5px;padding:6px 9px}
+}
     body{margin:0;background:var(--cream);color:var(--charcoal);font-family:var(--font-body,Inter,sans-serif);-webkit-font-smoothing:antialiased}
     a{color:var(--navy);text-decoration:none}a:hover{color:var(--og-blue)}
     [id]{scroll-margin-top:calc(var(--hdr,120px) - 1px)}
@@ -3682,48 +3713,19 @@ html.fn-egg .fgrid .fdot:nth-child(3)::after,html.fn-egg .fgrid .fdot:nth-child(
           <p style="font:500 13px/1.6 var(--font-body);color:var(--text-on-navy-muted);margin:14px 0 0;padding-top:14px;border-top:1px solid var(--border-on-navy);min-height:21px;overflow:hidden">{{ joinStat }}</p>
         </div>
         <div style="padding-top:6px">
-          <p style="font:600 13px/1 var(--font-body);color:var(--text-muted);margin:0 0 20px">How the trial works</p>
-          <div style="display:grid;grid-template-columns:64px 1fr;gap:18px;padding-bottom:26px;position:relative">
-          <span aria-hidden="true" style="position:absolute;left:31.25px;top:64px;bottom:0;width:1.5px;background:var(--border-default)"></span>
-          <span style="position:relative;z-index:1;display:inline-block;width:64px;height:64px;border-radius:16px;overflow:hidden;box-shadow:var(--shadow-sm)"><img loading="lazy" decoding="async" src="assets/opt/e52d2f1e.jpg" alt="" style="width:100%;height:100%;object-fit:cover;display:block"><span style="position:absolute;left:0;top:0;width:22px;height:22px;border-radius:0 0 10px 0;background:var(--navy);color:var(--cream);display:inline-flex;align-items:center;justify-content:center;font:700 11.5px/1 var(--font-body)">1</span></span>
-          <div style="padding-top:3px">
-            <h3 style="font:700 17px/1.3 var(--font-body);color:var(--navy);margin:0 0 5px">Book your trial</h3>
-            <p style="font-size:14.5px;line-height:1.62;color:var(--charcoal);margin:0;max-width:56ch">Two minutes. We match you to the right class and level.</p>
+          <div class="tplan">
+            <button type="button" class="tplan-h" aria-expanded="false" aria-controls="tplanb"><span class="tplan-k">How the trial works</span><span class="tplan-c"><span class="tplan-chip0"><span>free</span></span><span class="tplan-chip"><span>One full week · free</span></span><span class="tplan-cv" aria-hidden="true"></span></span></button>
+            <div class="tplan-b" id="tplanb"><div>
+            <ol class="tplan-l">
+            <li class="tplan-r"><span class="tplan-ph"><img loading="lazy" decoding="async" src="assets/opt/e52d2f1e.jpg" alt=""><b aria-hidden="true">1</b></span><span class="tplan-t"><strong>Book your trial</strong><small>Matched to your class and level</small></span><span class="tplan-d">2 min</span></li>
+            <li class="tplan-r"><span class="tplan-ph"><img loading="lazy" decoding="async" src="assets/opt/6b3cc21d.jpg" alt=""><b aria-hidden="true">2</b></span><span class="tplan-t"><strong>Weekly Class</strong><small>Your real class, your real tutor</small></span><span class="tplan-d">2 hrs</span></li>
+            <li class="tplan-r"><span class="tplan-ph"><img loading="lazy" decoding="async" src="assets/mmSpread1.jpg" alt=""><b aria-hidden="true">3</b></span><span class="tplan-t"><strong>Workbook and portal</strong><small>Everything the week needs, yours to keep</small></span><span class="tplan-d">Same day</span></li>
+            <li class="tplan-r"><span class="tplan-ph"><img loading="lazy" decoding="async" src="assets/opt/e54782f9.jpg" alt=""><b aria-hidden="true">4</b></span><span class="tplan-t"><strong>Weekly Workshop</strong><small>Exam-condition practice</small></span><span class="tplan-d">2 hrs</span></li>
+            <li class="tplan-r"><span class="tplan-ph"><img loading="lazy" decoding="async" src="assets/opt/4d08b68a.jpg" alt=""><b aria-hidden="true">5</b></span><span class="tplan-t"><strong>Decide</strong><small>Your call. No pressure, no follow-up sales</small></span><span class="tplan-d">Day 7</span></li>
+            </ol>
+            <p class="tplan-f">No card taken. Walk away owing nothing.</p>
+            </div></div>
           </div>
-        </div>
-          <div style="display:grid;grid-template-columns:64px 1fr;gap:18px;padding-bottom:26px;position:relative">
-          <span aria-hidden="true" style="position:absolute;left:31.25px;top:64px;bottom:0;width:1.5px;background:var(--border-default)"></span>
-          <span style="position:relative;z-index:1;display:inline-block;width:64px;height:64px;border-radius:16px;overflow:hidden;box-shadow:var(--shadow-sm)"><img loading="lazy" decoding="async" src="assets/opt/6b3cc21d.jpg" alt="" style="width:100%;height:100%;object-fit:cover;display:block"><span style="position:absolute;left:0;top:0;width:22px;height:22px;border-radius:0 0 10px 0;background:var(--navy);color:var(--cream);display:inline-flex;align-items:center;justify-content:center;font:700 11.5px/1 var(--font-body)">2</span></span>
-          <div style="padding-top:3px">
-            <h3 style="font:700 17px/1.3 var(--font-body);color:var(--navy);margin:0 0 5px">Attend your Weekly Class</h3>
-            <p style="font-size:14.5px;line-height:1.62;color:var(--charcoal);margin:0;max-width:56ch">Two hours with your real class and tutor, on this week's topic.</p>
-          </div>
-        </div>
-          <div style="display:grid;grid-template-columns:64px 1fr;gap:18px;padding-bottom:26px;position:relative">
-          <span aria-hidden="true" style="position:absolute;left:31.25px;top:64px;bottom:0;width:1.5px;background:var(--border-default)"></span>
-          <span style="position:relative;z-index:1;display:inline-block;width:64px;height:64px;border-radius:16px;overflow:hidden;box-shadow:var(--shadow-sm)"><img loading="lazy" decoding="async" src="assets/mmSpread1.jpg" alt="" style="width:100%;height:100%;object-fit:cover;display:block"><span style="position:absolute;left:0;top:0;width:22px;height:22px;border-radius:0 0 10px 0;background:var(--navy);color:var(--cream);display:inline-flex;align-items:center;justify-content:center;font:700 11.5px/1 var(--font-body)">3</span></span>
-          <div style="padding-top:3px">
-            <h3 style="font:700 17px/1.3 var(--font-body);color:var(--navy);margin:0 0 5px">Get the week's resources</h3>
-            <p style="font-size:14.5px;line-height:1.62;color:var(--charcoal);margin:0;max-width:56ch">Workbook, homework, and full portal access.</p>
-          </div>
-        </div>
-          <div style="display:grid;grid-template-columns:64px 1fr;gap:18px;padding-bottom:26px;position:relative">
-          <span aria-hidden="true" style="position:absolute;left:31.25px;top:64px;bottom:0;width:1.5px;background:var(--border-default)"></span>
-          <span style="position:relative;z-index:1;display:inline-block;width:64px;height:64px;border-radius:16px;overflow:hidden;box-shadow:var(--shadow-sm)"><img loading="lazy" decoding="async" src="assets/opt/e54782f9.jpg" alt="" style="width:100%;height:100%;object-fit:cover;display:block"><span style="position:absolute;left:0;top:0;width:22px;height:22px;border-radius:0 0 10px 0;background:var(--navy);color:var(--cream);display:inline-flex;align-items:center;justify-content:center;font:700 11.5px/1 var(--font-body)">4</span></span>
-          <div style="padding-top:3px">
-            <h3 style="font:700 17px/1.3 var(--font-body);color:var(--navy);margin:0 0 5px">Attend your Weekly Workshop</h3>
-            <p style="font-size:14.5px;line-height:1.62;color:var(--charcoal);margin:0;max-width:56ch">Exam-condition practice. This is where most students decide.</p>
-          </div>
-        </div>
-          <div style="display:grid;grid-template-columns:64px 1fr;gap:18px;;position:relative">
-          
-          <span style="position:relative;z-index:1;display:inline-block;width:64px;height:64px;border-radius:16px;overflow:hidden;box-shadow:var(--shadow-sm)"><img loading="lazy" decoding="async" src="assets/opt/4d08b68a.jpg" alt="" style="width:100%;height:100%;object-fit:cover;display:block"><span style="position:absolute;left:0;top:0;width:22px;height:22px;border-radius:0 0 10px 0;background:var(--navy);color:var(--cream);display:inline-flex;align-items:center;justify-content:center;font:700 11.5px/1 var(--font-body)">5</span></span>
-          <div style="padding-top:3px">
-            <h3 style="font:700 17px/1.3 var(--font-body);color:var(--navy);margin:0 0 5px">Decide</h3>
-            <p style="font-size:14.5px;line-height:1.62;color:var(--charcoal);margin:0;max-width:56ch">Keep coming, or walk away owing nothing. No card taken.</p>
-          </div>
-        </div>
-        </div>
     </div>
     
   </div>
@@ -4352,7 +4354,7 @@ class Component extends DCLogic {
       // and any block a section's container holds directly that nothing above has already tagged.
       root.querySelectorAll("section.sec > .ctrp > p, section.sec > .ctrp > .eyebrow, section.sec > .ctrp > div > .eyebrow, section.sec > .ctrp > div > p").forEach((p) => tag(p, "up", 0));
       root.querySelectorAll(".hscroll").forEach((h) => Array.from(h.children).forEach((c, i) => tag(c, "up", i)));
-      root.querySelectorAll("#final .g2 > div:last-child > div, #academy .acad, .syssteps > button").forEach((c, i) => tag(c, "up", i % 6));
+      root.querySelectorAll("#final .tplan-h, #final .tplan-r, #final .tplan-f, #academy .acad, .syssteps > button").forEach((c, i) => tag(c, "up", i % 6));
       root.querySelectorAll("section.sec > .ctrp > *").forEach((c) => {
         if (c.closest("#system")) return;
         if (c.tagName === "SPAN" || c.tagName === "SCRIPT" || c.matches(".g2, .g3, .g4, .pillarg, .offerg, .lb2, .sechead, .hscroll, [aria-hidden='true']")) return;
