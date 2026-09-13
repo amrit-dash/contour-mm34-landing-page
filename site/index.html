@@ -1900,6 +1900,104 @@ html.fn-egg .fgrid .fdot:nth-child(3)::after,html.fn-egg .fgrid .fdot:nth-child(
     @media (min-width:1101px) and (prefers-reduced-motion:reduce){
       .sys.sysfocus .systray,.sys.sysfocus .systray.mopen{transition:none}
     }
+    /* ── Focus panel · per-part desktop layouts (2026-09-13) ──
+       head bar tinted cream so it reads as a bar, not more card. copy half: title on
+       top, bullets as cream tiles in a two-up grid (odd last tile spans), CTA on the
+       floor. curriculum: left half is a two-up picker of areas plus the big CTA,
+       right half previews the picked area's topics. workbook viewer fills its half. */
+    .curprev{display:none}
+    @media (min-width:1101px){
+      .sys.sysfocus .syspanel .tabpanel>div:last-child>.pdtext{flex:1;grid-template-columns:minmax(0,1fr)!important;grid-template-rows:auto minmax(0,1fr);gap:18px 0!important;margin:0 0 20px!important}
+      .sys.sysfocus .syspanel .tabpanel>div:last-child>.pdtext>.ptitle>h3{font-size:clamp(24px,2.1vw,30px)!important}
+      .sys.sysfocus .syspanel .tabpanel>div:last-child>.pdtext>.pbul{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px!important;align-self:center;align-content:center}
+      .sys.sysfocus .syspanel .tabpanel>div:last-child>.pdtext>.pbul>p{display:block!important;background:var(--cream);border:1px solid var(--border-subtle);border-radius:var(--radius-lg);padding:16px 18px!important;font-size:14.5px!important;line-height:1.55!important}
+      .sys.sysfocus .syspanel .tabpanel>div:last-child>.pdtext>.pbul>p>span:first-child{display:none!important}
+      .sys.sysfocus .syspanel .tabpanel>div:last-child>.pdtext>.pbul>p:last-child:nth-child(odd){grid-column:1/-1}
+      .sys.sysfocus .syspanel .tabpanel>div:last-child>.pdtext>.pbul>p:only-child{background:none;border:0;padding:0!important;font-size:16px!important;line-height:1.6!important;color:var(--charcoal)}
+      /* tile grids picked per part from the copy (see _pbulTag): lead = long first claim on its own
+         row with the rest paired beneath; stack = every claim on its own row */
+      html.pbl-lead .sys.sysfocus .syspanel .tabpanel>div:last-child>.pdtext>.pbul>p:first-child{grid-column:1/-1}
+      html.pbl-lead .sys.sysfocus .syspanel .tabpanel>div:last-child>.pdtext>.pbul>p:last-child:nth-child(odd){grid-column:auto}
+      html.pbl-stack .sys.sysfocus .syspanel .tabpanel>div:last-child>.pdtext>.pbul{grid-template-columns:minmax(0,1fr)}
+      /* curriculum · three bands: head, crumb+title strip, then a wide darker picker
+         beside a preview that takes the picker's height and spreads its rows to fill */
+      .sys.sysfocus .syspanel .tabpanel#curriculum{grid-template-columns:minmax(0,1.5fr) minmax(0,1fr);grid-template-rows:auto auto auto;background:#D3CBC0!important}
+      .sys.sysfocus .syspanel .tabpanel#curriculum>div:first-child{background:var(--surface-raised);border-radius:calc(var(--radius-2xl) - 1px) calc(var(--radius-2xl) - 1px) 0 0}
+      .sys.sysfocus .syspanel .tabpanel#curriculum>div:nth-child(2){grid-column:1;grid-row:3;justify-content:flex-start;background:#D3CBC0!important;border-right:0!important}
+      .sys.sysfocus .syspanel .tabpanel#curriculum>div:last-child{display:contents}
+      .sys.sysfocus .syspanel .tabpanel#curriculum>div:last-child>.pdtext{grid-column:1/-1;grid-row:2;display:grid!important;grid-template-columns:minmax(0,1fr)!important;grid-template-rows:auto auto!important;gap:10px 0!important;margin:0!important;padding:20px 30px 18px;background:var(--surface-raised);border-bottom:1px solid var(--border-subtle)}
+      .sys.sysfocus .syspanel .tabpanel#curriculum .ptitle{grid-template-columns:max-content 120px;column-gap:28px}
+      .sys.sysfocus .syspanel .tabpanel#curriculum .ptitle>h3{font-size:clamp(22px,1.9vw,27px)!important;max-width:none}
+      .sys.sysfocus.prl-under .syspanel .tabpanel#curriculum .ptitle{grid-template-columns:minmax(0,1fr)}
+      .sys.sysfocus.prl-prefix .syspanel .tabpanel#curriculum .ptitle{grid-template-columns:4px minmax(0,1fr);column-gap:16px}
+      .sys.sysfocus .syspanel .tabpanel#curriculum>div:last-child>.pdtext>.pbul{display:block!important;margin:0}
+      .sys.sysfocus .syspanel .tabpanel#curriculum>div:last-child>.pdtext>.pbul>p{background:none;border:0;padding:0!important;font-size:14.5px!important;color:var(--text-muted)}
+      .sys.sysfocus .syspanel .tabpanel#curriculum>div:last-child>.pdtext>.pbul>p>strong{color:var(--charcoal)}
+      .sys.sysfocus .syspanel .tabpanel#curriculum>div:last-child>div:last-child{display:none!important}
+      .sys.sysfocus .syspanel .tabpanel#curriculum .termlist{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px!important;margin-bottom:14px!important}
+      .sys.sysfocus .syspanel .tabpanel#curriculum .termlist>div{border-radius:var(--radius-lg);border-color:transparent!important}
+      .sys.sysfocus .syspanel .tabpanel#curriculum .termlist>div:last-child:nth-child(odd){grid-column:1/-1}
+      .sys.sysfocus .syspanel .tabpanel#curriculum .termbtn{grid-template-columns:auto minmax(0,1fr)!important;column-gap:12px!important;padding:12px 14px!important;height:100%;align-content:center;background:var(--surface-raised)!important}
+      .sys.sysfocus .syspanel .tabpanel#curriculum .termbtn:hover{background:var(--cream)!important}
+      .sys.sysfocus .syspanel .tabpanel#curriculum .termbtn>span:first-child{width:40px!important;height:40px!important;border-radius:11px!important}
+      .sys.sysfocus .syspanel .tabpanel#curriculum .termbtn>span:first-child>span:last-child{font-size:16px!important}
+      .sys.sysfocus .syspanel .tabpanel#curriculum .termbtn>span:nth-child(2)>span:first-child{font-size:14px!important;line-height:1.25!important}
+      .sys.sysfocus .syspanel .tabpanel#curriculum .termbtn>span:nth-child(2)>span:last-child{font-size:11.5px!important}
+      .sys.sysfocus .syspanel .tabpanel#curriculum .termbtn>span:last-child{display:none!important}
+      .sys.sysfocus .syspanel .tabpanel#curriculum .termbtn[aria-expanded="true"]{background:var(--navy)!important}
+      .sys.sysfocus .syspanel .tabpanel#curriculum .termbtn[aria-expanded="true"]>span:nth-child(2)>span:first-child{color:var(--cream)!important}
+      .sys.sysfocus .syspanel .tabpanel#curriculum .termbtn[aria-expanded="true"]>span:nth-child(2)>span:last-child{color:rgba(255,249,241,.7)!important}
+      .sys.sysfocus .syspanel .tabpanel#curriculum .termbtn[aria-expanded="true"]>span:first-child{background:var(--surface-raised)!important;color:var(--navy)!important}
+      .sys.sysfocus .syspanel .tabpanel#curriculum .termx{display:none!important}
+      .sys.sysfocus .syspanel .tabpanel#curriculum .termnote{margin-bottom:16px!important;color:var(--charcoal)!important}
+      .sys.sysfocus .syspanel .tabpanel#curriculum .ctarow{display:grid!important;gap:10px!important}
+      .sys.sysfocus .syspanel .tabpanel#curriculum .ctarow>.sc-host-x>button,.sys.sysfocus .syspanel .tabpanel#curriculum .ctarow>button{width:100%;min-height:48px;font-size:15px!important}
+      .sys.sysfocus .syspanel .tabpanel#curriculum .ctarow>span{text-align:center;color:var(--charcoal)!important}
+      .sys.sysfocus .syspanel .tabpanel#curriculum .curprev{grid-column:2;grid-row:3;display:flex;flex-direction:column;min-height:0;margin:26px 26px 26px 0;border-radius:var(--radius-xl)}
+      .sys.sysfocus .syspanel .tabpanel#curriculum .curprev>div:first-child{background:var(--navy)!important;border-bottom-color:var(--navy)!important}
+      .sys.sysfocus .syspanel .tabpanel#curriculum .curprev>div:first-child>span:first-child{background:var(--surface-raised)!important;color:var(--navy)!important}
+      .sys.sysfocus .syspanel .tabpanel#curriculum .curprev>div:first-child>span:last-child>span:first-child{color:var(--cream)!important}
+      .sys.sysfocus .syspanel .tabpanel#curriculum .curprev>div:first-child>span:last-child>span:last-child{color:rgba(255,249,241,.7)!important}
+      .sys.sysfocus .syspanel .tabpanel#curriculum .curprev>div:nth-child(2){flex:1;display:flex;flex-direction:column;padding:0 18px!important}
+      .sys.sysfocus .syspanel .tabpanel#curriculum .curprev>div:nth-child(2)>div{flex:1;display:flex;align-items:center;padding:6px 0!important}
+      .sys.sysfocus .syspanel .tabpanel#curriculum .curprev>div:nth-child(2)>div:last-child{border-bottom:0!important}
+      /* workbook · viewer fills its half */
+      .sys.sysfocus .syspanel .tabpanel#workbook>div:nth-child(2){justify-content:flex-start}
+      .sys.sysfocus .syspanel .tabpanel#workbook .pvis{padding:0!important}
+      .sys.sysfocus .syspanel .tabpanel#workbook #wbviewer{border:0!important;border-radius:0!important;box-shadow:none!important}
+      .sys.sysfocus .syspanel .tabpanel#workbook .pvis>div>p{padding:0 22px;margin:14px 0 18px!important}
+    }
+    /* title block: crumb above, title with the pillar-colour leader line running to the edge */
+    .ptitle{display:grid;grid-template-columns:fit-content(calc(90% - 12px)) minmax(10%,1fr);column-gap:12px;align-items:center}
+    .ptitle>.pcrumb{grid-column:1/-1;grid-row:1}
+    .ptitle>h3{grid-column:1;grid-row:2;min-width:0}
+    .ptitle>.prule{grid-column:2;grid-row:2;width:auto!important;height:3px;margin:0!important;align-self:center}
+    /* prototype toggle: rule runs full width under the title instead */
+    .sys.prl-under .ptitle{grid-template-columns:minmax(0,1fr)}
+    .sys.prl-under .ptitle>h3{grid-column:1}
+    .sys.prl-under .ptitle>.prule{grid-column:1;grid-row:3;width:100%!important;margin:14px 0 0!important}
+    .sys.prl-under .ptitle>.pcrumb{margin-bottom:7px!important}
+    /* prototype toggle: Prefix. the pillar colour becomes a vertical bar spanning crumb and title;
+       wins on phones too (higher specificity than the phone under-rules below) */
+    .sys.prl-prefix .ptitle{grid-template-columns:4px minmax(0,1fr);column-gap:16px;align-items:stretch}
+    .sys.prl-prefix .ptitle>.prule{grid-column:1;grid-row:1/3;width:4px!important;height:auto!important;align-self:stretch;margin:0!important;border-radius:2px}
+    .sys.prl-prefix .ptitle>.pcrumb{grid-column:2;grid-row:1;margin-bottom:8px!important}
+    .sys.prl-prefix .ptitle>h3{grid-column:2;grid-row:2}
+    /* phones and tablets: rule always under, crumb tucked closer, calmer spacing in the copy half */
+    @media (max-width:1100px){
+      .ptitle{grid-template-columns:minmax(0,1fr)}
+      .ptitle>h3{grid-column:1}
+      .ptitle>.prule{grid-column:1;grid-row:3;width:100%!important;margin:12px 0 0!important}
+      .ptitle>.pcrumb{margin-bottom:7px!important}
+      .syspanel .tabpanel>div:last-child>.pdtext{row-gap:18px!important}
+      .syspanel .tabpanel>div:last-child>.pdtext>.pbul{gap:13px!important}
+    }
+    @media (max-width:760px){
+      .syspanel .tabpanel>div:last-child{padding:22px 20px 22px!important}
+      .syspanel .tabpanel>div:last-child>.pdtext>.pbul{margin-top:2px}
+    }
+    /* part counter sits between its arrows; phones keep just the arrows */
+    @media (max-width:760px){.pcount{display:none!important}}
     .progdots{display:none}
     .syspanel>.syspanel-title{animation:none}
     @media (max-width:1000px){
@@ -2294,6 +2392,12 @@ html.fn-egg .fgrid .fdot:nth-child(3)::after,html.fn-egg .fgrid .fdot:nth-child(
       <button sc-camel-on-click="{{ b.pick }}" aria-pressed="{{ b.on }}" style="--tv-background: {{ b.bg }};--tv-color: {{ b.co }};appearance:none;border:1px solid var(--charcoal-m);cursor:pointer;font:600 11px/1 var(--font-body);padding:6px 10px;border-radius:999px;background:var(--tv-background);color:var(--tv-color)">{{ b.label }}</button>
     </sc-for>
   </span>
+    <span style="display:flex;align-items:center;gap:6px">
+    <span style="font:500 10px/1 var(--font-body);color:#9A9A9A;letter-spacing:.08em">RULE</span>
+    <sc-for list="{{ prlBtns }}" as="b" hint-placeholder-count="3">
+      <button sc-camel-on-click="{{ b.pick }}" aria-pressed="{{ b.on }}" style="--tv-background: {{ b.bg }};--tv-color: {{ b.co }};appearance:none;border:1px solid var(--charcoal-m);cursor:pointer;font:600 11px/1 var(--font-body);padding:6px 10px;border-radius:999px;background:var(--tv-background);color:var(--tv-color)">{{ b.label }}</button>
+    </sc-for>
+    </span>
   <button sc-camel-on-click="{{ toggleAnno }}" style="--tv-background: {{ annoBg }};--tv-color: {{ annoCo }};appearance:none;border:1px solid var(--charcoal-m);cursor:pointer;font:600 11px/1 var(--font-body);padding:6px 10px;border-radius:999px;background:var(--tv-background);color:var(--tv-color)" aria-pressed="{{ annoPressed }}">Annotations</button>
   <button sc-camel-on-click="{{ toggleDots }}" style="--tv-background: {{ dotsBg }};--tv-color: {{ dotsCo }};appearance:none;border:1px solid var(--charcoal-m);cursor:pointer;font:600 11px/1 var(--font-body);padding:6px 10px;border-radius:999px;background:var(--tv-background);color:var(--tv-color)" aria-pressed="{{ dotsPressed }}">Proof dots</button>
   <span class="hide-m" style="font:500 11px/1 var(--font-body);color:#9A9A9A;margin-left:auto">Family A → offer object: <span style="color:var(--highlighter);font-weight:600">{{ offer.objectLabel }}</span> · dotted values = proof-bank pending (hover)</span>
@@ -2897,7 +3001,7 @@ html.fn-egg .fgrid .fdot:nth-child(3)::after,html.fn-egg .fgrid .fdot:nth-child(
 <div class="tabpanel" id="{{ p1cur.id }}" style="min-width:0;background:var(--surface-raised);border:1px solid var(--border-subtle);border-radius:var(--radius-2xl);box-shadow:var(--shadow-sm);overflow:hidden">
         <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;padding:14px 18px 14px 22px;border-bottom:1px solid var(--border-subtle)">
           <span style="display:inline-flex;align-items:center;gap:10px;min-width:0"><span style="flex:none;width:26px;height:26px;border-radius:8px;background:var(--navy);color:var(--cream);display:inline-flex;align-items:center;justify-content:center;font:700 12px/1 var(--font-body)">{{ p1cur.n }}</span><span style="font:700 14px/1.3 var(--font-body);color:var(--navy);white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ p1cur.name }}</span></span>
-          <span style="display:inline-flex;align-items:center;gap:10px"><span style="font:600 12.5px/1 var(--font-body);color:var(--text-muted);white-space:nowrap">{{ p1count }}</span><button sc-camel-on-click="{{ p1prev }}" aria-label="Previous part" style="appearance:none;cursor:pointer;width:36px;height:36px;border-radius:50%;background:transparent;border:1.5px solid var(--border-default);color:var(--navy);font:600 14px/1 var(--font-body);display:inline-flex;align-items:center;justify-content:center;transition:background .15s ease" style-hover="background:var(--cream-m)">←</button><button sc-camel-on-click="{{ p1next }}" aria-label="Next part" style="appearance:none;cursor:pointer;width:36px;height:36px;border-radius:50%;background:transparent;border:1.5px solid var(--border-default);color:var(--navy);font:600 14px/1 var(--font-body);display:inline-flex;align-items:center;justify-content:center;transition:background .15s ease" style-hover="background:var(--cream-m)">→</button></span>
+          <span style="display:inline-flex;align-items:center;gap:10px"><button sc-camel-on-click="{{ p1prev }}" aria-label="Previous part" style="appearance:none;cursor:pointer;width:36px;height:36px;border-radius:50%;background:transparent;border:1.5px solid var(--border-default);color:var(--navy);font:600 14px/1 var(--font-body);display:inline-flex;align-items:center;justify-content:center;transition:background .15s ease" style-hover="background:var(--cream-m)">←</button><span class="pcount" style="font:600 12.5px/1 var(--font-body);color:var(--text-muted);white-space:nowrap;min-width:3.4em;text-align:center">{{ p1count }}</span><button sc-camel-on-click="{{ p1next }}" aria-label="Next part" style="appearance:none;cursor:pointer;width:36px;height:36px;border-radius:50%;background:transparent;border:1.5px solid var(--border-default);color:var(--navy);font:600 14px/1 var(--font-body);display:inline-flex;align-items:center;justify-content:center;transition:background .15s ease" style-hover="background:var(--cream-m)">→</button></span>
         </div>
         <div class="pvmedia" style="position:relative;background:var(--cream-m);min-height:300px">
           <sc-if value="{{ p1cur.photo }}" hint-placeholder-val="{{ false }}"><img loading="lazy" decoding="async" src="{{ p1cur.img }}" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block"></sc-if>
@@ -2909,12 +3013,12 @@ html.fn-egg .fgrid .fdot:nth-child(3)::after,html.fn-egg .fgrid .fdot:nth-child(
         <div style="position:absolute;left:0;right:0;bottom:0;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:14px 16px;background:linear-gradient(transparent,rgba(12,49,102,.55))">
           <span class="viscap" style="font:600 12.5px/1.3 var(--font-body);color:var(--cream)">{{ clsCap }}</span>
           <span style="display:inline-flex;align-items:center;gap:6px">
-            <span style="display:inline-flex;gap:5px;margin-right:6px">
+            <button sc-camel-on-click="{{ clsPrev }}" aria-label="Previous photo" style="appearance:none;cursor:pointer;width:34px;height:34px;border-radius:50%;background:rgba(255,249,241,.92);border:none;color:var(--navy);font:600 14px/1 var(--font-body);display:inline-flex;align-items:center;justify-content:center">←</button>
+            <span style="display:inline-flex;gap:5px;margin:0 4px">
               <sc-for list="{{ clsDots }}" as="d" hint-placeholder-count="4">
                 <button sc-camel-on-click="{{ d.pick }}" aria-label="Show photo" style="--tv-background: {{ d.bg }};appearance:none;border:none;cursor:pointer;width:7px;height:7px;border-radius:50%;padding:0;background:var(--tv-background)"></button>
               </sc-for>
             </span>
-            <button sc-camel-on-click="{{ clsPrev }}" aria-label="Previous photo" style="appearance:none;cursor:pointer;width:34px;height:34px;border-radius:50%;background:rgba(255,249,241,.92);border:none;color:var(--navy);font:600 14px/1 var(--font-body);display:inline-flex;align-items:center;justify-content:center">←</button>
             <button sc-camel-on-click="{{ clsNext }}" aria-label="Next photo" style="appearance:none;cursor:pointer;width:34px;height:34px;border-radius:50%;background:rgba(255,249,241,.92);border:none;color:var(--navy);font:600 14px/1 var(--font-body);display:inline-flex;align-items:center;justify-content:center">→</button>
           </span>
         </div>
@@ -3026,10 +3130,10 @@ html.fn-egg .fgrid .fdot:nth-child(3)::after,html.fn-egg .fgrid .fdot:nth-child(
       <span style="font:600 12px/1 var(--font-body);color:var(--navy);background:var(--surface-raised);border:1px solid var(--border-default);border-radius:999px;padding:8px 13px;white-space:nowrap" title="Model field (curriculum.study_design)"><span style="border-bottom:2px dotted rgba(0,122,255,.45);cursor:help">VCAA study design 2024–2027</span></span>
       <span style="font:600 12px/1 var(--font-body);color:var(--navy);background:var(--surface-raised);border:1px solid var(--border-default);border-radius:999px;padding:8px 13px;white-space:nowrap" title="Model field (curriculum.exam_window)"><span style="border-bottom:2px dotted rgba(0,122,255,.45);cursor:help">Sequenced ahead of school</span></span>
     </div>
-    <div style="display:flex;flex-direction:column;gap:12px;margin-bottom:16px">
+    <div class="termlist" style="display:flex;flex-direction:column;gap:12px;margin-bottom:16px">
       <sc-for list="{{ terms }}" as="t" hint-placeholder-count="4">
         <div style="background:var(--surface-raised);border:1px solid var(--border-subtle);border-radius:var(--radius-lg);overflow:hidden;box-shadow:var(--shadow-xs)">
-          <button sc-camel-on-click="{{ t.toggle }}" aria-expanded="{{ t.ariaExp }}" style="--tv-background: {{ t.headBg }};appearance:none;border:none;background:var(--tv-background);cursor:pointer;width:100%;display:grid;grid-template-columns:auto 1fr auto;align-items:center;column-gap:16px;padding:14px 20px 14px 14px;text-align:left;transition:background .15s ease" style-hover="background:rgba(12,49,102,.045)">
+          <button class="termbtn" sc-camel-on-click="{{ t.toggle }}" aria-expanded="{{ t.ariaExp }}" style="--tv-background: {{ t.headBg }};appearance:none;border:none;background:var(--tv-background);cursor:pointer;width:100%;display:grid;grid-template-columns:auto 1fr auto;align-items:center;column-gap:16px;padding:14px 20px 14px 14px;text-align:left;transition:background .15s ease" style-hover="background:rgba(12,49,102,.045)">
             <span style="--tv-background: {{ t.tileBg }};--tv-color: {{ t.tileCo }};width:46px;height:46px;border-radius:13px;background:var(--tv-background);color:var(--tv-color);display:inline-flex;flex-direction:column;align-items:center;justify-content:center;gap:1px"><span style="font:600 8.5px/1 var(--font-body);letter-spacing:.08em">{{ t.kind }}</span><span style="font-family:var(--font-display);font-weight:700;font-size:19px;line-height:1">{{ t.num }}</span></span>
             <span style="min-width:0;display:flex;flex-direction:column;gap:3px">
               <span style="font:700 16px/1.25 var(--font-body);color:var(--navy)">{{ t.title }}</span>
@@ -3038,7 +3142,7 @@ html.fn-egg .fgrid .fdot:nth-child(3)::after,html.fn-egg .fgrid .fdot:nth-child(
             <span style="width:30px;height:30px;border-radius:50%;border:1.5px solid var(--navy);color:var(--navy);display:inline-flex;align-items:center;justify-content:center;font:500 15px/1 var(--font-body)">{{ t.chev }}</span>
           </button>
           <sc-if value="{{ t.open }}" hint-placeholder-val="{{ false }}">
-            <div style="border-top:1px solid var(--border-subtle);padding:6px 22px 14px">
+            <div class="termx" style="border-top:1px solid var(--border-subtle);padding:6px 22px 14px">
               <sc-for list="{{ t.weeks }}" as="w" hint-placeholder-count="4">
                 <div style="display:flex;align-items:center;gap:14px;padding:10px 0;border-bottom:1px dashed var(--border-subtle)">
                   <sc-if value="{{ w.notSac }}" hint-placeholder-val="{{ true }}"><span style="flex:none;min-width:24px;font-family:var(--font-display);font-weight:700;font-size:13px;color:var(--navy)">{{ w.d }}</span></sc-if>
@@ -3052,7 +3156,7 @@ html.fn-egg .fgrid .fdot:nth-child(3)::after,html.fn-egg .fgrid .fdot:nth-child(
         </div>
       </sc-for>
     </div>
-    <p style="font-size:13.5px;line-height:1.6;color:var(--text-muted);margin:0 0 30px">School in a different order? We teach ahead and cater to your school's SAC order. <a href="#faq">See the FAQ</a>.</p>
+    <p class="termnote" style="font-size:13.5px;line-height:1.6;color:var(--text-muted);margin:0 0 30px">School in a different order? We teach ahead and cater to your school's SAC order. <a href="#faq">See the FAQ</a>.</p>
     <div class="ctarow" style="display:flex;align-items:center;gap:14px;flex-wrap:wrap">
       <x-import component-from-global-scope="ContourDesignSystem_0483dc.Button" class="ctab" style="white-space:nowrap" variant="primary" size="md" sc-camel-on-click="{{ openModal }}" hint-size="200px,44px">{{ offer.cta }}<span aria-hidden="true">→</span></x-import>
       <span style="font:500 13px/1.4 var(--font-body);color:var(--text-muted)">{{ offer.risk }}</span>
@@ -3062,13 +3166,32 @@ html.fn-egg .fgrid .fdot:nth-child(3)::after,html.fn-egg .fgrid .fdot:nth-child(
         </div>
         <div style="padding:26px 28px 26px">
           <div class="pdtext" style="display:grid;grid-template-columns:minmax(0,.95fr) minmax(0,1.05fr);gap:12px 36px;align-items:start">
-            <h3 style="font-family:var(--font-display);font-weight:700;font-size:clamp(22px,2vw,26px);letter-spacing:-0.015em;line-height:1.2;color:var(--navy);margin:0;text-wrap:balance">{{ p1cur.title }}</h3>
-            <div style="display:flex;flex-direction:column;gap:11px">
+            <div class="ptitle" style="min-width:0"><p class="pcrumb" style="display:flex;align-items:center;gap:8px;font:600 11.5px/1 var(--font-body);letter-spacing:.08em;text-transform:uppercase;color:var(--text-muted);margin:0 0 10px"><span>{{ sysKick }}</span><span aria-hidden="true" style="opacity:.45">/</span><span>Part {{ p1cur.pn }}</span></p><h3 style="font-family:var(--font-display);font-weight:700;font-size:clamp(22px,2vw,26px);letter-spacing:-0.015em;line-height:1.2;color:var(--navy);margin:0;text-wrap:balance">{{ p1cur.title }}</h3><span class="prule" aria-hidden="true" style="--tv-background: {{ sysColBg }};display:block;width:64px;height:4px;border-radius:2px;background:var(--tv-background);margin:14px 0 0"></span></div>
+            <div class="pbul" style="display:flex;flex-direction:column;gap:11px">
               <sc-for list="{{ p1cur.bullets }}" as="b" hint-placeholder-count="3">
-                <p style="display:flex;gap:11px;font-size:14.5px;line-height:1.55;color:var(--charcoal);margin:0"><span style="flex:none;width:8px;height:8px;border-radius:2px;background:var(--og-blue);margin-top:7px"></span><span style="min-width:0"><strong style="color:var(--navy)">{{ b.lead }}</strong> {{ b.rest }}</span></p>
+                <p style="display:flex;gap:11px;font-size:14.5px;line-height:1.55;color:var(--charcoal);margin:0"><span style="flex:none;width:8px;height:8px;border-radius:2px;--tv-background: {{ sysColBg }};background:var(--tv-background);margin-top:7px"></span><span style="min-width:0"><strong style="color:var(--navy)">{{ b.lead }}</strong> {{ b.rest }}</span></p>
               </sc-for>
             </div>
           </div>
+          <sc-if value="{{ p1t3 }}" hint-placeholder-val="{{ false }}">
+          <div class="curprev" style="background:var(--surface-raised);border:1px solid var(--border-subtle);border-radius:var(--radius-xl);box-shadow:var(--shadow-sm);overflow:hidden">
+            <div style="display:flex;align-items:center;gap:12px;padding:14px 18px;background:var(--cream);border-bottom:1px solid var(--border-subtle)">
+              <span style="flex:none;width:40px;height:40px;border-radius:11px;background:var(--navy);color:var(--cream);display:inline-flex;flex-direction:column;align-items:center;justify-content:center;gap:1px"><span style="font:600 8.5px/1 var(--font-body);letter-spacing:.08em">{{ curPrev.kind }}</span><span style="font-family:var(--font-display);font-weight:700;font-size:16px;line-height:1">{{ curPrev.num }}</span></span>
+              <span style="min-width:0;display:flex;flex-direction:column;gap:3px"><span style="font:700 15px/1.25 var(--font-body);color:var(--navy)">{{ curPrev.title }}</span><span style="font:500 12px/1.35 var(--font-body);color:var(--text-muted)">{{ curPrev.meta }}</span></span>
+            </div>
+            <div style="padding:4px 18px 10px">
+              <sc-for list="{{ curPrev.weeks }}" as="w" hint-placeholder-count="4">
+                <div style="display:flex;align-items:center;gap:14px;padding:10px 0;border-bottom:1px dashed var(--border-subtle)">
+                  <sc-if value="{{ w.notSac }}" hint-placeholder-val="{{ true }}"><span style="flex:none;min-width:24px;font-family:var(--font-display);font-weight:700;font-size:13px;color:var(--navy)">{{ w.d }}</span></sc-if>
+                  <sc-if value="{{ w.sac }}" hint-placeholder-val="{{ false }}"><span style="flex:none;font:600 11px/1 var(--font-body);color:var(--cream);background:var(--navy);border-radius:999px;padding:6px 11px;white-space:nowrap">{{ w.d }}</span></sc-if>
+                  <span style="font:600 14px/1.4 var(--font-body);color:var(--charcoal)">{{ w.t }}</span>
+                  <sc-if value="{{ w.sac }}" hint-placeholder-val="{{ false }}"><span style="margin-left:auto;font:700 10.5px/1 var(--font-body);color:var(--navy);background:var(--highlighter);border-radius:999px;padding:4px 9px;letter-spacing:.04em">SAC</span></sc-if>
+                </div>
+              </sc-for>
+            </div>
+            <div style="margin-top:auto;padding:12px 18px;border-top:1px solid var(--border-subtle);background:var(--cream);font:500 12.5px/1.5 var(--font-body);color:var(--text-muted)"><strong style="color:var(--navy)">{{ curTotal }} topics</strong> across six areas of study, taught in this order and ahead of school.</div>
+          </div>
+          </sc-if>
           <div style="display:flex;align-items:center;justify-content:flex-end;gap:12px;flex-wrap:wrap;border-top:1px solid var(--border-subtle);margin-top:22px;padding-top:16px">
             <x-import component-from-global-scope="ContourDesignSystem_0483dc.Button" class="ctab" style="white-space:nowrap" variant="primary" size="sm" sc-camel-on-click="{{ openModal }}" hint-size="160px,36px">{{ offer.cta }}</x-import>
           </div>
@@ -3079,7 +3202,7 @@ html.fn-egg .fgrid .fdot:nth-child(3)::after,html.fn-egg .fgrid .fdot:nth-child(
 <div class="tabpanel" id="{{ p2cur.id }}" style="min-width:0;background:var(--surface-raised);border:1px solid var(--border-subtle);border-radius:var(--radius-2xl);box-shadow:var(--shadow-sm);overflow:hidden">
         <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;padding:14px 18px 14px 22px;border-bottom:1px solid var(--border-subtle)">
           <span style="display:inline-flex;align-items:center;gap:10px;min-width:0"><span style="flex:none;width:26px;height:26px;border-radius:8px;background:var(--og-blue);color:#FFF9F1;display:inline-flex;align-items:center;justify-content:center;font:700 12px/1 var(--font-body)">{{ p2cur.n }}</span><span style="font:700 14px/1.3 var(--font-body);color:var(--navy);white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ p2cur.name }}</span></span>
-          <span style="display:inline-flex;align-items:center;gap:10px"><span style="font:600 12.5px/1 var(--font-body);color:var(--text-muted);white-space:nowrap">{{ p2count }}</span><button sc-camel-on-click="{{ p2prev }}" aria-label="Previous part" style="appearance:none;cursor:pointer;width:36px;height:36px;border-radius:50%;background:transparent;border:1.5px solid var(--border-default);color:var(--navy);font:600 14px/1 var(--font-body);display:inline-flex;align-items:center;justify-content:center;transition:background .15s ease" style-hover="background:var(--cream-m)">←</button><button sc-camel-on-click="{{ p2next }}" aria-label="Next part" style="appearance:none;cursor:pointer;width:36px;height:36px;border-radius:50%;background:transparent;border:1.5px solid var(--border-default);color:var(--navy);font:600 14px/1 var(--font-body);display:inline-flex;align-items:center;justify-content:center;transition:background .15s ease" style-hover="background:var(--cream-m)">→</button></span>
+          <span style="display:inline-flex;align-items:center;gap:10px"><button sc-camel-on-click="{{ p2prev }}" aria-label="Previous part" style="appearance:none;cursor:pointer;width:36px;height:36px;border-radius:50%;background:transparent;border:1.5px solid var(--border-default);color:var(--navy);font:600 14px/1 var(--font-body);display:inline-flex;align-items:center;justify-content:center;transition:background .15s ease" style-hover="background:var(--cream-m)">←</button><span class="pcount" style="font:600 12.5px/1 var(--font-body);color:var(--text-muted);white-space:nowrap;min-width:3.4em;text-align:center">{{ p2count }}</span><button sc-camel-on-click="{{ p2next }}" aria-label="Next part" style="appearance:none;cursor:pointer;width:36px;height:36px;border-radius:50%;background:transparent;border:1.5px solid var(--border-default);color:var(--navy);font:600 14px/1 var(--font-body);display:inline-flex;align-items:center;justify-content:center;transition:background .15s ease" style-hover="background:var(--cream-m)">→</button></span>
         </div>
         <div class="pvmedia" style="position:relative;background:var(--cream-m);min-height:300px">
           <sc-if value="{{ p2cur.photo }}" hint-placeholder-val="{{ false }}"><img loading="lazy" decoding="async" src="{{ p2cur.img }}" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block"></sc-if>
@@ -3187,10 +3310,10 @@ html.fn-egg .fgrid .fdot:nth-child(3)::after,html.fn-egg .fgrid .fdot:nth-child(
         </div>
         <div style="padding:26px 28px 26px">
           <div class="pdtext" style="display:grid;grid-template-columns:minmax(0,.95fr) minmax(0,1.05fr);gap:12px 36px;align-items:start">
-            <h3 style="font-family:var(--font-display);font-weight:700;font-size:clamp(22px,2vw,26px);letter-spacing:-0.015em;line-height:1.2;color:var(--navy);margin:0;text-wrap:balance">{{ p2cur.title }}</h3>
-            <div style="display:flex;flex-direction:column;gap:11px">
+            <div class="ptitle" style="min-width:0"><p class="pcrumb" style="display:flex;align-items:center;gap:8px;font:600 11.5px/1 var(--font-body);letter-spacing:.08em;text-transform:uppercase;color:var(--text-muted);margin:0 0 10px"><span>{{ sysKick }}</span><span aria-hidden="true" style="opacity:.45">/</span><span>Part {{ p2cur.pn }}</span></p><h3 style="font-family:var(--font-display);font-weight:700;font-size:clamp(22px,2vw,26px);letter-spacing:-0.015em;line-height:1.2;color:var(--navy);margin:0;text-wrap:balance">{{ p2cur.title }}</h3><span class="prule" aria-hidden="true" style="--tv-background: {{ sysColBg }};display:block;width:64px;height:4px;border-radius:2px;background:var(--tv-background);margin:14px 0 0"></span></div>
+            <div class="pbul" style="display:flex;flex-direction:column;gap:11px">
               <sc-for list="{{ p2cur.bullets }}" as="b" hint-placeholder-count="3">
-                <p style="display:flex;gap:11px;font-size:14.5px;line-height:1.55;color:var(--charcoal);margin:0"><span style="flex:none;width:8px;height:8px;border-radius:2px;background:var(--og-blue);margin-top:7px"></span><span style="min-width:0"><strong style="color:var(--navy)">{{ b.lead }}</strong> {{ b.rest }}</span></p>
+                <p style="display:flex;gap:11px;font-size:14.5px;line-height:1.55;color:var(--charcoal);margin:0"><span style="flex:none;width:8px;height:8px;border-radius:2px;--tv-background: {{ sysColBg }};background:var(--tv-background);margin-top:7px"></span><span style="min-width:0"><strong style="color:var(--navy)">{{ b.lead }}</strong> {{ b.rest }}</span></p>
               </sc-for>
             </div>
           </div>
@@ -3204,7 +3327,7 @@ html.fn-egg .fgrid .fdot:nth-child(3)::after,html.fn-egg .fgrid .fdot:nth-child(
 <div class="tabpanel" id="{{ p3cur.id }}" style="min-width:0;background:var(--surface-raised);border:1px solid var(--border-subtle);border-radius:var(--radius-2xl);box-shadow:var(--shadow-sm);overflow:hidden">
         <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;padding:14px 18px 14px 22px;border-bottom:1px solid var(--border-subtle)">
           <span style="display:inline-flex;align-items:center;gap:10px;min-width:0"><span style="flex:none;width:26px;height:26px;border-radius:8px;background:var(--highlighter);color:var(--navy);display:inline-flex;align-items:center;justify-content:center;font:700 12px/1 var(--font-body)">{{ p3cur.n }}</span><span style="font:700 14px/1.3 var(--font-body);color:var(--navy);white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ p3cur.name }}</span></span>
-          <span style="display:inline-flex;align-items:center;gap:10px"><span style="font:600 12.5px/1 var(--font-body);color:var(--text-muted);white-space:nowrap">{{ p3count }}</span><button sc-camel-on-click="{{ p3prev }}" aria-label="Previous part" style="appearance:none;cursor:pointer;width:36px;height:36px;border-radius:50%;background:transparent;border:1.5px solid var(--border-default);color:var(--navy);font:600 14px/1 var(--font-body);display:inline-flex;align-items:center;justify-content:center;transition:background .15s ease" style-hover="background:var(--cream-m)">←</button><button sc-camel-on-click="{{ p3next }}" aria-label="Next part" style="appearance:none;cursor:pointer;width:36px;height:36px;border-radius:50%;background:transparent;border:1.5px solid var(--border-default);color:var(--navy);font:600 14px/1 var(--font-body);display:inline-flex;align-items:center;justify-content:center;transition:background .15s ease" style-hover="background:var(--cream-m)">→</button></span>
+          <span style="display:inline-flex;align-items:center;gap:10px"><button sc-camel-on-click="{{ p3prev }}" aria-label="Previous part" style="appearance:none;cursor:pointer;width:36px;height:36px;border-radius:50%;background:transparent;border:1.5px solid var(--border-default);color:var(--navy);font:600 14px/1 var(--font-body);display:inline-flex;align-items:center;justify-content:center;transition:background .15s ease" style-hover="background:var(--cream-m)">←</button><span class="pcount" style="font:600 12.5px/1 var(--font-body);color:var(--text-muted);white-space:nowrap;min-width:3.4em;text-align:center">{{ p3count }}</span><button sc-camel-on-click="{{ p3next }}" aria-label="Next part" style="appearance:none;cursor:pointer;width:36px;height:36px;border-radius:50%;background:transparent;border:1.5px solid var(--border-default);color:var(--navy);font:600 14px/1 var(--font-body);display:inline-flex;align-items:center;justify-content:center;transition:background .15s ease" style-hover="background:var(--cream-m)">→</button></span>
         </div>
         <div class="pvmedia" style="position:relative;background:var(--cream-m);min-height:300px">
           <sc-if value="{{ p3cur.photo }}" hint-placeholder-val="{{ false }}"><img loading="lazy" decoding="async" src="{{ p3cur.img }}" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block"></sc-if>
@@ -3248,10 +3371,10 @@ html.fn-egg .fgrid .fdot:nth-child(3)::after,html.fn-egg .fgrid .fdot:nth-child(
         </div>
         <div style="padding:26px 28px 26px">
           <div class="pdtext" style="display:grid;grid-template-columns:minmax(0,.95fr) minmax(0,1.05fr);gap:12px 36px;align-items:start">
-            <h3 style="font-family:var(--font-display);font-weight:700;font-size:clamp(22px,2vw,26px);letter-spacing:-0.015em;line-height:1.2;color:var(--navy);margin:0;text-wrap:balance">{{ p3cur.title }}</h3>
-            <div style="display:flex;flex-direction:column;gap:11px">
+            <div class="ptitle" style="min-width:0"><p class="pcrumb" style="display:flex;align-items:center;gap:8px;font:600 11.5px/1 var(--font-body);letter-spacing:.08em;text-transform:uppercase;color:var(--text-muted);margin:0 0 10px"><span>{{ sysKick }}</span><span aria-hidden="true" style="opacity:.45">/</span><span>Part {{ p3cur.pn }}</span></p><h3 style="font-family:var(--font-display);font-weight:700;font-size:clamp(22px,2vw,26px);letter-spacing:-0.015em;line-height:1.2;color:var(--navy);margin:0;text-wrap:balance">{{ p3cur.title }}</h3><span class="prule" aria-hidden="true" style="--tv-background: {{ sysColBg }};display:block;width:64px;height:4px;border-radius:2px;background:var(--tv-background);margin:14px 0 0"></span></div>
+            <div class="pbul" style="display:flex;flex-direction:column;gap:11px">
               <sc-for list="{{ p3cur.bullets }}" as="b" hint-placeholder-count="3">
-                <p style="display:flex;gap:11px;font-size:14.5px;line-height:1.55;color:var(--charcoal);margin:0"><span style="flex:none;width:8px;height:8px;border-radius:2px;background:var(--og-blue);margin-top:7px"></span><span style="min-width:0"><strong style="color:var(--navy)">{{ b.lead }}</strong> {{ b.rest }}</span></p>
+                <p style="display:flex;gap:11px;font-size:14.5px;line-height:1.55;color:var(--charcoal);margin:0"><span style="flex:none;width:8px;height:8px;border-radius:2px;--tv-background: {{ sysColBg }};background:var(--tv-background);margin-top:7px"></span><span style="min-width:0"><strong style="color:var(--navy)">{{ b.lead }}</strong> {{ b.rest }}</span></p>
               </sc-for>
             </div>
           </div>
@@ -3835,7 +3958,7 @@ class Component extends DCLogic {
     level: "mastery", pickedClass: 1, openTerm: 0, openFaq: 0, openFaqG: 0, openFaqs: [0],
     modalOpen: false, modalKind: "offer", sent: false, eoiSent: false, shared: false, nurtured: false,
     storyOpen: false, lbOpen: false, lbMode: "atar", galleryIdx: -1, galleryImg: 0, albumIdx: 0, wbPage: 0, headOpen: false, tutorCampus: "All", openTutor: -1, activeSec: "top", railOn: false,
-    sysP: 1, sysOpen: false, jl: "focus", psw: "pills",
+    sysP: 1, sysOpen: false, jl: "focus", psw: "pills", prl: "prefix",
   };
 
   railRef = React.createRef();
@@ -4246,6 +4369,18 @@ class Component extends DCLogic {
       });
     } catch (e) {}
   }
+  // picks the bullet-tile grid for the visible part from its copy; lives on <html> because the runtime resets className
+  _pbulTag() {
+    const cl = document.documentElement.classList;
+    const ul = Array.from(document.querySelectorAll(".sys .syspanel .tabpanel .pbul")).find((u) => u.offsetParent !== null);
+    const ps = ul ? Array.from(ul.querySelectorAll(":scope > p")) : [];
+    const L = ps.map((q) => (q.textContent || "").trim().length);
+    let mode = "";
+    if (L.length === 2 && Math.min(L[0], L[1]) > 100) mode = "stack";
+    else if (L.length === 3 && L[0] >= 1.35 * Math.max(L[1], L[2])) mode = "lead";
+    cl.toggle("pbl-lead", mode === "lead");
+    cl.toggle("pbl-stack", mode === "stack");
+  }
   _scheduleTag() {
     if (this._tagRaf) return;
     this._tagRaf = requestAnimationFrame(() => { this._tagRaf = 0; this._tagReveal(); });
@@ -4496,6 +4631,7 @@ class Component extends DCLogic {
   _wireDom() {
     if (this._domWired) return;
     this._domWired = true;
+    [60, 400, 1500].forEach((ms) => setTimeout(() => { try { this._pbulTag(); } catch (e) {} }, ms));
     try {
       if (/(?:\?|&)reveal=all\b/.test(location.search)) document.documentElement.classList.add("no-reveal");
       try { const k = "p" + (this.state.sysP || 1); document.documentElement.setAttribute("data-step", String(this.state[k] || 0)); } catch (e) {}
@@ -4556,6 +4692,7 @@ class Component extends DCLogic {
   componentDidUpdate(prevProps) { if (this._domWired) this._scheduleTag();
     try { if (this._pcarEnsure) this._pcarEnsure(); } catch (e) {}
     try { if (this._offEnsure) this._offEnsure(); } catch (e) {}
+    try { this._pbulTag(); } catch (e) {}
     try { const k = "p" + (this.state.sysP || 1); document.documentElement.setAttribute("data-step", String(this.state[k] || 0)); } catch (e) {}
     ["lifecycleState:lifecycle", "lens:lens", "adVariant:variant", "annotations:anno"].forEach(pair => {
       const [p, s] = pair.split(":");
@@ -4740,7 +4877,7 @@ class Component extends DCLogic {
       return {
         ...t, open, weeks,
         ariaExp: open + "", chev: open ? "−" : "+",
-        toggle: () => this.setState({ openTerm: open ? -1 : i }),
+        toggle: () => this.setState({ openTerm: open && !window.matchMedia("(min-width:1101px)").matches ? -1 : i }),
         kind: isExam ? "EXAM" : "AOS",
         num: isExam ? "★" : t.label.replace("AOS", "").trim(),
         tileBg: "var(--navy)",
@@ -4751,6 +4888,8 @@ class Component extends DCLogic {
       };
     });
 
+    // desktop preview: the picked area, or the first when everything is folded
+    const curPrev = terms[S.openTerm >= 0 && S.openTerm < terms.length ? S.openTerm : 0];
     const curTotal = terms.filter((t) => t.label.startsWith("AOS")).reduce((a, t) => a + t.weeks.filter((w) => !w.sac).length, 0);
     // ---- Results / tutors / campuses / week ----
     const lbBase = [
@@ -5077,7 +5216,7 @@ class Component extends DCLogic {
     const ticker = [...tickerBase, ...tickerBase];
 
     return {
-      offer, subline, card, modal, terms, curTotal, faqGroups, quotes, vids, tutors, campuses, week, journey, resultsCards, levels, nextClasses, ticker,
+      offer, subline, card, modal, terms, curPrev, curTotal, faqGroups, quotes, vids, tutors, campuses, week, journey, resultsCards, levels, nextClasses, ticker,
       lcBtns, lensBtns, s5lead, s10items, s10title, s10portalLine, s13title, handoffLabel, nurtureTitle, nurtureBody, nurtureCta,
       anno: S.anno, noAnno: !S.anno, variant: S.variant,
       weapon, weaponChips, weaponReady: true,
@@ -5152,7 +5291,8 @@ class Component extends DCLogic {
       storyOpen: S.storyOpen, toggleStory: () => this.setState(s => ({ storyOpen: !s.storyOpen })),
       storyBtn: S.storyOpen ? "Close the letter" : "Read the full letter from our co-founders",
       rootCls: S.dots ? "" : "nodots",
-      sysLayoutCls: (S.jl === "classic" ? "" : "sysfocus") + (S.psw === "segmented" ? " sysseg" : ""),
+      sysLayoutCls: (S.jl === "classic" ? "" : "sysfocus") + (S.psw === "segmented" ? " sysseg" : "") + (S.prl === "under" ? " prl-under" : S.prl === "prefix" ? " prl-prefix" : ""),
+      prlBtns: [["side", "Side"], ["under", "Under"], ["prefix", "Prefix"]].map(([v, label]) => ({ label, on: ((S.prl || "prefix") === v) + "", bg: (S.prl || "prefix") === v ? "var(--cream)" : "transparent", co: (S.prl || "prefix") === v ? "var(--charcoal)" : "#B9B9B9", pick: () => this.persist({ prl: v }) })),
       dotsPressed: S.dots + "", dotsBg: S.dots ? "var(--highlighter)" : "transparent", dotsCo: S.dots ? "var(--charcoal)" : "#B9B9B9",
       toggleDots: () => this.persist({ dots: !S.dots }),
       annoPressed: S.anno + "", annoBg: S.anno ? "var(--highlighter)" : "transparent", annoCo: S.anno ? "var(--charcoal)" : "#B9B9B9",
@@ -5183,19 +5323,20 @@ class Component extends DCLogic {
           ["p2", ["var(--og-blue)", "#FFF9F1"], [["07", "Do the weekly homework", "Full worked solutions, never marked blind", "opt/mmJourney4.jpg"], ["08", "Rewatch the class", "Recorded and uploaded the same night", "opt/6b3cc21d.jpg"], ["09", "Open the portal, not a folder", "Every resource as a PDF, on any device", "opt/f31a3dce.jpg"], ["10", "Run a Contour Check", "Know exactly what to revise", "opt/328d3f6e.jpg"], ["11", "Master CAS and your Bound Reference", "Built week by week, exam-legal", "mmSpread1.jpg"], ["12", "Sit a practice SAC", "Under time, before school runs the real one", "opt/c473f05f.jpg"], ["13", "Sit practice exams", "Ten Contour Exams, VCAA style", "ramodh/week-15.jpg"]]],
           ["p3", ["var(--highlighter)", "var(--navy)"], [["14", "Sit an Invigilated Mock", "Real room, real clock, marked and ranked", "ramodh/pillar-1.jpg"], ["15", "Log in to the portal", "Everything in one place", "opt/4d08b68a.jpg"], ["16", "Stuck at 9pm? Text your tutor", "A real explanation, any hour", "opt/e52d2f1e.jpg"], ["17", "Book a 1-on-1 consultation", "Unlimited, free, over video", "opt/5edb3b2e.jpg"], ["18", "Lean on your tutoring team", "Class tutors who know your name", "opt/df97af1f.jpg"], ["19", "Track your progress", "A report after every mock, home hears every term", "e727ca0c.jpg"]]],
         ];
-        const parts = {"p1":[{"id":"classes","title":"Two hours that put you ahead of school.","bullets":[{"lead":"Taught ahead of school,","rest":"exam skills built in from day one."},{"lead":"8 to 18 students, two tutors","rest":"in every room."},{"lead":"Taught by 45+ raw scorers,","rest":"recorded to the portal that night."}],"photo":false,"img":""},{"id":"workbook","title":"The workbook your tutor teaches from.","bullets":[{"lead":"One book per week:","rest":"theory, worked examples, exam sets."},{"lead":"Printed in class,","rest":"PDF on the portal."},{"lead":"50 a year:","rest":"your revision library, already written."}],"photo":false,"img":""},{"id":"workshops","title":"A second session every week, at no extra cost","bullets":[{"lead":"Harder, exam-style problems","rest":"that stretch you past the workbook, so nothing on the paper feels new."},{"lead":"SAC-week revision mode.","rest":"In the lead-up to school assessments, workshops pivot to targeted SAC preparation for the topics you're being tested on."},{"lead":"Ask anything, in person.","rest":"A relaxed setting to work through your specific sticking points with a tutor in the room."},{"lead":"Recorded and uploaded","rest":", so you never lose a workshop to a clash with sport, work or a school event."}],"photo":true,"img":R("assets/opt/mmJourney6.jpg")},{"id":"curriculum","title":"Exactly what we teach, in order","bullets":[{"lead":"","rest":"Our actual outline: every topic, named, in teaching order, sequenced ahead of school. Tap any area of study."}],"photo":false,"img":""},{"id":"sac-prep","title":"Every SAC, rehearsed before it counts.","bullets":[{"lead":"Workshops switch to SAC-revision mode,","rest":"matched to your school’s calendar and topic order."},{"lead":"10+ practice SACs per area of study,","rest":"sat under real time pressure first."},{"lead":"Targeted 1-on-1 consults","rest":"to close the last gaps before the day."}],"photo":true,"img":R("assets/opt/mmJourney3.jpg")},{"id":"exam-prep","title":"In the final stretch, everything points at the exam.","bullets":[{"lead":"Every area of study re-worked","rest":"in exam-style sessions."},{"lead":"10 Contour Exams","rest":"plus the full VCAA back-catalogue, timed, marked and ranked."},{"lead":"Invigilated mocks","rest":"with question-by-question walkthroughs, so the real exam is never your first."}],"photo":true,"img":R("assets/opt/e54782f9.jpg")}],"p2":[{"id":"res-homework","title":"Enough to lock the week in. Never busywork.","bullets":[{"lead":"A full worked solution for every exercise,","rest":"every step shown."},{"lead":"A walkthrough video","rest":"where the working alone is not enough."},{"lead":"Checked in your Weekly Workshop,","rest":"so gaps never quietly compound."}],"photo":true,"img":R("assets/opt/mmJourney4.jpg")},{"id":"res-recordings","title":"A sick day never costs a week.","bullets":[{"lead":"Searchable by week and topic:","rest":"rewatch the exact ten minutes you need before a SAC."},{"lead":"Miss a class to illness or sport,","rest":"watch it before the next one."},{"lead":"Any explanation, rewatchable at exam time.","rest":"Nothing is ever lost."}],"photo":true,"img":R("assets/opt/e54782f9.jpg")},{"id":"res-digital","title":"Every page, on every device.","bullets":[{"lead":"Annotate the workbook on your iPad,","rest":"or work on paper with the PDF as backup."},{"lead":"The whole year on your phone:","rest":"revise on the bus, at school, anywhere."},{"lead":"Never hunting loose paper","rest":"the night before a SAC: print a fresh copy anytime."}],"photo":true,"img":R("assets/opt/f31a3dce.jpg")},{"id":"checks","title":"The revision roadmap that replaces \"just revise\".","bullets":[{"lead":"A self-diagnosis contents page","rest":"mapped to the study design."},{"lead":"Know what to prioritise,","rest":"what to skip, and when you’re exam-ready."},{"lead":"Contour Checkpoints","rest":"compile the past exam questions that matter."}],"photo":false,"img":""},{"id":"subject-resources","title":"Built for Methods. Not adapted to it.","bullets":[{"lead":"Five minutes of working, thirty seconds.","rest":"The calculator system for TI-Nspire, Casio and Mathematica."},{"lead":"Taught properly.","rest":"A beginner course and live bootcamps, then CAS skills inside every area of study."},{"lead":"Built as you learn, not crammed in October.","rest":"The exam-legal reference, checked against VCAA rules."},{"lead":"Grows with you each week.","rest":"The best book in the room by the time it counts."}],"photo":false,"img":""},{"id":"sac-packs","title":"Your school’s assessment, rehearsed.","bullets":[{"lead":"Sit them under time","rest":"before your school runs the real one."},{"lead":"10+ practice SACs per area of study,","rest":"refreshed every year."},{"lead":"Fully worked solutions and marking guides","rest":"for every pack."}],"photo":false,"img":""},{"id":"practice-exams","title":"Past VCAA papers run out. Ours don’t.","bullets":[{"lead":"The full VCAA back-catalogue alongside,","rest":"every paper with worked solutions."},{"lead":"Every paper returns worked,","rest":"with a walkthrough recording."},{"lead":"A wrong answer becomes a fixed weakness,","rest":"not a mystery."}],"photo":false,"img":""}],"p3":[{"id":"mock-exams","title":"Sit the exam four times before it counts.","bullets":[{"lead":"Four a year plus a SWOTVAC mock:","rest":"invigilated, marked, and ranked against the cohort, so you know where you stand before the day it’s decided."},{"lead":"Real room, real timing, real silence.","rest":""},{"lead":"Then walked through,","rest":"question by question."}],"photo":true,"img":R("assets/opt/mmJourney3.jpg")},{"id":"portal","title":"Your whole program, in your pocket","bullets":[{"lead":"","rest":"Everything lives in one place. What students actually use it for:"}],"photo":true,"img":R("assets/opt/6b3cc21d.jpg")},{"id":"support","title":"The night before a SAC, this is the difference.","bullets":[{"lead":"The Methods text line.","rest":"Message your tutor a photo of the question you're stuck on and get a proper, personalised explanation. Late-night SAC prep included."},{"lead":"A real explanation, not just the answer.","rest":"Tutors reply with the why, so the same question never stumps you twice."}],"photo":false,"img":""},{"id":"one-on-one","title":"We give private tutoring away, free and unlimited.","bullets":[{"lead":"","rest":"Unlimited 1-on-1 Consultations are already included, free. Book a tutor on the portal, get individualised help over video call."}],"photo":false,"img":""},{"id":"dedicated-tutor","title":"A whole team on one student.","bullets":[{"lead":"Your class tutors carry the context,","rest":"so you never re-explain yourself."},{"lead":"Book a consult with any Methods tutor;","rest":"the text line and consults share one picture of where you’re at."},{"lead":"Someone flags it early","rest":"when something slips, before it costs marks."}],"photo":true,"img":R("assets/opt/ef9de5bf.jpg")},{"id":"progress-tracking","title":"Know exactly where you stand.","bullets":[{"lead":"Question-by-question breakdown,","rest":"ranked against the whole cohort."},{"lead":"Strengths, gaps and the exact topics","rest":"to revise next."},{"lead":"Home hears from us every term:","rest":"a written feedback report and a check-in, without having to ask."}],"photo":false,"img":""}]};
+        const parts = {"p1":[{"id":"classes","title":"Two hours that put you ahead of school.","bullets":[{"lead":"Taught ahead of school,","rest":"exam skills built in from day one."},{"lead":"8 to 18 students, two tutors","rest":"in every room."},{"lead":"Taught by 45+ raw scorers,","rest":"recorded to the portal that night."}],"photo":false,"img":""},{"id":"workbook","title":"The workbook your tutor teaches from.","bullets":[{"lead":"One book per week:","rest":"theory, worked examples, exam sets."},{"lead":"Printed in class,","rest":"PDF on the portal."},{"lead":"50 a year:","rest":"your revision library, already written."}],"photo":false,"img":""},{"id":"workshops","title":"A second session every week, at no extra cost","bullets":[{"lead":"Harder, exam-style problems","rest":"that stretch you past the workbook, so nothing on the paper feels new."},{"lead":"SAC-week revision mode.","rest":"In the lead-up to school assessments, workshops pivot to targeted SAC preparation for the topics you're being tested on."},{"lead":"Ask anything, in person.","rest":"A relaxed setting to work through your specific sticking points with a tutor in the room."},{"lead":"Recorded and uploaded","rest":", so you never lose a workshop to a clash with sport, work or a school event."}],"photo":true,"img":R("assets/opt/mmJourney6.jpg")},{"id":"curriculum","title":"Exactly what we teach, in order","bullets":[{"lead":"","rest":"Our actual outline: every topic, named, in teaching order, sequenced ahead of school. Tap any area of study."}],"photo":false,"img":""},{"id":"sac-prep","title":"Every SAC, rehearsed before it counts.","bullets":[{"lead":"Workshops switch to SAC-revision mode,","rest":"matched to your school’s calendar and topic order."},{"lead":"10+ practice SACs per area of study,","rest":"sat under real time pressure first."},{"lead":"Targeted 1-on-1 consults","rest":"to close the last gaps before the day."}],"photo":true,"img":R("assets/opt/mmJourney3.jpg")},{"id":"exam-prep","title":"In the final stretch, everything points at the exam.","bullets":[{"lead":"Every area of study re-worked","rest":"in exam-style sessions."},{"lead":"10 Contour Exams","rest":"plus the full VCAA back-catalogue, timed, marked and ranked."},{"lead":"Invigilated mocks","rest":"with question-by-question walkthroughs, so the real exam is never your first."}],"photo":true,"img":R("assets/opt/e54782f9.jpg")}],"p2":[{"id":"res-homework","title":"Enough to lock the week in. Never busywork.","bullets":[{"lead":"A full worked solution for every exercise,","rest":"every step shown."},{"lead":"A walkthrough video","rest":"where the working alone is not enough."},{"lead":"Checked in your Weekly Workshop,","rest":"so gaps never quietly compound."}],"photo":true,"img":R("assets/opt/mmJourney4.jpg")},{"id":"res-recordings","title":"A sick day never costs a week.","bullets":[{"lead":"Searchable by week and topic:","rest":"rewatch the exact ten minutes you need before a SAC."},{"lead":"Miss a class to illness or sport,","rest":"watch it before the next one."},{"lead":"Any explanation, rewatchable at exam time.","rest":"Nothing is ever lost."}],"photo":true,"img":R("assets/opt/e54782f9.jpg")},{"id":"res-digital","title":"Every page, on every device.","bullets":[{"lead":"Annotate the workbook on your iPad,","rest":"or work on paper with the PDF as backup."},{"lead":"The whole year on your phone:","rest":"revise on the bus, at school, anywhere."},{"lead":"Never hunting loose paper","rest":"the night before a SAC: print a fresh copy anytime."}],"photo":true,"img":R("assets/opt/f31a3dce.jpg")},{"id":"checks","title":"The revision roadmap that replaces \"just revise\".","bullets":[{"lead":"A self-diagnosis contents page","rest":"mapped to the study design."},{"lead":"Know what to prioritise,","rest":"what to skip, and when you’re exam-ready."},{"lead":"Contour Checkpoints","rest":"compile the past exam questions that matter."}],"photo":false,"img":""},{"id":"subject-resources","title":"Built for Methods. Not adapted to it.","bullets":[{"lead":"Five minutes of working, thirty seconds.","rest":"The calculator system for TI-Nspire, Casio and Mathematica."},{"lead":"Taught properly.","rest":"A beginner course and live bootcamps, then CAS skills inside every area of study."},{"lead":"Built as you learn, not crammed in October.","rest":"The exam-legal reference, checked against VCAA rules."},{"lead":"Grows with you each week.","rest":"The best book in the room by the time it counts."}],"photo":false,"img":""},{"id":"sac-packs","title":"Your school’s assessment, rehearsed.","bullets":[{"lead":"Sit them under time","rest":"before your school runs the real one."},{"lead":"10+ practice SACs per area of study,","rest":"refreshed every year."},{"lead":"Fully worked solutions and marking guides","rest":"for every pack."}],"photo":false,"img":""},{"id":"practice-exams","title":"Past VCAA papers run out. Ours don’t.","bullets":[{"lead":"The full VCAA back-catalogue alongside,","rest":"every paper with worked solutions."},{"lead":"Every paper returns worked,","rest":"with a walkthrough recording."},{"lead":"A wrong answer becomes a fixed weakness,","rest":"not a mystery."}],"photo":false,"img":""}],"p3":[{"id":"mock-exams","title":"Sit the exam four times before it counts.","bullets":[{"lead":"Four a year plus a SWOTVAC mock:","rest":"invigilated, marked, and ranked against the cohort, so you know where you stand before the day it’s decided."},{"lead":"Real room, real timing, real silence.","rest":""},{"lead":"Then walked through,","rest":"question by question."}],"photo":true,"img":R("assets/opt/mmJourney3.jpg")},{"id":"portal","title":"Your whole program, in your pocket","bullets":[{"lead":"Every class, recorded.","rest":"Missed one or want it again? Watch it that night."},{"lead":"Every workbook and cheat sheet as a PDF.","rest":"Printed in class, always on the portal."},{"lead":"2,000+ practice questions,","rest":"organised by topic, each with a full worked solution."},{"lead":"Book a tutor in two taps.","rest":"Free 1-on-1 Consultations, scheduled from your phone."}],"photo":true,"img":R("assets/opt/6b3cc21d.jpg")},{"id":"support","title":"The night before a SAC, this is the difference.","bullets":[{"lead":"The Methods text line.","rest":"Message your tutor a photo of the question you're stuck on and get a proper, personalised explanation. Late-night SAC prep included."},{"lead":"A real explanation, not just the answer.","rest":"Tutors reply with the why, so the same question never stumps you twice."}],"photo":false,"img":""},{"id":"one-on-one","title":"We give private tutoring away, free and unlimited.","bullets":[{"lead":"","rest":"Unlimited 1-on-1 Consultations are already included, free. Book a tutor on the portal, get individualised help over video call."}],"photo":false,"img":""},{"id":"dedicated-tutor","title":"A whole team on one student.","bullets":[{"lead":"Your class tutors carry the context,","rest":"so you never re-explain yourself."},{"lead":"Book a consult with any Methods tutor;","rest":"the text line and consults share one picture of where you’re at."},{"lead":"Someone flags it early","rest":"when something slips, before it costs marks."}],"photo":true,"img":R("assets/opt/ef9de5bf.jpg")},{"id":"progress-tracking","title":"Know exactly where you stand.","bullets":[{"lead":"Question-by-question breakdown,","rest":"ranked against the whole cohort."},{"lead":"Strengths, gaps and the exact topics","rest":"to revise next."},{"lead":"Home hears from us every term:","rest":"a written feedback report and a check-in, without having to ask."}],"photo":false,"img":""}]};
         const pv = {};
+      const partTotal = defs.reduce((a, d) => a + d[2].length, 0); let partOff = 0;
         defs.forEach(([key, col, steps]) => {
           const n = steps.length, cur = Math.min(S[key] || 0, n - 1);
           const names = { p1: ["Weekly Class", "Weekly Workbook", "Weekly Workshop", "Curriculum", "SAC Preparation", "Exam Preparation"], p2: ["Weekly Homework", "Class Recordings", "Digital Resources", "Contour Checks", "CAS Hub & Bound Reference", "Practice SACs", "Practice Exams"], p3: ["Invigilated Mocks", "Learning Portal", "24/7 Text Support", "1-on-1 Consultations", "Your Tutoring Team", "Progress Tracking"] };
-          pv[key + "cur"] = Object.assign({ n: steps[cur][0], name: names[key][cur] }, parts[key][cur]);
+          pv[key + "cur"] = Object.assign({ n: steps[cur][0], pn: String(cur + 1).padStart(2, "0"), name: names[key][cur] }, parts[key][cur]);
           pv[key + "steps"] = steps.map((st, i) => ({ n: st[0], t: st[1], d: st[2], img: R("assets/" + st[3]), pick: () => this._pillarGo(key, i, false, true),
             badgeBg: i === cur ? col[0] : "var(--surface-raised)", badgeCo: i === cur ? col[1] : "var(--navy)", badgeBd: i === cur ? "none" : "1.5px solid var(--border-default)",
             ringBd: i === cur ? "2.5px solid " + col[0] : "1px solid var(--border-subtle)", ringSh: i === cur ? "var(--shadow-md)" : "none",
             fadeOp: i === cur ? "1" : ".72",
             titleCo: i === cur ? "var(--navy)" : "var(--charcoal)", line: i === n - 1 ? "none" : "block" }));
           for (let i = 0; i < n; i++) pv[key + "t" + i] = cur === i;
-          pv[key + "count"] = (cur + 1) + " of " + n;
+          pv[key + "count"] = (partOff + cur + 1) + " of " + partTotal; partOff += n;
           pv[key + "prev"] = () => { if (cur > 0) this._pillarGo(key, cur - 1); else { const pk = key === "p1" ? "p3" : key === "p2" ? "p1" : "p2"; this._pillarGo(pk, ({ p1: 5, p2: 6, p3: 5 })[pk]); } };
           pv[key + "next"] = () => { if (cur < n - 1) this._pillarGo(key, cur + 1); else this._pillarGo(key === "p1" ? "p2" : key === "p2" ? "p3" : "p1", 0); };
       const gn = Number(key.slice(1)), gon = (S.sysP || 1) === gn;
