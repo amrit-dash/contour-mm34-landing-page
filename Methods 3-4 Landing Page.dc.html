@@ -2259,6 +2259,12 @@ html.fn-egg .fgrid .fdot:nth-child(3)::after,html.fn-egg .fgrid .fdot:nth-child(
       <option value="top">Paid · top</option>
     </sc-raw-select>
   </span>
+  <span style="display:flex;align-items:center;gap:6px">
+    <span style="font:500 10px/1 var(--font-body);color:#9A9A9A;letter-spacing:.08em">PILLARS</span>
+    <sc-for list="{{ pswBtns }}" as="b" hint-placeholder-count="2">
+      <button sc-camel-on-click="{{ b.pick }}" aria-pressed="{{ b.on }}" style="--tv-background: {{ b.bg }};--tv-color: {{ b.co }};appearance:none;border:1px solid var(--charcoal-m);cursor:pointer;font:600 11px/1 var(--font-body);padding:6px 10px;border-radius:999px;background:var(--tv-background);color:var(--tv-color)">{{ b.label }}</button>
+    </sc-for>
+  </span>
   <button sc-camel-on-click="{{ toggleAnno }}" style="--tv-background: {{ annoBg }};--tv-color: {{ annoCo }};appearance:none;border:1px solid var(--charcoal-m);cursor:pointer;font:600 11px/1 var(--font-body);padding:6px 10px;border-radius:999px;background:var(--tv-background);color:var(--tv-color)" aria-pressed="{{ annoPressed }}">Annotations</button>
   <button sc-camel-on-click="{{ toggleDots }}" style="--tv-background: {{ dotsBg }};--tv-color: {{ dotsCo }};appearance:none;border:1px solid var(--charcoal-m);cursor:pointer;font:600 11px/1 var(--font-body);padding:6px 10px;border-radius:999px;background:var(--tv-background);color:var(--tv-color)" aria-pressed="{{ dotsPressed }}">Proof dots</button>
   <span class="hide-m" style="font:500 11px/1 var(--font-body);color:#9A9A9A;margin-left:auto">Family A → offer object: <span style="color:var(--highlighter);font-weight:600">{{ offer.objectLabel }}</span> · dotted values = proof-bank pending (hover)</span>
@@ -3790,7 +3796,7 @@ html.fn-egg .fgrid .fdot:nth-child(3)::after,html.fn-egg .fgrid .fdot:nth-child(
 
 
 </x-dc>
-<script type="text/x-dc" data-dc-script="" data-props="{&quot;lifecycleState&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;precycle&quot;,&quot;release&quot;,&quot;launch&quot;,&quot;inseason&quot;,&quot;between&quot;],&quot;default&quot;:&quot;inseason&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Prototype state&quot;},&quot;lens&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;student&quot;,&quot;guardian&quot;],&quot;default&quot;:&quot;student&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Prototype state&quot;},&quot;adVariant&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;default&quot;,&quot;catchup&quot;,&quot;consolidate&quot;,&quot;getahead&quot;,&quot;top&quot;],&quot;default&quot;:&quot;default&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Prototype state&quot;},&quot;annotations&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Prototype state&quot;},&quot;proofDots&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Prototype state&quot;}}">
+<script type="text/x-dc" data-dc-script="" data-props="{&quot;lifecycleState&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;precycle&quot;,&quot;release&quot;,&quot;launch&quot;,&quot;inseason&quot;,&quot;between&quot;],&quot;default&quot;:&quot;inseason&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Prototype state&quot;},&quot;lens&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;student&quot;,&quot;guardian&quot;],&quot;default&quot;:&quot;student&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Prototype state&quot;},&quot;adVariant&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;default&quot;,&quot;catchup&quot;,&quot;consolidate&quot;,&quot;getahead&quot;,&quot;top&quot;],&quot;default&quot;:&quot;default&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Prototype state&quot;},&quot;annotations&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Prototype state&quot;},&quot;proofDots&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Prototype state&quot;},&quot;pillarSwitcher&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;pills&quot;,&quot;segmented&quot;],&quot;default&quot;:&quot;pills&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Prototype state&quot;},&quot;journeyLayout&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;focus&quot;,&quot;classic&quot;],&quot;default&quot;:&quot;focus&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Prototype state&quot;}}">
 const R = (p) => { const k = String(p).replace(/[^a-zA-Z0-9]/g, "_"); return (window.__resources && window.__resources[k]) || p; };
 const RESMAP = {"mmSpread1":R("assets/mmSpread1.jpg"),"mmJourney3":R("assets/opt/mmJourney3.jpg"),"mmJourney4":R("assets/opt/mmJourney4.jpg"),"mmJourney6":R("assets/opt/mmJourney6.jpg"),"coverDiff":R("assets/coverDiff.png"),"iconArrow":R("assets/iconArrow.png"),"iconStopwatch":R("assets/iconStopwatch.png"),"iconMag":R("assets/iconMag.png"),"markNavy":R("assets/markNavy.svg"),"mmCampus1":R("assets/opt/mmCampus1.jpg"),"mmCampus2":R("assets/ramodh/pillar-3.jpg"),"mmCampus3":R("assets/ramodh/week-15.jpg"),"mmCampus4":R("assets/opt/ef9de5bf.jpg"),"mmCampus5":R("assets/opt/e54782f9.jpg"),"mmCampus6":R("assets/opt/c40515b3.jpg"),"mmCampus7":R("assets/ramodh/pillar-1.jpg"),"mmCampus8":R("assets/opt/4d08b68a.jpg")};
 const RES = (id, p) => R(RESMAP[id] || p);
@@ -3800,7 +3806,7 @@ class Component extends DCLogic {
     level: "mastery", pickedClass: 1, openTerm: 0, openFaq: 0, openFaqG: 0, openFaqs: [0],
     modalOpen: false, modalKind: "offer", sent: false, eoiSent: false, shared: false, nurtured: false,
     storyOpen: false, lbOpen: false, lbMode: "atar", galleryIdx: -1, galleryImg: 0, albumIdx: 0, wbPage: 0, headOpen: false, tutorCampus: "All", openTutor: -1, activeSec: "top", railOn: false,
-    sysP: 1,
+    sysP: 1, sysOpen: false, jl: "focus", psw: "pills",
   };
 
   railRef = React.createRef();
@@ -3877,6 +3883,8 @@ class Component extends DCLogic {
       if (this.props.adVariant) init.variant = this.props.adVariant;
       if (this.props.annotations !== undefined && this.props.annotations !== null) init.anno = this.props.annotations;
       if (this.props.proofDots !== undefined && this.props.proofDots !== null) init.dots = this.props.proofDots;
+      if (this.props.journeyLayout) init.jl = this.props.journeyLayout;
+      if (this.props.pillarSwitcher) init.psw = this.props.pillarSwitcher;
       if (Object.keys(init).length) this.setState(init);
     } catch (e) {}
     const startMap = () => {
@@ -5115,11 +5123,18 @@ class Component extends DCLogic {
       storyOpen: S.storyOpen, toggleStory: () => this.setState(s => ({ storyOpen: !s.storyOpen })),
       storyBtn: S.storyOpen ? "Close the letter" : "Read the full letter from our co-founders",
       rootCls: S.dots ? "" : "nodots",
+      sysLayoutCls: (S.jl === "classic" ? "" : "sysfocus") + (S.psw === "segmented" ? " sysseg" : ""),
       dotsPressed: S.dots + "", dotsBg: S.dots ? "var(--highlighter)" : "transparent", dotsCo: S.dots ? "var(--charcoal)" : "#B9B9B9",
       toggleDots: () => this.persist({ dots: !S.dots }),
       annoPressed: S.anno + "", annoBg: S.anno ? "var(--highlighter)" : "transparent", annoCo: S.anno ? "var(--charcoal)" : "#B9B9B9",
       toggleAnno: () => this.persist({ anno: !S.anno }),
       pickVariant: (ev) => this.persist({ variant: ev.target.value }),
+      pswBtns: [["pills", "Pills"], ["segmented", "Tabs"]].map(([v, label]) => ({
+        label, on: ((S.psw || "pills") === v) + "",
+        bg: (S.psw || "pills") === v ? "var(--cream)" : "transparent",
+        co: (S.psw || "pills") === v ? "var(--charcoal)" : "#B9B9B9",
+        pick: () => this.persist({ psw: v }),
+      })),
       isPickerCard, isEoiCard: !isPickerCard, eoiSent: S.eoiSent, eoiNotSent: !S.eoiSent,
       submitEoi: () => this.setState({ eoiSent: true }),
       showLensChip: true,
