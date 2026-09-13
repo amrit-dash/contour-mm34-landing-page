@@ -2781,6 +2781,7 @@ html.fn-egg .fgrid .fdot:nth-child(3)::after,html.fn-egg .fgrid .fdot:nth-child(
   <span class="sysgrp-lead">Four hours a week with tutors who've mastered Methods: one class to learn it, one workshop to perform it.</span>
 </button>
 <sc-if value="{{ sysP1 }}" hint-placeholder-val="{{ true }}">
+<div class="systray {{ sysPartsCls }}">
 <div class="syssteps">
 <sc-for list="{{ p1steps }}" as="s" hint-placeholder-count="6">
           <button sc-camel-on-click="{{ s.pick }}" style="appearance:none;border:none;background:transparent;cursor:pointer;text-align:left;display:grid;grid-template-columns:96px 1fr;gap:18px;padding:0 0 26px;margin:0;position:relative;width:100%;font-family:var(--font-body)">
@@ -2800,6 +2801,7 @@ html.fn-egg .fgrid .fdot:nth-child(3)::after,html.fn-egg .fgrid .fdot:nth-child(
   <span class="sysgrp-lead">Stop hunting for notes. Everything the year demands, written in-house, matched to the study design, and included.</span>
 </button>
 <sc-if value="{{ sysP2 }}" hint-placeholder-val="{{ false }}">
+<div class="systray {{ sysPartsCls }}">
 <div class="syssteps">
 <sc-for list="{{ p2steps }}" as="s" hint-placeholder-count="6">
           <button sc-camel-on-click="{{ s.pick }}" style="appearance:none;border:none;background:transparent;cursor:pointer;text-align:left;display:grid;grid-template-columns:96px 1fr;gap:18px;padding:0 0 26px;margin:0;position:relative;width:100%;font-family:var(--font-body)">
@@ -2819,6 +2821,7 @@ html.fn-egg .fgrid .fdot:nth-child(3)::after,html.fn-egg .fgrid .fdot:nth-child(
   <span class="sysgrp-lead">You go home. The system keeps working: your portal, your tutor, your reports.</span>
 </button>
 <sc-if value="{{ sysP3 }}" hint-placeholder-val="{{ false }}">
+<div class="systray {{ sysPartsCls }}">
 <div class="syssteps">
 <sc-for list="{{ p3steps }}" as="s" hint-placeholder-count="6">
           <button sc-camel-on-click="{{ s.pick }}" style="appearance:none;border:none;background:transparent;cursor:pointer;text-align:left;display:grid;grid-template-columns:96px 1fr;gap:18px;padding:0 0 26px;margin:0;position:relative;width:100%;font-family:var(--font-body)">
@@ -5065,6 +5068,38 @@ class Component extends DCLogic {
       pv["sysP" + gn] = gon; pv["sysG" + gn] = gon ? "on" : ""; pv["sysA" + gn] = gon ? "true" : "false"; pv["sysC" + gn] = gon ? "\u2212" : "+";
       pv["sysPick" + gn] = () => this._pillarGo(key, Math.min(S[key] || 0, n - 1), false);
         });
+        // phone header: one pillar at a time, so its name, lead, colour and part count are read off sysP
+        const gi = (S.sysP || 1) - 1;
+        const pmeta = [
+          ["Expert Tutoring", "Four hours a week with tutors who've mastered Methods: one class to learn it, one workshop to perform it.", "var(--navy)", "var(--cream)", 6],
+          ["Comprehensive Resources", "Stop hunting for notes. Everything the year demands, written in-house, matched to the study design, and included.", "var(--og-blue)", "#FFF9F1", 7],
+          ["Personalised Support", "You go home. The system keeps working: your portal, your tutor, your reports.", "var(--highlighter)", "var(--navy)", 6],
+        ][gi];
+        pv.sysName = pmeta[0]; pv.sysLead = pmeta[1];
+        pv.sysColBg = pmeta[2]; pv.sysColFg = pmeta[3];
+        const ords = ["Pillar 1", "Pillar 2", "Pillar 3"];
+        const all = [
+          ["Expert Tutoring", "var(--navy)", 6, "var(--cream)", "var(--navy-m)"],
+          ["Comprehensive Resources", "var(--og-blue)", 7, "#FFF9F1", "var(--og-blue-m)"],
+          ["Personalised Support", "var(--highlighter)", 6, "var(--navy)", "var(--highlighter-m)"],
+        ];
+        pv.sysKick = ords[gi];
+        pv.sysKickParts = pmeta[4] + " parts";
+        // the two pillars that aren't live fill the tabs, kept in pillar order
+        [0, 1, 2].filter((k) => k !== gi).forEach((k, slot) => {
+          const t = "sysTab" + (slot === 0 ? "A" : "B");
+          pv[t + "Kick"] = ords[k]; pv[t + "Name"] = all[k][0];
+          pv[t + "Dot"] = all[k][1]; pv[t + "Fg"] = all[k][3]; pv[t + "Hov"] = all[k][4];
+        });
+        pv.sysSegs = [0, 1, 2].map((k) => ({
+          kick: ords[k], dot: all[k][1], fg: all[k][3], hov: all[k][4],
+          cls: k === gi ? "on" : "", sel: k === gi ? "true" : "false",
+          pick: () => this._pillarGo("p" + (k + 1), Math.min(S["p" + (k + 1)] || 0, all[k][2] - 1), false),
+        }));
+        pv.sysPartsA = S.sysOpen ? "true" : "false";
+        pv.sysPartsCls = S.sysOpen ? "mopen" : "";
+        pv.sysStepsLabel = S.sysOpen ? "Hide steps" : "See steps";
+        pv.sysToggleParts = () => this.setState((st) => ({ sysOpen: !st.sysOpen }));
         return pv;
       })(),
       funnelDots: (() => {
