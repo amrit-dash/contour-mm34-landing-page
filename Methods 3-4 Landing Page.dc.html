@@ -1286,8 +1286,15 @@ section[id],div[id]{scroll-margin-top:calc(var(--hdr,120px) - 1px)}
     @media (max-width:620px){.g3,.g4{grid-template-columns:1fr!important}}
     @media (max-width:880px){.lvlrow{grid-template-columns:1fr!important}}
     @media (max-width:680px){.lb2{grid-template-columns:1fr!important}}
-    .wbspread>*{min-width:0}
-    @media (max-width:1000px){.wbspread{grid-template-columns:1fr!important}.wbspine{display:none}}
+    /* every spread is rendered and stacked in the same cell; the sheet takes the tallest one's height and the
+       every spread stretches to that height (the cover stays navy top to bottom), so turning pages never changes
+       the section height */
+    .wbspread{grid-template-columns:minmax(0,1fr)!important}
+    .wbsp{grid-area:1/1;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);align-self:stretch;min-width:0}
+    .wbsp>*{min-width:0}
+    .wbsp{visibility:hidden;pointer-events:none}
+    html:not([data-wb]) .wbspread>.wbsp:nth-of-type(1),html[data-wb="0"] .wbspread>.wbsp:nth-of-type(1),html[data-wb="1"] .wbspread>.wbsp:nth-of-type(2),html[data-wb="2"] .wbspread>.wbsp:nth-of-type(3),html[data-wb="3"] .wbspread>.wbsp:nth-of-type(4),html[data-wb="4"] .wbspread>.wbsp:nth-of-type(5){visibility:visible;pointer-events:auto}
+    @media (max-width:1000px){.wbsp{grid-template-columns:1fr}.wbspine{display:none}}
     @keyframes orbitspin{to{transform:translate(-50%,-50%) rotate(360deg)}}
     @keyframes kbpan{0%{transform:scale(1) translate(0,0)}45%{transform:scale(1.09) translate(-1.6%,-2.2%)}55%{transform:scale(1.09) translate(-1.6%,-2.2%)}100%{transform:scale(1) translate(0,0)}}
     .kbpan{animation:kbpan 14s ease-in-out infinite}
@@ -2011,7 +2018,7 @@ html.fn-egg .fgrid .fdot:nth-child(3)::after,html.fn-egg .fgrid .fdot:nth-child(
       .sys.sysfocus .syspanel .tabpanel#workbook>div:nth-child(2){justify-content:flex-start}
       .sys.sysfocus .syspanel .tabpanel#workbook .pvis{padding:0!important}
       .sys.sysfocus .syspanel .tabpanel#workbook #wbviewer{border:0!important;border-radius:0!important;box-shadow:none!important}
-      .sys.sysfocus .syspanel .tabpanel#workbook .pvis>div>p{padding:0 22px;margin:14px 0 18px!important}
+      .sys.sysfocus .syspanel .tabpanel#workbook .pvis>.wbwrap>p{margin:0!important;padding:13px 22px 15px!important;border-top:1px solid var(--border-subtle);background:var(--cream-m);font-size:12.5px!important;line-height:1.5}
     }
     /* title block: crumb above, title with the pillar-colour leader line running to the edge */
     .ptitle{display:grid;grid-template-columns:fit-content(calc(90% - 12px)) minmax(10%,1fr);column-gap:12px;align-items:center}
@@ -2049,6 +2056,34 @@ html.fn-egg .fgrid .fdot:nth-child(3)::after,html.fn-egg .fgrid .fdot:nth-child(
     @media (max-width:1000px){
       /* results: the faded score cloud only reads on a wide canvas */
       #results>div[aria-hidden="true"]{display:none}
+    }
+    /* desktop hero: the container stops growing at 1620px wide, so on anything bigger the page was
+       a 1200px island with dead navy either side - 680px of it a side at 2560. the text column stays
+       where it is, pinned to the container, and the film breaks out of the right-hand padding and
+       runs to the edge of the screen instead, so the width a large monitor actually has goes to the
+       one element that can use it. the bleed is the distance from the container's content edge to
+       the viewport edge, worked out the same way the container itself is: the padded box centred,
+       capped at 1200px of content */
+    @media (min-width:1101px){
+      .hero-g{
+        --pad:clamp(32px,11vw,210px);
+        --ctrp:min(100vw,calc(1200px + 2 * var(--pad)));
+        --cw:calc(var(--ctrp) - 2 * var(--pad));
+        --bleed:calc((100vw - var(--ctrp)) / 2 + var(--pad));
+        margin-right:calc(var(--bleed) * -1);
+        grid-template-columns:minmax(0,calc((var(--cw) - 64px) * .575)) minmax(0,1fr)!important;
+        align-items:stretch!important;
+      }
+      .hero-g>div{min-width:0}
+      /* the film fills the row rather than setting its own height, so it is exactly as tall as the
+         copy beside it and the hero keeps the height it has today */
+      .herovid{margin:0!important;display:flex}
+      .herovid>div:first-child{aspect-ratio:auto!important;height:100%;min-height:520px;width:100%;border-radius:var(--radius-2xl) 0 0 var(--radius-2xl)}
+      /* the source is a 894x1024 portrait, so the wider the slot gets the more of its height is
+         thrown away - centred, the crop takes the tutor's head off. hold it high instead */
+      .herovid img{object-position:50% 26%!important}
+      /* both chips come inside the card - the right-hand one has no outside left to sit in now */
+      .chipTR{top:26px!important;right:34px!important}
     }
     @media (min-width:881px) and (max-width:1100px){
       /* tablet landscape: hero stays two-up, but the film gets real width and keeps its rating chip */
@@ -2321,19 +2356,42 @@ html.fn-egg .fgrid .fdot:nth-child(3)::after,html.fn-egg .fgrid .fdot:nth-child(
     /* "also look at": the catch-all link is a pill like its siblings, filled a shade deeper than the section */
     .alllink{text-decoration:none!important;border:1px solid var(--border-subtle);border-radius:999px;background:color-mix(in srgb,var(--cream-m) 42%,var(--surface-raised));padding:9px 15px!important;white-space:nowrap;transition:background var(--dur-s) var(--ease),border-color var(--dur-s) var(--ease)}
     .alllink:hover{background:var(--cream-m);border-color:var(--border-default);color:var(--navy)}
-    .wbfull-b{display:none;appearance:none;border:0;background:rgba(255,249,241,.12);color:var(--cream);width:30px;height:30px;border-radius:8px;align-items:center;justify-content:center;cursor:pointer;flex:none;-webkit-tap-highlight-color:transparent}
+    .wbfull-b{display:inline-flex;appearance:none;border:0;background:rgba(255,249,241,.12);color:var(--cream);width:30px;height:30px;border-radius:8px;align-items:center;justify-content:center;cursor:pointer;flex:none;-webkit-tap-highlight-color:transparent}
     .wbfull-o{display:none}
     html.wb-full .wbfull-i{display:none}
     html.wb-full .wbfull-o{display:inline}
-    @media (max-width:1000px){.wbfull-b{display:inline-flex}}
+    /* workbook modal (all widths): the viewer and its caption lift out as one centred sheet over a blurred, dimmed
+       page. Height follows the content, capped to the viewport with the pages scrolling inside. Pages are never
+       stretched: a stretched page pulls its blocks apart. Tap outside, Escape or the toolbar button closes it. */
     html.wb-full{overflow:hidden}
     html.wb-full .syspanel>*,html.wb-full .syssteps{animation:none!important}
     html.wb-full [data-reveal]{will-change:auto!important;transform:none!important}
-    html.wb-full #wbviewer{position:fixed;inset:0;z-index:120;border-radius:0!important;border:0!important;box-shadow:none!important;display:flex;flex-direction:column;background:var(--cream-m)}
-    html.wb-full #wbviewer>div:first-child{flex:none;padding-top:calc(10px + env(safe-area-inset-top,0px))!important}
-    html.wb-full #wbviewer>div:nth-child(2){flex:1;min-height:0;overflow:auto;-webkit-overflow-scrolling:touch;padding:14px var(--gx) calc(24px + env(safe-area-inset-bottom,0px))!important}
-    html.wb-full #wbviewer .wbspread{grid-template-columns:1fr!important;max-width:720px;margin:0 auto}
-    html.wb-full #wbviewer .wbspine{display:none}
+    html.wb-full body::before{content:"";position:fixed;inset:0;background:rgba(12,49,102,.55);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);z-index:119}
+    html.wb-full .wbwrap{position:fixed;z-index:120;left:50%;top:50%;transform:translate(-50%,-50%);width:min(1180px,calc(100vw - 24px));max-height:calc(100dvh - 24px);display:flex;flex-direction:column;background:var(--surface-raised);border-radius:var(--radius-lg);box-shadow:var(--shadow-lg);overflow:hidden;animation:wbmodal .32s var(--ease) both}
+    html.wb-full .wbwrap>#wbviewer{flex:1 1 auto;min-height:0;display:flex;flex-direction:column;border:0!important;border-radius:0!important;box-shadow:none!important}
+    html.wb-full #wbviewer>div:first-child{flex:none}
+    html.wb-full #wbviewer>div:nth-child(2){flex:1 1 auto;min-height:0;overflow:auto;-webkit-overflow-scrolling:touch;padding:clamp(14px,2.4vw,28px)!important}
+    html.wb-full #wbviewer>div:nth-child(2)>div{max-width:1040px;margin:0 auto}
+    /* phones and tablets match the desktop focus treatment: toolbar flush under the head bar, no card around the
+       viewer, the sheet sits straight on the cream floor */
+    @media (max-width:1100px){
+      .syspanel .tabpanel#workbook .pvis{padding:0!important}
+      .syspanel .tabpanel#workbook #wbviewer{border:0!important;border-radius:0!important;box-shadow:none!important}
+      .syspanel .tabpanel#workbook #wbviewer>div:nth-child(2){padding:16px!important}
+      .syspanel .tabpanel#workbook #wbviewer>div:nth-child(2)>div{border-radius:14px}
+      .syspanel .tabpanel#workbook .pvis>.wbwrap>p{margin:0!important;padding:13px 20px 15px!important;border-top:1px solid var(--border-subtle);background:var(--cream-m);font-size:12.5px!important;line-height:1.5}
+      .syspanel .tabpanel#workbook .pvmedia{border-bottom:1px solid var(--border-subtle)}
+    }
+    html.wb-full .wbwrap>p,html.wb-full .sys.sysfocus .syspanel .tabpanel#workbook .pvis>.wbwrap>p{flex:none;margin:0!important;padding:12px 18px calc(13px + env(safe-area-inset-bottom,0px));border-top:1px solid var(--border-subtle);background:var(--cream);font-size:12.5px!important}
+    @media (max-width:1000px){
+      /* phones: the sheet holds the full height so the modal never jumps between spreads; shorter spreads centre */
+      html.wb-full .wbwrap{width:calc(100vw - 20px);height:calc(100dvh - 20px);max-height:none}
+      html.wb-full #wbviewer>div:nth-child(2){display:flex;flex-direction:column}
+      html.wb-full #wbviewer>div:nth-child(2)>div{margin:auto;width:100%}
+      html.wb-full #wbviewer .wbspine{display:none}
+    }
+    @keyframes wbmodal{from{opacity:0;transform:translate(-50%,-50%) scale(.965)}to{opacity:1;transform:translate(-50%,-50%) scale(1)}}
+    @media (prefers-reduced-motion:reduce){html.wb-full .wbwrap{animation:none}}
 
     /* ── Density pass 2026-09 · one inner-padding token, shorter leads, compact system on phones ── */
     :root{--card-pad:22px}
@@ -3071,7 +3129,7 @@ html.fn-egg .fgrid .fdot:nth-child(3)::after,html.fn-egg .fgrid .fdot:nth-child(
       </div></div>
         </sc-if>
         <sc-if value="{{ p1t1 }}" hint-placeholder-val="{{ false }}">
-          <div class="pvis" style="padding:24px 24px 0"><div>
+          <div class="pvis" style="padding:24px 24px 0"><div class="wbwrap">
           <div id="wbviewer" class="wbviewer" style="border:1px solid var(--border-subtle);border-radius:var(--radius-xl);box-shadow:var(--shadow-lg);overflow:hidden">
             <div style="background:var(--charcoal);display:flex;align-items:center;gap:12px;padding:10px 14px">
               <span style="font:700 9.5px/1 var(--font-body);color:var(--cream);border:1.5px solid rgba(255,249,241,.4);border-radius:6px;padding:4px 6px;letter-spacing:.06em">PDF</span>
@@ -3085,7 +3143,7 @@ html.fn-egg .fgrid .fdot:nth-child(3)::after,html.fn-egg .fgrid .fdot:nth-child(
               <div ref="{{ wbRef }}" style="background:var(--surface-raised);border-radius:10px;box-shadow:var(--shadow-md);overflow:hidden">
             <div class="wbspread" style="display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);min-height:400px;position:relative">
               <span class="wbspine" aria-hidden="true" style="position:absolute;left:50%;top:0;bottom:0;width:1px;background:var(--border-subtle);z-index:1"></span>
-              <sc-if value="{{ wb0 }}" hint-placeholder-val="{{ true }}">
+              <div class="wbsp {{ wb0cls }}">
                 <div style="background:var(--navy);display:flex;flex-direction:column;justify-content:space-between;padding:clamp(18px,2.2vw,30px)">
                   <img loading="lazy" decoding="async" src="assets/ds/contour-mark-navy.svg" alt="" style="height:22px;align-self:flex-start;filter:brightness(0) invert(1)">
                   <div>
@@ -3102,8 +3160,8 @@ html.fn-egg .fgrid .fdot:nth-child(3)::after,html.fn-egg .fgrid .fdot:nth-child(
                     <p style="display:flex;gap:9px;font:500 13px/1.5 var(--font-body);color:var(--charcoal);margin:0"><span style="flex:none;width:7px;height:7px;border-radius:2px;background:var(--og-blue);margin-top:6px"></span><span style="min-width:0;flex:1;overflow-wrap:anywhere">Extension Questions</span><span style="font:500 11px/1.5 var(--font-body);color:var(--text-muted);flex:none">pg 31–33</span></p>
                   </div>
                   <p style="font:400 12px/1.55 var(--font-body);color:var(--text-muted);margin:auto 0 0">Printed and handed to you in class. The PDF lives on the portal.</p></div>
-              </sc-if>
-              <sc-if value="{{ wb1 }}" hint-placeholder-val="{{ false }}">
+              </div>
+              <div class="wbsp {{ wb1cls }}">
                 <div style="padding:clamp(18px,2.2vw,30px);display:flex;flex-direction:column;"><p style="font:700 11px/1 var(--font-body);color:var(--navy);letter-spacing:.04em;margin:0 0 10px">Section A · Introduction to Transformations</p>
                   <h4 style="font:700 15.5px/1.35 var(--font-body);color:var(--navy);margin:0 0 10px">Image and pre-image</h4>
                   <p style="font:400 12.5px/1.65 var(--font-body);color:var(--charcoal);margin:0 0 10px">Every transformation question starts with two coordinates: the point you begin with, and the point it lands on. The original coordinate is the <strong style="color:var(--navy)">pre-image</strong>; the transformed coordinate is the <strong style="color:var(--navy)">image</strong>.</p>
@@ -3122,8 +3180,8 @@ html.fn-egg .fgrid .fdot:nth-child(3)::after,html.fn-egg .fgrid .fdot:nth-child(
                     <p style="font:600 12px/1.55 var(--font-body);color:var(--navy);margin:0">NOTE: The x′ and y′ notation will be used quite heavily!</p>
                   </div>
                   <p style="font:500 11px/1.5 var(--font-body);color:var(--text-muted);margin:auto 0 0">Weekly Workbook · page 4</p></div>
-              </sc-if>
-              <sc-if value="{{ wb2 }}" hint-placeholder-val="{{ false }}">
+              </div>
+              <div class="wbsp {{ wb2cls }}">
                 <div style="padding:clamp(18px,2.2vw,30px);display:flex;flex-direction:column;"><p style="font:700 11px/1 var(--font-body);color:var(--navy);letter-spacing:.04em;margin:0 0 10px">Exploration · Dilation</p>
                   <p style="font:600 13px/1.5 var(--font-body);color:var(--navy);margin:0 0 10px">Plot the transformed points!</p>
                   <div style="display:flex;flex-direction:column;gap:8px">
@@ -3138,8 +3196,8 @@ html.fn-egg .fgrid .fdot:nth-child(3)::after,html.fn-egg .fgrid .fdot:nth-child(
                   <div style="background:var(--highlighter);border-radius:10px;padding:10px 13px;margin-top:12px;align-self:flex-start">
                     <p style="font:600 11.5px/1.45 var(--font-body);color:var(--navy);margin:0">NOTE: Always say dilation FROM an axis, and reflection IN an axis.</p>
                   </div></div>
-              </sc-if>
-              <sc-if value="{{ wb3 }}" hint-placeholder-val="{{ false }}">
+              </div>
+              <div class="wbsp {{ wb3cls }}">
                 <div style="padding:clamp(18px,2.2vw,30px);display:flex;flex-direction:column;"><p style="font:700 11px/1 var(--font-body);color:var(--navy);letter-spacing:.04em;margin:0 0 10px">Exam-style set</p>
                   <div style="display:flex;align-items:center;gap:8px;margin-bottom:12px">
                     <span style="font:600 10.5px/1 var(--font-body);color:var(--navy);border:1.5px solid var(--navy);border-radius:999px;padding:5px 9px">Tech-free</span>
@@ -3156,13 +3214,13 @@ html.fn-egg .fgrid .fdot:nth-child(3)::after,html.fn-egg .fgrid .fdot:nth-child(
                     <div style="height:9px;border-radius:999px;background:var(--cream-m);width:64%"></div>
                   </div>
                   <p style="font:500 11px/1.5 var(--font-body);color:var(--text-muted);margin:auto 0 0">Full solutions at the back · never marked blind</p></div>
-              </sc-if>
-              <sc-if value="{{ wb4 }}" hint-placeholder-val="{{ false }}">
+              </div>
+              <div class="wbsp {{ wb4cls }}">
                 <div style="grid-column:1/-1;position:relative;min-height:400px">
                   <img loading="lazy" decoding="async" src="assets/mmSpread1.jpg" alt="A real workbook spread" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover">
                   <span style="position:absolute;left:14px;bottom:14px;font:600 11.5px/1 var(--font-body);color:var(--navy);background:rgba(255,249,241,.94);border-radius:999px;padding:8px 12px;box-shadow:var(--shadow-sm)">An actual spread from the Methods 3/4 series</span>
                 </div>
-              </sc-if>
+              </div>
             </div>
               </div>
             </div>
@@ -4192,13 +4250,32 @@ class Component extends DCLogic {
     const d = dir || (i > this.state.wbPage ? 1 : -1);
     this.setState({ wbPage: i }, () => {
       try {
-        if (this._wbEl && !window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-          this._wbEl.style.transformOrigin = d > 0 ? "left center" : "right center";
-          this._wbEl.animate([
-            { transform: "perspective(1600px) rotateY(" + (d > 0 ? 26 : -26) + "deg)", opacity: .45 },
-            { transform: "perspective(1600px) rotateY(0deg)", opacity: 1 },
-          ], { duration: 460, easing: "cubic-bezier(.22,1,.36,1)" });
+        const el = this._wbEl;
+        if (!el || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+        const ease = "cubic-bezier(.22,1,.36,1)";
+        if (window.matchMedia("(max-width:1000px)").matches) {
+          // phones: the sheet itself turns over
+          el.style.transformOrigin = "center center";
+          el.animate([
+            { transform: "perspective(1200px) rotateY(" + (d > 0 ? 80 : -80) + "deg)", opacity: 0 },
+            { transform: "perspective(1200px) rotateY(0deg)", opacity: 1 },
+          ], { duration: 520, easing: ease });
+          return;
         }
+        // desktop: the incoming page swings in around the spine, the other page settles behind it
+        const sp = el.querySelectorAll(".wbspread > .wbsp")[i]; const pages = sp ? Array.from(sp.children) : [];
+        const left = pages[0], right = pages[1];
+        const turning = d > 0 ? left : right, resting = d > 0 ? right : left;
+        if (turning) {
+          turning.style.transformOrigin = d > 0 ? "right center" : "left center";
+          turning.style.position = "relative"; turning.style.zIndex = "2";
+          const a = turning.animate([
+            { transform: "perspective(1400px) rotateY(" + (d > 0 ? 88 : -88) + "deg)", filter: "brightness(.72)" },
+            { transform: "perspective(1400px) rotateY(0deg)", filter: "brightness(1)" },
+          ], { duration: 560, easing: ease });
+          a.onfinish = () => { turning.style.zIndex = ""; };
+        }
+        if (resting) resting.animate([{ opacity: .55 }, { opacity: 1 }], { duration: 380, easing: ease });
       } catch (e) {}
     });
   }
@@ -4330,7 +4407,8 @@ class Component extends DCLogic {
               return;
             }
             // workbook viewer: full-screen toggle (state on <html> so the template re-render cannot drop it)
-            if (e.target.closest(".wbfull-b")) { e.preventDefault(); e.stopPropagation(); const on = !html.classList.contains("wb-full"); html.classList.toggle("wb-full", on); document.querySelectorAll(".wbfull-b").forEach((b) => b.setAttribute("aria-pressed", on ? "true" : "false")); return; }
+            if (html.classList.contains("wb-full") && !e.target.closest(".wbwrap")) { e.preventDefault(); e.stopPropagation(); html.classList.remove("wb-full"); document.querySelectorAll(".wbfull-b").forEach((b) => b.setAttribute("aria-pressed", "false")); return; }
+          if (e.target.closest(".wbfull-b")) { e.preventDefault(); e.stopPropagation(); const on = !html.classList.contains("wb-full"); html.classList.toggle("wb-full", on); document.querySelectorAll(".wbfull-b").forEach((b) => b.setAttribute("aria-pressed", on ? "true" : "false")); return; }
             if (!html.classList.contains("mwf-open")) return;
             if (e.target.closest("#mwfdrop .mwfrow")) { setOpen(false); return; }
             // the menu stays open while the page scrolls under it; the first tap outside the rows only closes it
@@ -4605,6 +4683,25 @@ class Component extends DCLogic {
     ensure();
     [60, 250, 800, 2000].forEach((ms) => setTimeout(ensure, ms));
   }
+  _wireWbSwipe() {
+    if (this._wbSwipeWired) return;
+    this._wbSwipeWired = true;
+    let x0 = 0, y0 = 0, on = false;
+    document.addEventListener("touchstart", (e) => {
+      const v = e.target && e.target.closest ? e.target.closest("#wbviewer") : null;
+      on = !!v && window.matchMedia("(max-width:1000px)").matches;
+      if (!on) return;
+      x0 = e.touches[0].clientX; y0 = e.touches[0].clientY;
+    }, { capture: true, passive: true });
+    document.addEventListener("touchend", (e) => {
+      if (!on) return; on = false;
+      const t = e.changedTouches && e.changedTouches[0]; if (!t) return;
+      const dx = t.clientX - x0, dy = t.clientY - y0;
+      if (Math.abs(dx) < 44 || Math.abs(dx) < Math.abs(dy) * 1.4) return;
+      const n = 5, cur = this.state.wbPage || 0;
+      if (dx < 0) this._wbGo((cur + 1) % n, 1); else this._wbGo((cur + n - 1) % n, -1);
+    }, { capture: true, passive: true });
+  }
   _wireTplan() {
     if (this._tplanWired) return;
     this._tplanWired = true;
@@ -4674,6 +4771,7 @@ class Component extends DCLogic {
     try {
       if (/(?:\?|&)reveal=all\b/.test(location.search)) document.documentElement.classList.add("no-reveal");
       try { const k = "p" + (this.state.sysP || 1); document.documentElement.setAttribute("data-step", String(this.state[k] || 0)); } catch (e) {}
+      try { document.documentElement.setAttribute("data-wb", String(this.state.wbPage || 0)); } catch (e) {}
       const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
       if ("IntersectionObserver" in window) {
         this._revIo = new IntersectionObserver((es) => {
@@ -4703,6 +4801,7 @@ class Component extends DCLogic {
       this._tagReveal();
       this._wirePillarCar();
       this._wireTplan();
+      this._wireWbSwipe();
       this._wireOfferCollapse();
       this._wireFunnel();
       // dev probe: ?probe=1 lists elements wider than the viewport in <html data-probe>
@@ -4734,6 +4833,7 @@ class Component extends DCLogic {
     try { if (this._offEnsure) this._offEnsure(); } catch (e) {}
     try { this._pbulTag(); } catch (e) {}
     try { const k = "p" + (this.state.sysP || 1); document.documentElement.setAttribute("data-step", String(this.state[k] || 0)); } catch (e) {}
+    try { document.documentElement.setAttribute("data-wb", String(this.state.wbPage || 0)); } catch (e) {}
     ["lifecycleState:lifecycle", "lens:lens", "adVariant:variant", "annotations:anno"].forEach(pair => {
       const [p, s] = pair.split(":");
       if (this.props[p] !== prevProps[p] && this.props[p] !== undefined && this.props[p] !== null) this.setState({ [s]: this.props[p] });
@@ -5312,6 +5412,7 @@ class Component extends DCLogic {
       letterSalut: S.lens === "guardian" ? "Dear parents and guardians," : "Dear students,",
       wbLabel: (S.wbPage + 1) + " / 5",
       wb0: S.wbPage === 0, wb1: S.wbPage === 1, wb2: S.wbPage === 2, wb3: S.wbPage === 3, wb4: S.wbPage === 4,
+      wb0cls: S.wbPage === 0 ? "on" : "", wb1cls: S.wbPage === 1 ? "on" : "", wb2cls: S.wbPage === 2 ? "on" : "", wb3cls: S.wbPage === 3 ? "on" : "", wb4cls: S.wbPage === 4 ? "on" : "",
       wbRef: (el) => { this._wbEl = el; },
       wbDots: [0, 1, 2, 3, 4].map((i) => ({ bg: i === S.wbPage ? "var(--navy)" : "var(--cream-m)", pick: () => this._wbGo(i) })),
       clsSlides: (() => {
