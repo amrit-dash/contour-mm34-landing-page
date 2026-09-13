@@ -3942,30 +3942,52 @@ class Component extends DCLogic {
         if (!document.getElementById("secrail") || !document.querySelector("section h2")) return;
         clearInterval(this._domPoll); this._domPoll = null;
         this._wireDom();
+        try {
+          const tr = document.querySelector(".sysprogram .g3"), k = tr && tr.children[1];
+          if (tr && k && tr.scrollWidth > tr.clientWidth + 4) tr.scrollLeft = k.offsetLeft - (tr.clientWidth - k.offsetWidth) / 2;
+        } catch (e2) {}
       } catch (e) {}
     }, 300);
     setTimeout(() => { if (this._domPoll) { clearInterval(this._domPoll); this._domPoll = null; try { this._wireDom(); } catch (e) {} } }, 15000);
     this._esc = (e) => { if (e.key === "Escape") this.setState({ modalOpen: false, galleryIdx: -1 }); };
     window.addEventListener("keydown", this._esc);
   }
-  _pillarGo(key, i, scroll) {
+  // one step around the three pillars, landing on whichever part that pillar was last left on
+  _sysStep(dir) {
+    const n = (((this.state.sysP || 1) - 1 + dir + 3) % 3) + 1, key = "p" + n, len = ({ p1: 6, p2: 7, p3: 6 })[key];
+    this._pillarGo(key, Math.min(this.state[key] || 0, len - 1), false);
+  }
+  // put the summary card in the middle of the screen, clear of the sticky header. a card taller than
+  // the space available cannot be centred, so that one is sat just under the header instead
+  _focusPanel(force) {
+    const el = document.querySelector(".sys .syspanel");
+    if (!el) return;
+    const hb = parseFloat(getComputedStyle(document.documentElement).getPropertyValue("--hdr")) || 120;
+    const r = el.getBoundingClientRect();
+    // an unforced call is a nudge: leave the card alone while it is already fully on screen
+    if (!force && r.top >= hb && r.bottom <= window.innerHeight) return;
+    const avail = window.innerHeight - hb;
+    const offset = r.height < avail ? hb + (avail - r.height) / 2 : hb + 10;
+    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    window.scrollTo({ top: Math.max(0, r.top + window.scrollY - offset), behavior: reduced ? "auto" : "smooth" });
+  }
+  _pillarGo(key, i, scroll, focusPanel) {
     this.setState({ [key]: i, sysP: Number(key.slice(1)) }, () => {
-      // single-column layouts (tablet/phone): label, tabs and panel read as one block; scroll to the label only when it is off-screen
-      if (window.matchMedia("(max-width:1100px)").matches) {
-        requestAnimationFrame(() => {
-          const p = document.querySelector(".sys .sysrail-title");
-          if (!p) return;
+      requestAnimationFrame(() => {
+        // picking a part from the index: the card is the answer, so centre it at every width
+        if (focusPanel) { this._focusPanel(true); return; }
+        // an in-page link into a part is a navigation, so it lands on the section itself
+        if (scroll) {
+          const el = document.getElementById("system");
+          if (!el) return;
           const hb = parseFloat(getComputedStyle(document.documentElement).getPropertyValue("--hdr")) || 120;
-          const pt = p.getBoundingClientRect().top;
-          if (pt >= hb && pt < window.innerHeight * .45) return;
           const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-          window.scrollTo({ top: p.getBoundingClientRect().top + window.scrollY - hb - 10, behavior: reduced ? "auto" : "smooth" });
-        });
-        return;
-      }
-      if (!scroll) return;
-      const el = document.getElementById("system");
-      if (el) { const hb = parseFloat(getComputedStyle(document.documentElement).getPropertyValue("--hdr")) || 120; window.scrollTo({ top: el.getBoundingClientRect().top + window.scrollY - hb + 1, behavior: "smooth" }); }
+          window.scrollTo({ top: el.getBoundingClientRect().top + window.scrollY - hb + 1, behavior: reduced ? "auto" : "smooth" });
+          return;
+        }
+        // switching pillars leaves the page where it is: the tab you just pressed stays under your
+        // thumb, and the heading, subtext and index all update in place. only picking a part travels
+      });
     });
   }
   _wbGo(i, dir) {
