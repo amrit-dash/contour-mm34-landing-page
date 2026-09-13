@@ -1912,6 +1912,11 @@ html.fn-egg .fgrid .fdot:nth-child(3)::after,html.fn-egg .fgrid .fdot:nth-child(
       .sys.sysfocus .syspanel .tabpanel>div:last-child>.pdtext>.pbul>p>span:first-child{display:none!important}
       .sys.sysfocus .syspanel .tabpanel>div:last-child>.pdtext>.pbul>p:last-child:nth-child(odd){grid-column:1/-1}
       .sys.sysfocus .syspanel .tabpanel>div:last-child>.pdtext>.pbul>p:only-child{background:none;border:0;padding:0!important;font-size:16px!important;line-height:1.6!important;color:var(--charcoal)}
+      /* tile grids picked per part from the copy (see _pbulTag): lead = long first claim on its own
+         row with the rest paired beneath; stack = every claim on its own row */
+      html.pbl-lead .sys.sysfocus .syspanel .tabpanel>div:last-child>.pdtext>.pbul>p:first-child{grid-column:1/-1}
+      html.pbl-lead .sys.sysfocus .syspanel .tabpanel>div:last-child>.pdtext>.pbul>p:last-child:nth-child(odd){grid-column:auto}
+      html.pbl-stack .sys.sysfocus .syspanel .tabpanel>div:last-child>.pdtext>.pbul{grid-template-columns:minmax(0,1fr)}
       /* curriculum · three bands: head, crumb+title strip, then a wide darker picker
          beside a preview that takes the picker's height and spreads its rows to fill */
       .sys.sysfocus .syspanel .tabpanel#curriculum{grid-template-columns:minmax(0,1.5fr) minmax(0,1fr);grid-template-rows:auto auto auto;background:#D3CBC0!important}
@@ -4330,6 +4335,18 @@ class Component extends DCLogic {
       });
     } catch (e) {}
   }
+  // picks the bullet-tile grid for the visible part from its copy; lives on <html> because the runtime resets className
+  _pbulTag() {
+    const cl = document.documentElement.classList;
+    const ul = Array.from(document.querySelectorAll(".sys .syspanel .tabpanel .pbul")).find((u) => u.offsetParent !== null);
+    const ps = ul ? Array.from(ul.querySelectorAll(":scope > p")) : [];
+    const L = ps.map((q) => (q.textContent || "").trim().length);
+    let mode = "";
+    if (L.length === 2 && Math.min(L[0], L[1]) > 100) mode = "stack";
+    else if (L.length === 3 && L[0] >= 1.35 * Math.max(L[1], L[2])) mode = "lead";
+    cl.toggle("pbl-lead", mode === "lead");
+    cl.toggle("pbl-stack", mode === "stack");
+  }
   _scheduleTag() {
     if (this._tagRaf) return;
     this._tagRaf = requestAnimationFrame(() => { this._tagRaf = 0; this._tagReveal(); });
@@ -4580,6 +4597,7 @@ class Component extends DCLogic {
   _wireDom() {
     if (this._domWired) return;
     this._domWired = true;
+    [60, 400, 1500].forEach((ms) => setTimeout(() => { try { this._pbulTag(); } catch (e) {} }, ms));
     try {
       if (/(?:\?|&)reveal=all\b/.test(location.search)) document.documentElement.classList.add("no-reveal");
       try { const k = "p" + (this.state.sysP || 1); document.documentElement.setAttribute("data-step", String(this.state[k] || 0)); } catch (e) {}
@@ -4640,6 +4658,7 @@ class Component extends DCLogic {
   componentDidUpdate(prevProps) { if (this._domWired) this._scheduleTag();
     try { if (this._pcarEnsure) this._pcarEnsure(); } catch (e) {}
     try { if (this._offEnsure) this._offEnsure(); } catch (e) {}
+    try { this._pbulTag(); } catch (e) {}
     try { const k = "p" + (this.state.sysP || 1); document.documentElement.setAttribute("data-step", String(this.state[k] || 0)); } catch (e) {}
     ["lifecycleState:lifecycle", "lens:lens", "adVariant:variant", "annotations:anno"].forEach(pair => {
       const [p, s] = pair.split(":");
