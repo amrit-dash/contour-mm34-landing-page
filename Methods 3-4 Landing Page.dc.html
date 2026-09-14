@@ -4530,7 +4530,14 @@ class Component extends DCLogic {
             if (e.target.closest("#mwf")) { setOpen(!html.classList.contains("mwf-open")); return; }
             // lens dropdown (phones): trigger toggles, an option or any outside tap closes
             const setLens = (o) => { html.classList.toggle("lens-open", o); const t = document.querySelector(".mlens-t"); if (t) t.setAttribute("aria-expanded", o ? "true" : "false"); };
-            if (e.target.closest(".mlens-t")) { setLens(!html.classList.contains("lens-open")); return; }
+            if (e.target.closest(".mlens-t")) { html.classList.remove("lens-nudge"); setLens(!html.classList.contains("lens-open")); return; }
+            // picking a lens: cross-fade the hero subline, which is the line the lens rewrites.
+            // The class goes on <html> because the template replaces the paragraph node itself.
+            if (e.target.closest(".mlens-o")) {
+              html.classList.remove("lens-nudge", "lens-swap"); void html.offsetWidth; html.classList.add("lens-swap");
+              clearTimeout(W.__mm34LensSwap);
+              W.__mm34LensSwap = setTimeout(() => html.classList.remove("lens-swap"), 500);
+            }
             if (html.classList.contains("lens-open")) setLens(false);
             if (e.target.closest("#totop")) { e.preventDefault(); const tt = document.getElementById("totop"); if (tt) { tt.classList.add("tt-go"); setTimeout(() => tt.classList.remove("tt-go"), 1600); } html.style.scrollBehavior = ""; W.scrollTo({ top: 0, behavior: W.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth" }); return; }
             const pt = e.target.closest(".progdot");
