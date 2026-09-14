@@ -4915,7 +4915,7 @@ class Component extends DCLogic {
     this._domWired = true;
     [60, 400, 1500].forEach((ms) => setTimeout(() => { try { this._pbulTag(); } catch (e) {} }, ms));
     try {
-      if (/(?:\?|&)reveal=all\b/.test(location.search)) document.documentElement.classList.add("no-reveal");
+      if (/(?:\?|&)reveal=all\b/.test(location.search)) document.documentElement.classList.add("no-reveal", "qa-now");
       try { const k = "p" + (this.state.sysP || 1); document.documentElement.setAttribute("data-step", String(this.state[k] || 0)); } catch (e) {}
       try { document.documentElement.setAttribute("data-wb", String(this.state.wbPage || 0)); } catch (e) {}
       const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
