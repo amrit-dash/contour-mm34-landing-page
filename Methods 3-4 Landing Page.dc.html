@@ -4430,6 +4430,12 @@ class Component extends DCLogic {
               if (y < 8) { const tt = document.getElementById("totop"); if (tt) tt.classList.remove("tt-go"); }
               // the sticky CTA bar waits until the hero, and its own CTA, are scrolled past
               document.documentElement.classList.toggle("past-hero", y > vh * 0.72);
+              // the audience switcher has done its job by the time the reader is into the proof:
+              // from the results section onward it collapses out of the header
+              const rsec = document.getElementById("results");
+              const pastLens = !!rsec && rsec.getBoundingClientRect().top <= 100;
+              document.documentElement.classList.toggle("past-lens", pastLens);
+              if (pastLens) document.documentElement.classList.remove("lens-open");
               try { const sb = document.querySelector(".only-m"); if (sb && sb.getBoundingClientRect().height > 0) document.documentElement.style.setProperty("--barh", Math.round(sb.getBoundingClientRect().height) + "px"); } catch (e) {}
               const dots = rail.querySelectorAll(".raildot");
               let head = 0;
